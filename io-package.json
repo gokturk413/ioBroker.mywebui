@@ -1,0 +1,603 @@
+{
+  "common": {
+    "name": "mywebui",
+    "version": "1.130.0",
+    "titleLang": {
+      "en": "mywebui",
+      "de": "mywebui",
+      "ru": "mywebui",
+      "pt": "mywebui",
+      "nl": "mywebui",
+      "fr": "mywebui",
+      "it": "mywebui",
+      "es": "mywebui",
+      "pl": "mywebui",
+      "uk": "mywebui",
+      "zh-cn": "mywebui"
+    },
+    "desc": {
+      "en": "Custom edited Graphical user interface for iobroker using Webcomponents by gokturk413",
+      "de": "Grafische Benutzeroberfläche für iobroker mit Webkomponenten",
+      "ru": "Графический пользовательский интерфейс для iobroker с использованием Webcomponents",
+      "pt": "Interface gráfica do usuário para iobroker usando Webcomponents",
+      "nl": "Grafische gebruiker interface voor iobroker met webcomponenten",
+      "fr": "Interface utilisateur graphique pour iobroker en utilisant Webcomponents",
+      "it": "Interfaccia utente grafica per iobroker utilizzando Webcomponents",
+      "es": "Interfaz de usuario gráfica para iobroker utilizando Webcomponents",
+      "pl": "Graphical user interface for iobroker (ang.)",
+      "uk": "Графічний інтерфейс користувача для iobroker за допомогою Webcomponents",
+      "zh-cn": "使用万维网传送器的高锰用户接口"
+    },
+    "news": {
+      "1.48.1": {
+        "en": "fix: changing flex/grid layout properties did nothing after switching a screen/control from Split or Tabs to Flex/Grid - a stale generated split/tab container stayed in the saved html and intercepted the children. The container is now always stripped on save when the type is non-structural, and stripped defensively at runtime, so flex/grid properties apply again (editor + runtime).",
+        "az": "duzelis: screen/control-u Split ve ya Tabs-dan Flex/Grid-e kecirdikden sonra flex/grid layout propertyleri deyisdirmek heç ne etmirdi - kohne generasiya olunmus split/tab konteyneri saxlanan html-de qalir ve usaqlari tutdurudu. Indi tip qeyri-struktural olanda konteyner save-de her zaman silinir ve runtime-da mudafiе olaraq silinir, ona gore flex/grid propertyleri yene tetbiq olunur (editor + runtime).",
+        "de": "Fix: Das Aendern von Flex/Grid-Layout-Eigenschaften bewirkte nichts, nachdem ein Screen/Control von Split oder Tabs auf Flex/Grid umgestellt wurde - ein veralteter generierter Split/Tab-Container blieb im gespeicherten HTML und fing die Kinder ab. Der Container wird jetzt beim Speichern bei nicht-strukturellem Typ immer entfernt und zur Laufzeit defensiv entfernt, sodass Flex/Grid-Eigenschaften wieder wirken.",
+        "ru": "исправление: изменение свойств flex/grid ничего не давало после переключения экрана/контрола со Split или Tabs на Flex/Grid - устаревший сгенерированный контейнер split/tab оставался в сохранённом html и перехватывал детей. Теперь контейнер всегда удаляется при сохранении для неструктурного типа и удаляется защитно во время выполнения, поэтому свойства flex/grid снова применяются.",
+        "tr": "duzeltme: bir ekrani/kontrolu Split veya Tabs'tan Flex/Grid'e gecirdikten sonra flex/grid layout ozelliklerini degistirmek hicbir sey yapmiyordu - eski uretilmis split/tab konteyneri kaydedilen html'de kaliyor ve cocuklari yakaliyordu. Konteyner artik tip yapisal degilken kaydetmede her zaman cikarilir ve calisma zamaninda savunmaci olarak cikarilir, boylece flex/grid ozellikleri tekrar uygulanir."
+      },
+      "1.48.0": {
+        "en": "feat: alignment guides - while you drag an element on the canvas, red helper lines appear when its edges or center align with another element's edges/center (figma/penpot-style); works in the screen AND custom-control editor. fix: the pump-style controls whose inner container used position:absolute can now be spaced/laid out - give the control a flex/grid layout (settings.layout) so its children flow and respect gap/padding instead of sticking to the corner.",
+        "az": "yenilik: alignment guides (hizalama kelavuzleri) - canvas-da elementi suruklеyеndе onun kenarlari ve ya merkezi basqa elementin kenari/merkezi ile uygunlasanda qirmizi komekci xetler cixir (figma/penpot uslubu); screen VE custom-control editorunda isleyir. duzelis: daxili konteyneri position:absolute islеden pump tipli control-lar artiq aralanе/duzulе biler - control-a flex/grid layout (settings.layout) ver ki, usaqlari axsin ve gap/padding-e tabe olsun, kunce yapismasin.",
+        "de": "Feature: Ausrichtungslinien - beim Ziehen eines Elements auf dem Canvas erscheinen rote Hilfslinien, wenn seine Kanten oder Mitte mit denen eines anderen Elements uebereinstimmen (Figma/Penpot-Stil); funktioniert im Screen- UND Custom-Control-Editor. Fix: Pump-artige Controls mit position:absolute im inneren Container koennen jetzt angeordnet/beabstandet werden - dem Control ein Flex/Grid-Layout (settings.layout) geben, damit die Kinder fliessen und Gap/Padding beachten.",
+        "ru": "функция: направляющие выравнивания - при перетаскивании элемента на холсте появляются красные вспомогательные линии, когда его края или центр совпадают с краями/центром другого элемента (стиль figma/penpot); работает в редакторе экранов И кастом-контролов. исправление: контролы типа pump с position:absolute во внутреннем контейнере теперь можно располагать/разносить - задайте контролу flex/grid layout (settings.layout), чтобы его дети текли и учитывали gap/padding.",
+        "tr": "ozellik: hizalama kilavuzlari - canvas'ta bir elemani suruklerken kenarlari veya merkezi baska bir elemanin kenari/merkezi ile hizalandiginda kirmizi yardimci cizgiler belirir (figma/penpot tarzi); ekran VE custom-control editorunde calisir. duzeltme: ic konteyneri position:absolute kullanan pump tarzi kontroller artik duzenlenebilir/aralanabilir - kontrole flex/grid layout (settings.layout) verin, boylece cocuklar akar ve gap/padding'e uyar."
+      },
+      "1.47.0": {
+        "en": "feat: penpot-style canvas layout overlays - Grid Overlay draws the column/row track lines on the canvas with draggable resize handles (drag a handle to resize a track, written live to settings.layout); Flex Layout Guides show the flex direction arrow + align/justify label on flex screens. (Alignment guides between elements are planned next.)",
+        "az": "yenilik: penpot uslublu canvas layout overlay-leri - Grid Overlay canvas-da sutun/setir track xetlerini cekir ve suruklene bilen olcu handle-lari ile (handle-i suruklе -> track olculenir, canli olaraq settings.layout-a yazilir); Flex Layout Guides flex ekranlarda istiqamet oxu + align/justify etiketi gosterir. (Elementler arasi alignment guide-lari novbeti planlasdirilib.)",
+        "de": "Feature: Penpot-artige Canvas-Layout-Overlays - das Grid-Overlay zeichnet die Spalten-/Zeilen-Tracklinien auf dem Canvas mit ziehbaren Resize-Griffen (Griff ziehen -> Track wird skaliert, live in settings.layout geschrieben); Flex-Layout-Guides zeigen den Flex-Richtungspfeil + Align/Justify-Label. (Ausrichtungslinien zwischen Elementen sind als naechstes geplant.)",
+        "ru": "функция: canvas-оверлеи раскладки в стиле penpot - Grid Overlay рисует линии дорожек столбцов/строк на холсте с перетаскиваемыми маркерами изменения размера (тянешь маркер -> дорожка меняет размер, пишется в settings.layout вживую); Flex Layout Guides показывают стрелку направления flex + метку align/justify. (Направляющие выравнивания между элементами - следующими.)",
+        "tr": "ozellik: penpot tarzi canvas layout overlay'leri - Grid Overlay canvas'ta sutun/satir track cizgilerini suruklenebilir boyutlandirma tutamaclariyla cizer (tutamaci surukle -> track boyutlanir, settings.layout'a canli yazilir); Flex Layout Guides flex ekranlarda yon oku + align/justify etiketi gosterir. (Elemanlar arasi hizalama kilavuzlari siradaki.)"
+      },
+      "1.46.0": {
+        "en": "feat: layout system Phase 2+3 - the Layout panel now uses the visual button-group editor (flex direction/align/justify/wrap icons, like the webui-flex-container 'Flex Layout' editor) for every container type; interactive grid track editor; Split and Tabs are now metadata-generated containers too (settings.layout) - the saved html holds only the panes/tabs and the split/tab container is generated (designer + runtime), so it can never be deleted by accident; round-trip stable.",
+        "az": "yenilik: layout sistemi Faza 2+3 - Layout paneli artiq vizual duyme-qrup redaktoru isledir (flex direction/align/justify/wrap ikonlari, webui-flex-container 'Flex Layout' redaktoru kimi) butun konteyner tipleri ucun; interaktiv grid track redaktoru; Split ve Tabs da artiq metadata-dan generasiya olunan konteynerlerdir (settings.layout) - saxlanan html yalniz panelleri saxlayir, split/tab konteyneri generasiya olunur (designer + runtime), ona gore tesadufen silinе bilmez; round-trip stabil.",
+        "de": "Feature: Layout-System Phase 2+3 - das Layout-Panel nutzt jetzt den visuellen Button-Gruppen-Editor (Flex direction/align/justify/wrap-Icons wie der 'Flex Layout'-Editor) fuer jeden Container-Typ; interaktiver Grid-Track-Editor; Split und Tabs sind jetzt ebenfalls aus Metadaten generierte Container (settings.layout) - das gespeicherte HTML enthaelt nur die Panes/Tabs, der Container wird generiert (Designer + Runtime) und kann nicht versehentlich geloescht werden; Round-Trip stabil.",
+        "ru": "функция: система раскладки фаза 2+3 - панель Layout теперь использует визуальный редактор кнопок-групп (иконки flex direction/align/justify/wrap, как редактор 'Flex Layout') для каждого типа контейнера; интерактивный редактор grid-дорожек; Split и Tabs теперь тоже контейнеры, генерируемые из метаданных (settings.layout) - сохранённый html содержит только панели/вкладки, контейнер генерируется (дизайнер + runtime) и не может быть удалён случайно; round-trip стабилен.",
+        "tr": "ozellik: layout sistemi Faz 2+3 - Layout paneli artik her konteyner tipi icin gorsel dugme-grup editoru kullaniyor (flex direction/align/justify/wrap ikonlari, 'Flex Layout' editoru gibi); etkilesimli grid track editoru; Split ve Tabs da artik metadata'dan uretilen konteynerler (settings.layout) - kaydedilen html sadece panelleri tutar, konteyner uretilir (tasarimci + runtime) ve yanlislikla silinemez; round-trip kararli."
+      },
+      "1.45.0": {
+        "en": "feat: designer-native layout system - a screen/control layout (Blank/Flex/Grid) is now metadata (settings.layout) applied to the root, NOT a deletable element, so it can't be removed by accident; new Layout panel in the Settings tab; interactive grid track editor (per-track value + unit fr/px/%/auto, add/remove); 'Convert to layout' for legacy <webui-flex-container> screens; works for screens, controls and global controls, in designer + runtime. fix: 'Remove HabPanel Style' action for the global style.",
+        "az": "yenilik: designer-native layout sistemi - screen/control layout-u (Blank/Flex/Grid) artiq metadata-dir (settings.layout), koke tetbiq olunur, silinе bilen element DEYIL, ona gore tesadufen silinmir; Settings tab-da yeni Layout paneli; interaktiv grid track redaktoru (her track ucun deyer + vahid fr/px/%/auto, elave et/sil); kohne <webui-flex-container> ekranlari ucun 'Convert to layout'; screen, control ve global control-lar ucun, designer + runtime-da isleyir. duzelis: qlobal style ucun 'Remove HabPanel Style' emri.",
+        "de": "Feature: designer-natives Layout-System - das Layout eines Screens/Controls (Blank/Flex/Grid) ist jetzt Metadaten (settings.layout), die auf das Root angewendet werden, KEIN loeschbares Element; neues Layout-Panel im Settings-Tab; interaktiver Grid-Track-Editor (Wert + Einheit fr/px/%/auto pro Track, hinzufuegen/entfernen); 'Convert to layout' fuer alte <webui-flex-container>-Screens; funktioniert fuer Screens, Controls und globale Controls, im Designer + Runtime. Fix: 'Remove HabPanel Style' Aktion.",
+        "ru": "функция: нативная система раскладки - раскладка экрана/контрола (Blank/Flex/Grid) теперь метаданные (settings.layout) на корне, а НЕ удаляемый элемент; новая панель Layout во вкладке Settings; интерактивный редактор grid-дорожек (значение + единица fr/px/%/auto, добавить/удалить); 'Convert to layout' для старых экранов; работает для экранов, контролов и глобальных контролов, в дизайнере и runtime. исправление: 'Remove HabPanel Style'.",
+        "tr": "ozellik: tasarimci-yerel layout sistemi - ekran/kontrol layout'u (Blank/Flex/Grid) artik metadata (settings.layout), silinebilir eleman DEGIL; Settings sekmesinde yeni Layout paneli; etkilesimli grid track editoru (deger + birim fr/px/%/auto, ekle/sil); eski ekranlar icin 'Convert to layout'; ekranlar, kontroller ve global kontroller icin, tasarimci + runtime'da calisir. duzeltme: 'Remove HabPanel Style'."
+      },
+      "1.43.1": {
+        "en": "perf: 3D galleries no longer render whole folders live - 3D screens never preview and 3D custom controls preview only one-at-a-time on click (big runtime memory saving); applies to tree and Global; 2D controls/widgets unchanged. docs: README - bindings (signals/state:/object:/??property/relative), dynamic properties, current changelog.",
+        "az": "performans: 3D qalereyalar artıq bütöv folderləri canlı render etmir - 3D ekranlar heç vaxt, 3D custom control-lar isə yalnız tək-tək (klikləyəndə) önizlənir (böyük runtime memory qənaəti); tree və Global üçün; 2D control/widget-lər dəyişməyib. sənəd: README - binding-lər (signal/state:/object:/??property/relative), dinamik property-lər, cari changelog.",
+        "tr": "performans: 3D galeriler artık tüm klasörleri canlı render etmiyor - 3D ekranlar hiç, 3D custom control'lar yalnızca teker teker (tıklayınca) önizleniyor (büyük runtime bellek tasarrufu); tree ve Global için; 2D control/widget'lar değişmedi. dokümantasyon: README - binding'ler, dinamik property'ler, güncel changelog.",
+        "ru": "производительность: 3D-галереи больше не рендерят целые папки вживую - 3D-экраны не превью вовсе, 3D-контролы превью только по одному (по клику) (большая экономия памяти в runtime); для дерева и Global; 2D-контролы/виджеты без изменений. документация: README - привязки, динамические свойства, актуальный changelog.",
+        "de": "Performance: 3D-Galerien rendern keine ganzen Ordner mehr live - 3D-Screens nie, 3D-Custom-Controls nur einzeln (bei Klick) (große Runtime-Speicherersparnis); für Baum und Global; 2D-Controls/Widgets unverändert. Doku: README - Bindings, dynamische Properties, aktuelles Changelog."
+      },
+      "1.43.0": {
+        "en": "fix: screen access control now syncs in real time across all surfaces - unchecking a group in the global Permissions dialog instantly clears 'Access Denied' on open runtime windows (uiRefresh broadcast); backend honours visibilityEnabled/accessibility.enabled so a disabled restriction with a stale group no longer blocks; Settings-tab and Projects 'Screen Access' dialog are mirrored (single source of truth). feat: global (platform-default) custom controls shipped under Global > CustomControls / 3D Custom Controls.",
+        "az": "düzəliş: ekran giriş nəzarəti indi bütün interfeyslərdə realtime sinxronlaşır - qlobal Permissions dialoqunda qrupun seçimini götürəndə açıq runtime pəncərələrində 'Access Denied' dərhal təmizlənir (uiRefresh broadcast); backend visibilityEnabled/accessibility.enabled-i nəzərə alır, deaktiv məhdudiyyət köhnə qrupla artıq bloklamır; Settings tabı və Projects 'Screen Access' dialoqu güzgülənir (vahid mənbə). yenilik: qlobal (platforma-default) custom control-lar Global > CustomControls / 3D Custom Controls altında.",
+        "tr": "düzeltme: ekran erişim kontrolü artık tüm arayüzlerde gerçek zamanlı senkronize olur - global Permissions diyalogunda bir grubun işaretini kaldırınca açık runtime pencerelerinde 'Access Denied' anında temizlenir (uiRefresh broadcast); backend visibilityEnabled/accessibility.enabled'i dikkate alır, devre dışı kısıtlama eski grupla artık engellemez; Settings sekmesi ve Projects 'Screen Access' diyaloğu birbirini yansıtır (tek kaynak). yenilik: global (platform-varsayılan) custom control'lar Global > CustomControls / 3D Custom Controls altında.",
+        "ru": "исправление: контроль доступа к экранам теперь синхронизируется в реальном времени во всех интерфейсах - снятие галочки группы в глобальном диалоге Permissions мгновенно убирает 'Access Denied' в открытых окнах runtime (broadcast uiRefresh); бэкенд учитывает visibilityEnabled/accessibility.enabled, отключённое ограничение со старой группой больше не блокирует; вкладка Settings и диалог Projects 'Screen Access' зеркалируются (единый источник). новое: глобальные (платформенные) пользовательские контролы под Global > CustomControls / 3D Custom Controls.",
+        "de": "Fix: Bildschirm-Zugriffskontrolle synchronisiert jetzt in Echtzeit über alle Oberflächen - das Abwählen einer Gruppe im globalen Permissions-Dialog entfernt 'Access Denied' sofort in offenen Runtime-Fenstern (uiRefresh-Broadcast); Backend berücksichtigt visibilityEnabled/accessibility.enabled, eine deaktivierte Einschränkung mit veralteter Gruppe blockiert nicht mehr; Settings-Tab und Projects-'Screen Access'-Dialog werden gespiegelt (eine Quelle). Feature: globale (Plattform-Standard) Custom Controls unter Global > CustomControls / 3D Custom Controls."
+      },
+      "1.42.45": {
+        "en": "design: neon glassmorphic theme for the solution explorer - dark gradient panel, glass project bar, glowing hover/selection, cyan icon set (wunderbaum CSS variables overridden, original icons untouched)",
+        "az": "dizayn: solution explorer üçün neon glassmorphic tema - tünd qradiyent panel, şüşə proyekt paneli, parlayan hover/seçim, cyan ikon dəsti (wunderbaum CSS dəyişənləri override edildi, orijinal ikonlara toxunulmadı)",
+        "tr": "tasarım: solution explorer için neon glassmorphic tema - koyu gradyan panel, cam proje çubuğu, parlayan hover/seçim, cyan ikon seti (wunderbaum CSS değişkenleri override edildi, orijinal ikonlara dokunulmadı)",
+        "ru": "дизайн: неоновая glassmorphic тема для solution explorer - тёмная градиентная панель, стеклянная панель проектов, светящиеся hover/выделение, голубой набор иконок (переопределены CSS-переменные wunderbaum, оригинальные иконки не тронуты)",
+        "de": "Design: Neon-Glassmorphic-Theme für den Solution Explorer - dunkles Gradient-Panel, Glas-Projektleiste, leuchtende Hover/Auswahl, Cyan-Icon-Set (wunderbaum-CSS-Variablen überschrieben, Original-Icons unverändert)"
+      },
+      "1.42.44": {
+        "en": "feature: multi-project support - project selector with create/delete in solution explorer; existing data stays as 'default' project, new projects under projects/<name>/; runtime preview passes ?project=, plain runtime.html always shows default (kiosk safe)",
+        "az": "yenilik: multi-proyekt dəstəyi - solution explorer-də yarat/sil düymələri ilə proyekt seçici; mövcud data 'default' proyekt kimi qalır, yeni proyektlər projects/<ad>/ altında; runtime önizləmə ?project= ötürür, parametrsiz runtime.html həmişə default göstərir (kiosk təhlükəsiz)",
+        "tr": "yenilik: çoklu proje desteği - solution explorer'da oluştur/sil düğmeleriyle proje seçici; mevcut veri 'default' proje olarak kalır, yeni projeler projects/<ad>/ altında; runtime önizleme ?project= geçirir, parametresiz runtime.html her zaman default gösterir (kiosk güvenli)",
+        "ru": "новое: поддержка нескольких проектов - селектор проектов с созданием/удалением в solution explorer; существующие данные остаются проектом 'default', новые проекты в projects/<имя>/; предпросмотр runtime передаёт ?project=, runtime.html без параметра всегда показывает default (безопасно для киосков)",
+        "de": "Neu: Multi-Projekt-Unterstützung - Projektauswahl mit Erstellen/Löschen im Solution Explorer; bestehende Daten bleiben als 'default'-Projekt, neue Projekte unter projects/<name>/; Runtime-Vorschau übergibt ?project=, runtime.html ohne Parameter zeigt immer default (kiosksicher)"
+      },
+      "1.42.43": {
+        "en": "refactor: all @gokturk413/@node-projects fork packages vendored into www/libs (edited directly in repo, removed from npm dependencies); build script made safe (gulp delAll no longer deletes www frontend sources)",
+        "az": "refaktor: bütün @gokturk413/@node-projects fork paketləri www/libs-ə vendorlandı (birbaşa repo-da redaktə olunur, npm asılılıqlarından çıxarıldı); build scripti təhlükəsiz edildi (gulp delAll artıq www frontend mənbələrini silmir)",
+        "tr": "refaktör: tüm @gokturk413/@node-projects fork paketleri www/libs'e taşındı (doğrudan repo'da düzenleniyor, npm bağımlılıklarından çıkarıldı); build script güvenli hale getirildi (gulp delAll artık www frontend kaynaklarını silmiyor)",
+        "ru": "рефакторинг: все fork-пакеты @gokturk413/@node-projects перенесены в www/libs (редактируются прямо в репозитории, удалены из npm-зависимостей); скрипт сборки сделан безопасным (gulp delAll больше не удаляет исходники frontend в www)",
+        "de": "Refactoring: alle @gokturk413/@node-projects Fork-Pakete nach www/libs verlagert (direkt im Repo bearbeitet, aus npm-Abhängigkeiten entfernt); Build-Skript abgesichert (gulp delAll löscht www-Frontend-Quellen nicht mehr)"
+      },
+      "1.42.42": {
+        "en": "feature: 'dynamic' tab in property grid for every element (works also with npm manifest widgets) - per-instance dynamic properties with two-way binding; fix: solution explorer drag crash on nodes without data",
+        "az": "yenilik: property grid-də hər element üçün 'dynamic' tabı (npm manifest widget-ləri ilə də işləyir) - instance-əsaslı dinamik property-lər iki-tərəfli binding ilə; düzəliş: solution explorer-də data-sız node-ları drag edəndə çökmə",
+        "tr": "yenilik: property grid'de her element için 'dynamic' sekmesi (npm manifest widget'larıyla da çalışır) - instance bazlı dinamik property'ler çift yönlü binding ile; düzeltme: solution explorer'da data'sız node sürüklemede çökme",
+        "ru": "новое: вкладка 'dynamic' в property grid для каждого элемента (работает и с npm manifest виджетами) - динамические свойства экземпляра с двусторонней привязкой; исправление: падение drag в solution explorer на узлах без data",
+        "de": "Neu: 'dynamic'-Tab im Property-Grid für jedes Element (funktioniert auch mit npm-Manifest-Widgets) - instanzbasierte dynamische Properties mit Zwei-Wege-Binding; Fix: Drag-Absturz im Solution Explorer bei Knoten ohne Daten"
+      },
+      "1.42.41": {
+        "en": "improvement: dynamic properties now work on Lit/package widgets at runtime too (accessors + -changed events applied by ScreenViewer); events tab lists -changed events of dynamic properties; added webui-demo-widget sample package",
+        "az": "təkmilləşdirmə: dinamik property-lər artıq runtime-da Lit/package widget-lərdə də işləyir (accessor-lar + -changed event-ləri ScreenViewer tərəfindən tətbiq olunur); events tabı dinamik property-lərin -changed event-lərini göstərir; webui-demo-widget nümunə paketi əlavə olundu",
+        "tr": "iyileştirme: dinamik property'ler artık runtime'da Lit/package widget'larda da çalışıyor (accessor'lar + -changed event'leri ScreenViewer tarafından uygulanıyor); events sekmesi dinamik property'lerin -changed event'lerini listeliyor; webui-demo-widget örnek paketi eklendi",
+        "ru": "улучшение: динамические свойства теперь работают и на Lit/package виджетах во время выполнения (аксессоры + события -changed применяются ScreenViewer); вкладка events показывает события -changed динамических свойств; добавлен пример пакета webui-demo-widget",
+        "de": "Verbesserung: dynamische Properties funktionieren zur Laufzeit jetzt auch bei Lit/Package-Widgets (Accessoren + -changed-Events durch ScreenViewer); Events-Tab listet -changed-Events dynamischer Properties; webui-demo-widget Beispielpaket hinzugefügt"
+      },
+      "1.42.40": {
+        "en": "feature: per-instance dynamic properties for custom controls (add/edit name, type, default via properties tab) and extended Lit widget property support (Array/Object/converter types, webuiProperties metadata for signal/color/screen/enum editors)",
+        "az": "yenilik: custom control-lar üçün instance-əsaslı dinamik property-lər (properties tabından ad, tip, default əlavə/redaktə) və Lit widget-lər üçün genişləndirilmiş property dəstəyi (Array/Object/converter tipləri, signal/color/screen/enum editorları üçün webuiProperties metadata)",
+        "tr": "yenilik: custom control'ler için instance bazlı dinamik property'ler (properties sekmesinden ad, tip, varsayılan ekleme/düzenleme) ve Lit widget'lar için genişletilmiş property desteği (Array/Object/converter tipleri, signal/color/screen/enum editörleri için webuiProperties metadata)",
+        "ru": "новое: динамические свойства экземпляров для custom control (добавление/редактирование имени, типа, значения по умолчанию во вкладке properties) и расширенная поддержка свойств Lit-виджетов (типы Array/Object/converter, метаданные webuiProperties для редакторов signal/color/screen/enum)",
+        "de": "Neu: instanzbasierte dynamische Properties für Custom Controls (Name, Typ, Standardwert über den Properties-Tab hinzufügen/bearbeiten) und erweiterte Lit-Widget-Property-Unterstützung (Array/Object/Converter-Typen, webuiProperties-Metadaten für Signal/Color/Screen/Enum-Editoren)"
+      },
+      "1.37.30": {
+        "en": "cleanup: remove unused grafanaLangSync onMessage handler and helper functions from main.js",
+        "az": "təmizlik: istifadəsiz grafanaLangSync onMessage handler və köməkçi funksiyalar main.js-dən silindi",
+        "tr": "temizlik: kullanılmayan grafanaLangSync onMessage handler ve yardımcı fonksiyonlar main.js'den kaldırıldı",
+        "ru": "очистка: удалён неиспользуемый обработчик grafanaLangSync и вспомогательные функции из main.js",
+        "de": "Bereinigung: ungenutzter grafanaLangSync-Handler und Hilfsfunktionen aus main.js entfernt"
+      },
+      "1.37.29": {
+        "en": "security fix: lang sync via session-verified HTTP endpoint instead of sendTo — username no longer trusted from frontend",
+        "az": "təhlükəsizlik düzəlişi: dil sinxronizasiyası session-yoxlamalı HTTP endpoint ilə — username artıq frontend-dən alınmır",
+        "tr": "güvenlik düzeltmesi: dil senkronizasyonu session doğrulamalı HTTP endpoint ile — username artık frontend'den gelmiyor",
+        "ru": "исправление безопасности: синхронизация языка через HTTP endpoint с проверкой сессии — username больше не берётся из frontend",
+        "de": "Sicherheitsfix: Sprachsync über session-verifizierten HTTP-Endpoint — username kommt nicht mehr vom Frontend"
+      },
+      "1.37.28": {
+        "en": "fix: rename webExtension.js to .cjs to avoid ES module conflict",
+        "az": "düzəliş: ES module konflikti aradan qaldırmaq üçün webExtension.js → .cjs",
+        "tr": "düzeltme: ES module çakışmasını önlemek için webExtension.js → .cjs",
+        "ru": "исправление: переименован webExtension.js в .cjs для совместимости с ES module",
+        "de": "fix: webExtension.js in .cjs umbenannt wegen ES-Modul-Konflikt"
+      },
+      "1.37.27": {
+        "en": "fix: add native.webInstance='*' so iobroker.web loads webExtension.js",
+        "az": "düzəliş: native.webInstance='*' əlavə edildi ki iobroker.web webExtension.js-i yükləsin",
+        "tr": "düzeltme: iobroker.web'in webExtension.js'i yüklemesi için native.webInstance='*' eklendi",
+        "ru": "исправление: добавлен native.webInstance='*' для загрузки webExtension.js через iobroker.web",
+        "de": "fix: native.webInstance='*' hinzugefügt damit iobroker.web webExtension.js lädt"
+      },
+      "1.37.26": {
+        "en": "fix: add webExtension.js to npm package files list",
+        "az": "düzəliş: webExtension.js npm paket siyahısına əlavə edildi",
+        "tr": "düzeltme: webExtension.js npm paket listesine eklendi",
+        "ru": "исправление: добавлен webExtension.js в список файлов npm пакета",
+        "de": "fix: webExtension.js zur npm-Paketdateiliste hinzugefügt"
+      },
+      "1.37.25": {
+        "en": "Grafana integration: language sync via sendTo, SSO via nginx auth_request + webExtension, Grafana settings tab in admin UI",
+        "de": "Grafana-Integration: Sprachsynchronisierung via sendTo, SSO via nginx auth_request + webExtension, Grafana-Tab in Admin-UI",
+        "ru": "Интеграция Grafana: синхронизация языка через sendTo, SSO через nginx auth_request + webExtension, вкладка Grafana в настройках",
+        "az": "Grafana inteqrasiyası: sendTo vasitəsilə dil sinxronizasiyası, nginx auth_request + webExtension ilə SSO, admin UI-da Grafana tabı",
+        "tr": "Grafana entegrasyonu: sendTo ile dil senkronizasyonu, nginx auth_request + webExtension ile SSO, admin UI'da Grafana sekmesi"
+      },
+      "1.37.9": {
+        "en": "fix package install — control.data was still using webui.0 namespace",
+        "de": "paketinstallation fix — control.data verwendete noch webui.0 namespace",
+        "ru": "исправление установки пакетов — control.data использовал webui.0 namespace",
+        "pt": "fix instalação pacote — control.data ainda usava webui.0 namespace",
+        "nl": "pakket installatie fix — control.data gebruikte nog webui.0 namespace",
+        "fr": "fix installation paquet — control.data utilisait encore webui.0 namespace",
+        "it": "fix installazione pacchetto — control.data usava ancora webui.0 namespace",
+        "es": "fix instalación paquete — control.data aún usaba webui.0 namespace",
+        "pl": "fix instalacji pakietu — control.data wciąż używał webui.0 namespace",
+        "uk": "виправлення встановлення пакету — control.data ще використовував webui.0 namespace",
+        "zh-cn": "修复包安装 — control.data仍在使用webui.0命名空间"
+      },
+      "1.37.8": {
+        "en": "fix sendTo — await Promise instead of callback",
+        "de": "sendTo fix — await Promise statt callback",
+        "ru": "исправление sendTo — await Promise вместо callback",
+        "pt": "fix sendTo — await Promise em vez de callback",
+        "nl": "sendTo fix — await Promise in plaats van callback",
+        "fr": "fix sendTo — await Promise au lieu de callback",
+        "it": "fix sendTo — await Promise invece di callback",
+        "es": "fix sendTo — await Promise en lugar de callback",
+        "pl": "fix sendTo — await Promise zamiast callback",
+        "uk": "fix sendTo — await Promise замість callback",
+        "zh-cn": "修复sendTo — 使用await Promise而不是callback"
+      },
+      "1.37.7": {
+        "en": "fix license check — use getState instead of sendTo for compatibility",
+        "de": "lizenzprüfung fix — getState statt sendTo für kompatibilität",
+        "ru": "исправление проверки лицензии — getState вместо sendTo для совместимости",
+        "pt": "correção verificação licença — getState em vez de sendTo para compatibilidade",
+        "nl": "licentiecontrole fix — getState in plaats van sendTo voor compatibiliteit",
+        "fr": "correction vérification licence — getState au lieu de sendTo pour compatibilité",
+        "it": "correzione controllo licenza — getState invece di sendTo per compatibilità",
+        "es": "corrección verificación licencia — getState en lugar de sendTo para compatibilidad",
+        "pl": "naprawa sprawdzania licencji — getState zamiast sendTo dla kompatybilności",
+        "uk": "виправлення перевірки ліцензії — getState замість sendTo для сумісності",
+        "zh-cn": "修复许可证检查 — 使用getState代替sendTo以提高兼容性"
+      },
+      "1.37.6": {
+        "en": "remove license-check.js source from npm package",
+        "de": "license-check.js source aus npm paket entfernt",
+        "ru": "удалён исходный файл license-check.js из npm пакета",
+        "pt": "remover source license-check.js do pacote npm",
+        "nl": "license-check.js source verwijderd uit npm pakket",
+        "fr": "supprimer le source license-check.js du paquet npm",
+        "it": "rimuovere il source license-check.js dal pacchetto npm",
+        "es": "eliminar source license-check.js del paquete npm",
+        "pl": "usuń source license-check.js z pakietu npm",
+        "uk": "видалено source license-check.js з npm пакету",
+        "zh-cn": "从npm包中删除license-check.js源文件"
+      },
+      "1.37.5": {
+        "en": "update license check strings and regenerate obfuscated file",
+        "de": "lizenztexte aktualisiert und obfuscated datei neu generiert",
+        "ru": "обновлены строки проверки лицензии и перегенерирован obfuscated файл",
+        "pt": "atualizar strings de verificação de licença e regenerar arquivo obfuscated",
+        "nl": "licentie check strings bijgewerkt en obfuscated bestand opnieuw gegenereerd",
+        "fr": "mise à jour des chaînes de vérification de licence et régénération du fichier obfuscated",
+        "it": "aggiornare stringhe di controllo licenza e rigenerare file obfuscated",
+        "es": "actualizar cadenas de verificación de licencia y regenerar archivo obfuscated",
+        "pl": "zaktualizuj ciągi sprawdzania licencji i zregeneruj plik obfuscated",
+        "uk": "оновити рядки перевірки ліцензії та перегенерувати obfuscated файл",
+        "zh-cn": "更新许可证检查字符串并重新生成混淆文件"
+      },
+      "1.37.4": {
+        "en": "fast license check — alive state first, then sendTo",
+        "de": "schnelle lizenzprüfung — zuerst alive state, dann sendTo",
+        "ru": "быстрая проверка лицензии — сначала alive state, затем sendTo",
+        "pt": "verificação rápida de licença — alive state primeiro, depois sendTo",
+        "nl": "snelle licentiecontrole — alive state eerst, dan sendTo",
+        "fr": "vérification rapide de licence — alive state d'abord, puis sendTo",
+        "it": "controllo licenza rapido — alive state prima, poi sendTo",
+        "es": "verificación rápida de licencia — alive state primero, luego sendTo",
+        "pl": "szybkie sprawdzanie licencji — najpierw alive state, potem sendTo",
+        "uk": "швидка перевірка ліцензії — спочатку alive state, потім sendTo",
+        "zh-cn": "快速许可证检查 — 先检查alive状态，再sendTo"
+      },
+      "1.37.3": {
+        "en": "package.json and io-package.json updates",
+        "de": "package.json und io-package.json aktualisierungen",
+        "ru": "обновления package.json и io-package.json",
+        "pt": "atualizações de package.json e io-package.json",
+        "nl": "package.json en io-package.json updates",
+        "fr": "mises à jour de package.json et io-package.json",
+        "it": "aggiornamenti package.json e io-package.json",
+        "es": "actualizaciones de package.json e io-package.json",
+        "pl": "aktualizacje package.json i io-package.json",
+        "uk": "оновлення package.json та io-package.json",
+        "zh-cn": "package.json和io-package.json更新"
+      },
+      "1.37.2": {
+        "en": "license check timeout fix — block editor if adapter not responding",
+        "de": "lizenzprüfung timeout fix — editor blockieren wenn adapter nicht antwortet",
+        "ru": "исправление таймаута проверки лицензии — блокировать редактор если адаптер не отвечает",
+        "pt": "correção de timeout da verificação de licença — bloquear editor se adaptador não responder",
+        "nl": "licentiecontrole timeout fix — editor blokkeren als adapter niet reageert",
+        "fr": "correction du délai de vérification de licence — bloquer l'éditeur si l'adaptateur ne répond pas",
+        "it": "correzione timeout controllo licenza — blocca editor se adattatore non risponde",
+        "es": "corrección de timeout de verificación de licencia — bloquear editor si el adaptador no responde",
+        "pl": "naprawa timeout sprawdzania licencji — zablokuj edytor jeśli adapter nie odpowiada",
+        "uk": "виправлення таймауту перевірки ліцензії — блокувати редактор якщо адаптер не відповідає",
+        "zh-cn": "许可证检查超时修复 — 适配器不响应时阻止编辑器"
+      },
+      "1.37.1": {
+        "en": "rename to mywebui, secure license check via sendTo",
+        "de": "umbenennung zu mywebui, sichere lizenzprüfung via sendTo",
+        "ru": "переименование в mywebui, безопасная проверка лицензии через sendTo",
+        "pt": "renomear para mywebui, verificação de licença segura via sendTo",
+        "nl": "hernoemen naar mywebui, veilige licentiecontrole via sendTo",
+        "fr": "renommer en mywebui, vérification de licence sécurisée via sendTo",
+        "it": "rinomina in mywebui, controllo licenza sicuro via sendTo",
+        "es": "renombrar a mywebui, verificación de licencia segura via sendTo",
+        "pl": "zmiana nazwy na mywebui, bezpieczne sprawdzanie licencji przez sendTo",
+        "uk": "перейменування на mywebui, безпечна перевірка ліцензії через sendTo",
+        "zh-cn": "重命名为mywebui，通过sendTo进行安全许可证检查"
+      },
+      "1.37.0": {
+        "en": "fix bug in bundled code\nuse minified code for config",
+        "de": "fehler in gebündeltem code beheben\nminified code für config",
+        "ru": "исправить ошибку in bundled code\nминифицированный код для конфигурирования",
+        "pt": "corrigir o erro no código empacotado\nusar código minimizado para configuração",
+        "nl": "fix bug in gebundelde code\nvermineerde code voor config gebruiken",
+        "fr": "correction du bogue dans le code groupé\nutiliser le code minifié pour la configuration",
+        "it": "fix bug in codice bundle\nutilizzare il codice miniificato per la configurazione",
+        "es": "solucionar error en código incluido\nuse minified code for config",
+        "pl": "fix błąd w kodzie pakietowym\nużyj minionego kodu dla konfiguracji",
+        "uk": "виправлення помилок в коді\nвикористовуйте норифікований код для налаштування",
+        "zh-cn": "在捆绑的代码中修复错误\n配置使用已修改的代码"
+      },
+      "1.36.0": {
+        "en": "fix some boxQuads edge cases",
+        "de": "befestigen Sie einige BoxQuads Randgehäuse",
+        "ru": "исправьте некоторые случаи BoxQuads edge",
+        "pt": "corrigir algumas caixasQuads edge cases",
+        "nl": "fix sommige doosQuads rand gevallen",
+        "fr": "fixer quelques cas de bord de boxQuads",
+        "it": "risolvere alcuni casi di bordo boxQuads",
+        "es": "arreglar algunas cajas de borde Cuads",
+        "pl": "naprawić kilka skrzynek boxQuads krawędzi",
+        "uk": "закріпити якусь коробкуШвидких крайових випадків",
+        "zh-cn": "修补一些框 Quads 边框"
+      },
+      "1.35.4": {
+        "en": "clear cache on reload",
+        "de": "löschen cache auf nachladen",
+        "ru": "чистый кэш на перезагрузке",
+        "pt": "limpar cache ao recarregar",
+        "nl": "cache wissen bij herladen",
+        "fr": "effacer le cache lors du rechargement",
+        "it": "cache chiara su ricarica",
+        "es": "caché transparente en la recarga",
+        "pl": "klarowna pamięć podręczna przy ponownym załadowaniu",
+        "uk": "прозорий кеш на перевантаження",
+        "zh-cn": "重新装入时清除缓存"
+      },
+      "1.35.3": {
+        "en": "object changed to all clients",
+        "de": "objekt geändert für alle kunden",
+        "ru": "измененный объект для всех клиентов",
+        "pt": "objeto alterado para todos os clientes",
+        "nl": "object veranderd naar alle clients",
+        "fr": "objet changé à tous les clients",
+        "it": "oggetto cambiato in tutti i client",
+        "es": "objeto cambiado a todos los clientes",
+        "pl": "obiekt zmieniony na wszystkich klientów",
+        "uk": "об’єкт змінився для всіх клієнтів",
+        "zh-cn": "对象更改为全部客户端"
+      },
+      "1.35.2": {
+        "en": "forgett to parse bindings",
+        "de": "vergess auf parse bindungen",
+        "ru": "забыли разобрать привязки",
+        "pt": "esquecido de analisar as ligações",
+        "nl": "vergeten om bindingen te ontleden",
+        "fr": "oublier d'analyser les liaisons",
+        "it": "dimenticare di parse bindings",
+        "es": "olvidarse de parse bindings",
+        "pl": "zapominanie o przypisie",
+        "uk": "забути в обв'язках",
+        "zh-cn": "忘记解析绑定"
+      },
+      "1.35.1": {
+        "en": "fix reload custom controls",
+        "de": "reload benutzerdefinierte bedienelemente",
+        "ru": "исправить пользовательские элементы управления",
+        "pt": "corrigir recarga de controles personalizados",
+        "nl": "repareren herladen aangepaste controles",
+        "fr": "fixer les contrôles personnalisés de recharge",
+        "it": "correzione dei controlli personalizzati di ricarica",
+        "es": "recargar controles personalizados",
+        "pl": "naprawiać sterowanie niestandardowe",
+        "uk": "виправити перевантаження користувальницьких контрольів",
+        "zh-cn": "固定重装自定义控制"
+      },
+      "1.35.0": {
+        "en": "better nameing\nchanged object notification",
+        "de": "besser benennen\nänderung der objektbenachrichtigung",
+        "ru": "лучшее название\nизменено уведомление об объекте",
+        "pt": "melhor nome\nnotificação de objeto alterada",
+        "nl": "betere naamgeving\nobjectnotificatie gewijzigd",
+        "fr": "mieux nommer\nnotification d'objet modifiée",
+        "it": "nome migliore\nnotifica dell'oggetto modificato",
+        "es": "mejor nombre\nnotificación de objeto cambiado",
+        "pl": "lepsze nazwanie\nzmienione powiadomienie obiektu",
+        "uk": "краще ім'я\nзмінено повідомлення про об’єкт",
+        "zh-cn": "更好的名称\n更改对象通知"
+      }
+    },
+    "icon": "logo.svg",
+    "extIcon": "https://raw.githubusercontent.com/gokturk413/iobroker.mywebui/main/admin/logo.svg",
+    "connectionType": "local",
+    "dataSource": "push",
+    "platform": "Javascript/Node.js",
+    "loglevel": "info",
+    "tier": 3,
+    "enabled": true,
+    "compact": false,
+    "messagebox": true,
+    "keywords": [
+      "GUI",
+      "graphical",
+      "scada",
+      "webcompoents",
+      "HTML"
+    ],
+    "readme": "https://github.com/gokturk413/iobroker.mywebui/blob/main/README.md",
+    "authors": [
+      "gokturk413",
+      "jogibear9988 <jochen.kuehner@gmx.de> (original author)"
+    ],
+    "localLinks": {
+      "_default": "%web_protocol%://%ip%:%web_port%/mywebui/runtime.html"
+    },
+    "licenseInformation": {
+      "license": "CC-BY-NC-4.0",
+      "type": "free"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.19"
+      },
+      {
+        "web": ">=3.4.16"
+      }
+    ],
+    "restartAdapters": [],
+    "serviceStates": false,
+    "singleton": true,
+    "type": "visualization",
+    "noConfig": false,
+    "adminUI": {
+      "config": "json"
+    },
+    "materialize": true,
+    "onlyWWW": false,
+    "nogit": false,
+    "mode": "daemon",
+    "webExtension": "webExtension.cjs",
+    "welcomeScreen": {
+      "link": "mywebui/index.html",
+      "name": "mywebui editor",
+      "img": "admin/logo.svg",
+      "color": "#c8ffe1",
+      "order": 1
+    },
+    "installedFrom": "iobroker.mywebui"
+  },
+  "native": {
+    "licenseKey": "",
+    "grafanaEnabled": false,
+    "grafanaUrl": "http://localhost:3000",
+    "grafanaLangSyncEnabled": false,
+    "grafanaSsoEnabled": false,
+    "webInstance": "*"
+  },
+  "instanceObjects": [
+    {
+      "_id": "control",
+      "type": "folder",
+      "common": {
+        "name": "control"
+      },
+      "native": {}
+    },
+    {
+      "_id": "control.data",
+      "type": "state",
+      "common": {
+        "name": "data for command for mywebui",
+        "type": "string",
+        "desc": "additional data when running the command, needs to be set before setting the command.",
+        "read": true,
+        "write": true,
+        "role": "text"
+      },
+      "native": {}
+    },
+    {
+      "_id": "control.clientIds",
+      "type": "state",
+      "common": {
+        "name": "clientIds for command for mywebui",
+        "type": "string",
+        "desc": "clientIds when running the command, needs to be set before setting the command. splitted by ;",
+        "read": true,
+        "write": true,
+        "role": "text"
+      },
+      "native": {}
+    },
+    {
+      "_id": "control.command",
+      "type": "state",
+      "common": {
+        "name": "command for mywebui",
+        "type": "string",
+        "desc": "Writing this variable akt as the trigger. Instance and data must be preset before 'command' will be written.",
+        "states": {
+          "addNpm": "addNpm",
+          "removeNpm": "removeNpm",
+          "updateNpm": "updateNpm",
+          "refreshWww": "refreshWww",
+          "createImportmap": "createImportmap",
+          "uiConnected": "uiConnected",
+          "uiReloadPackages": "uiReloadPackages",
+          "uiReload": "uiReload",
+          "uiRefresh": "uiRefresh",
+          "uiChangeView": "uiChangeView",
+          "uiChangedView": "uiChangedView",
+          "uiOpenDialog": "uiOpenDialog",
+          "uiOpenedDialog": "uiOpenedDialog",
+          "uiPlaySound": "uiPlaySound",
+          "uiRunScript": "uiRunScript",
+          "uiAlert": "uiAlert"
+        },
+        "read": true,
+        "write": true,
+        "role": "text"
+      },
+      "native": {}
+    },
+    {
+      "_id": "control.project",
+      "type": "state",
+      "common": {
+        "name": "active project for npm/importmap commands",
+        "type": "string",
+        "desc": "project name to target; set before control.command for addNpm/removeNpm/createImportmap.",
+        "read": true,
+        "write": true,
+        "role": "text",
+        "def": "default"
+      },
+      "native": {}
+    },
+    {
+      "_id": "state",
+      "type": "folder",
+      "common": {
+        "name": "state"
+      },
+      "native": {}
+    },
+    {
+      "_id": "state.npm",
+      "type": "state",
+      "common": {
+        "name": "state of package installation",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "role": "text"
+      },
+      "native": {}
+    },
+    {
+      "_id": "widgets",
+      "type": "meta",
+      "common": {
+        "name": "Npm Packages for mywebui",
+        "role": "meta"
+      },
+      "native": {}
+    },
+    {
+      "_id": "data",
+      "type": "meta",
+      "common": {
+        "name": "Files for mywebui",
+        "type": "meta.user"
+      },
+      "native": {}
+    },
+    {
+      "_id": "projects",
+      "type": "meta",
+      "common": {
+        "name": "Per-project data + widgets for mywebui",
+        "type": "meta.user"
+      },
+      "native": {}
+    },
+    {
+      "_id": "license",
+      "type": "channel",
+      "common": {
+        "name": "License Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "license.valid",
+      "type": "state",
+      "common": {
+        "name": "License Valid",
+        "type": "boolean",
+        "role": "indicator",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "license.hardwareId",
+      "type": "state",
+      "common": {
+        "name": "Hardware ID",
+        "type": "string",
+        "role": "info",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    }
+  ]
+}

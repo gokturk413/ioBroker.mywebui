@@ -1,0 +1,151 @@
+{
+  "WebUI Adapter Configuration": {
+    "en": "WebUI Adapter Configuration",
+    "de": "WebUI-Adapter-Konfiguration",
+    "ru": "Конфигурация адаптера WebUI",
+    "pt": "Configuração do adaptador WebUI",
+    "nl": "WebUI-adapterconfiguratie",
+    "fr": "Configuration de l'adaptateur WebUI",
+    "it": "Configurazione dell'adattatore WebUI",
+    "es": "Configuración del adaptador WebUI",
+    "pl": "Konfiguracja adaptera WebUI",
+    "uk": "Конфігурація адаптера WebUI",
+    "zh-cn": "WebUI 适配器配置",
+    "az": "WebUI Adapter Konfiqurasiyası",
+    "tr": "WebUI Adaptör Yapılandırması"
+  },
+  "This adapter requires a valid license key to operate. The license is bound to your hardware for security purposes.": {
+    "en": "This adapter requires a valid license key to operate. The license is bound to your hardware for security purposes.",
+    "de": "Dieser Adapter benötigt einen gültigen Lizenzschlüssel. Die Lizenz ist aus Sicherheitsgründen an Ihre Hardware gebunden.",
+    "ru": "Для работы этого адаптера требуется действительный лицензионный ключ. Лицензия привязана к вашему оборудованию в целях безопасности.",
+    "az": "Bu adapter işləmək üçün etibarlı lisenziya açarı tələb edir. Lisenziya təhlükəsizlik məqsədləri üçün avadanlığınıza bağlıdır.",
+    "tr": "Bu adaptör çalışmak için geçerli bir lisans anahtarı gerektirir. Lisans güvenlik amacıyla donanımınıza bağlıdır."
+  },
+  "License Key": {
+    "en": "License Key",
+    "de": "Lizenzschlüssel",
+    "ru": "Лицензионный ключ",
+    "pt": "Chave de licença",
+    "nl": "Licentiesleutel",
+    "fr": "Clé de licence",
+    "it": "Chiave di licenza",
+    "es": "Clave de licencia",
+    "pl": "Klucz licencyjny",
+    "uk": "Ліцензійний ключ",
+    "zh-cn": "许可证密钥",
+    "az": "Lisenziya açarı",
+    "tr": "Lisans Anahtarı"
+  },
+  "Enter your license key here": {
+    "en": "Enter your license key here",
+    "de": "Geben Sie hier Ihren Lizenzschlüssel ein",
+    "ru": "Введите лицензионный ключ здесь",
+    "az": "Lisenziya açarınızı bura daxil edin",
+    "tr": "Lisans anahtarınızı buraya girin"
+  },
+  "Contact gokturk413 for a valid license key": {
+    "en": "Contact gokturk413 for a valid license key",
+    "de": "Kontaktieren Sie gokturk413 für einen gültigen Lizenzschlüssel",
+    "ru": "Свяжитесь с gokturk413 для получения действительного лицензионного ключа",
+    "az": "Etibarlı lisenziya açarı üçün gokturk413 ilə əlaqə saxlayın",
+    "tr": "Geçerli bir lisans anahtarı için gokturk413 ile iletişime geçin"
+  },
+  "Setup Instructions": {
+    "en": "Setup Instructions",
+    "de": "Einrichtungsanleitung",
+    "ru": "Инструкции по настройке",
+    "az": "Quraşdırma təlimatları",
+    "tr": "Kurulum Talimatları"
+  },
+  "License": {
+    "en": "License",
+    "de": "Lizenz",
+    "ru": "Лицензия",
+    "az": "Lisenziya",
+    "tr": "Lisans"
+  },
+  "Grafana": {
+    "en": "Grafana",
+    "de": "Grafana",
+    "ru": "Grafana",
+    "az": "Grafana",
+    "tr": "Grafana"
+  },
+  "Grafana Integration": {
+    "en": "Grafana Integration",
+    "de": "Grafana-Integration",
+    "ru": "Интеграция с Grafana",
+    "az": "Grafana İnteqrasiyası",
+    "tr": "Grafana Entegrasyonu"
+  },
+  "If Grafana is not installed or nginx is not configured, keep this disabled. The adapter will not throw any errors.": {
+    "en": "If Grafana is not installed or nginx is not configured, keep this disabled. The adapter will not throw any errors.",
+    "de": "Wenn Grafana nicht installiert oder nginx nicht konfiguriert ist, lassen Sie dies deaktiviert. Der Adapter wirft keine Fehler.",
+    "ru": "Если Grafana не установлена или nginx не настроен, оставьте это отключённым. Адаптер не будет выдавать ошибок.",
+    "az": "Grafana quraşdırılmayıbsa və ya nginx konfiqurasiya edilməyibsə, bu seçimi söndürün. Adapter heç bir xəta verməyəcək.",
+    "tr": "Grafana kurulu değilse veya nginx yapılandırılmamışsa, bunu devre dışı bırakın. Adaptör hata vermeyecektir."
+  },
+  "Enable Grafana Integration": {
+    "en": "Enable Grafana Integration",
+    "de": "Grafana-Integration aktivieren",
+    "ru": "Включить интеграцию с Grafana",
+    "az": "Grafana İnteqrasiyasını Aktivləşdir",
+    "tr": "Grafana Entegrasyonunu Etkinleştir"
+  },
+  "Grafana Connection": {
+    "en": "Grafana Connection",
+    "de": "Grafana-Verbindung",
+    "ru": "Подключение к Grafana",
+    "az": "Grafana Bağlantısı",
+    "tr": "Grafana Bağlantısı"
+  },
+  "Grafana Internal URL": {
+    "en": "Grafana Internal URL",
+    "de": "Grafana interne URL",
+    "ru": "Внутренний URL Grafana",
+    "az": "Grafana daxili URL",
+    "tr": "Grafana İç URL"
+  },
+  "Internal URL of Grafana (not nginx proxy URL)": {
+    "en": "Internal URL of Grafana (not nginx proxy URL)",
+    "de": "Interne URL von Grafana (nicht die nginx-Proxy-URL)",
+    "ru": "Внутренний URL Grafana (не URL nginx-прокси)",
+    "az": "Grafana-nın daxili URL-i (nginx proxy URL deyil)",
+    "tr": "Grafana'nın iç URL'si (nginx proxy URL'si değil)"
+  },
+  "Features": {
+    "en": "Features",
+    "de": "Funktionen",
+    "ru": "Функции",
+    "az": "Funksiyalar",
+    "tr": "Özellikler"
+  },
+  "Language Sync (webui → Grafana)": {
+    "en": "Language Sync (webui → Grafana)",
+    "de": "Sprachsynchronisierung (webui → Grafana)",
+    "ru": "Синхронизация языка (webui → Grafana)",
+    "az": "Dil sinxronizasiyası (webui → Grafana)",
+    "tr": "Dil Senkronizasyonu (webui → Grafana)"
+  },
+  "When user changes language in webui, also update Grafana UI language": {
+    "en": "When user changes language in webui, also update Grafana UI language",
+    "de": "Wenn der Benutzer die Sprache in webui ändert, auch die Grafana-UI-Sprache aktualisieren",
+    "ru": "При изменении языка в webui также обновлять язык интерфейса Grafana",
+    "az": "İstifadəçi webui-da dili dəyişdikdə, Grafana UI dilini də yenilə",
+    "tr": "Kullanıcı webui'de dil değiştirdiğinde Grafana arayüz dilini de güncelle"
+  },
+  "SSO via nginx auth_request": {
+    "en": "SSO via nginx auth_request",
+    "de": "SSO über nginx auth_request",
+    "ru": "SSO через nginx auth_request",
+    "az": "nginx auth_request vasitəsilə SSO",
+    "tr": "nginx auth_request ile SSO"
+  },
+  "nginx auth_request forwards ioBroker session to Grafana — users auto-login to Grafana iframe": {
+    "en": "nginx auth_request forwards ioBroker session to Grafana — users auto-login to Grafana iframe",
+    "de": "nginx auth_request leitet die ioBroker-Sitzung an Grafana weiter — Benutzer werden automatisch im Grafana-iframe angemeldet",
+    "ru": "nginx auth_request передаёт сессию ioBroker в Grafana — пользователи автоматически входят в iframe Grafana",
+    "az": "nginx auth_request ioBroker sesiyasını Grafana-ya ötürür — istifadəçilər Grafana iframe-ə avtomatik daxil olur",
+    "tr": "nginx auth_request ioBroker oturumunu Grafana'ya iletir — kullanıcılar Grafana iframe'e otomatik giriş yapar"
+  }
+}
