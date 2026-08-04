@@ -1,0 +1,17 @@
+export function isVisualSvgElement(element) {
+    let el = element;
+    while (el) {
+        if (el instanceof (el.ownerDocument.defaultView ?? window).SVGSVGElement)
+            return true;
+        if (el instanceof (el.ownerDocument.defaultView ?? window).SVGDefsElement)
+            return false;
+        if (el instanceof (el.ownerDocument.defaultView ?? window).SVGMetadataElement)
+            return false;
+        el = el.parentElement;
+    }
+    return true;
+}
+export function svgAsString(strings, ...values) {
+    return strings[0];
+}
+//# sourceMappingURL=SvgHelper.js.map

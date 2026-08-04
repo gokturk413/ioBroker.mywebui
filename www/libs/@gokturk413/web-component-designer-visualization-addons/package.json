@@ -1,0 +1,35 @@
+{
+  "description": "web-component-designer addon for visualizations",
+  "name": "@gokturk413/web-component-designer-visualization-addons",
+  "version": "0.1.140",
+  "type": "module",
+  "main": "./dist/index.js",
+  "author": "jochen.kuehner@gmx.de",
+  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "tsc",
+    "link": "npm link",
+    "prepublishOnly": "npm run build && npm run bundle",
+    "bundle": "esbuild ./dist/index.js --format=esm --minify --external:@node-projects/css-parser --external:@blockly/* --external:blockly --external:long --external:wunderbaum --external:@gokturk413/* --external:@node-projects/* --platform=neutral --bundle --outfile=./dist/index-min.js"
+  },
+  "dependencies": {
+    "@blockly/zoom-to-fit": ">=6.0.9",
+    "@gokturk413/base-custom-webcomponent": ">=0.27.8",
+    "@node-projects/css-parser": "^5.2.0",
+    "@gokturk413/propertygrid.webcomponent": ">=1.2.3",
+    "@gokturk413/splitview.webcomponent": ">=1.0.2",
+    "@gokturk413/web-component-designer": ">=0.1.224",
+    "@gokturk413/web-component-designer-codeview-monaco": ">=0.1.32",
+    "@gokturk413/web-component-designer-widgets-wunderbaum": ">=0.1.29",
+    "blockly": ">=11.1.1",
+    "long": ">=5.2.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gokturk413/web-component-designer.git"
+  }
+}
