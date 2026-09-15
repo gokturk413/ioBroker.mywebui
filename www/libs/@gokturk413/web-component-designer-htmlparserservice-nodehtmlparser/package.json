@@ -1,0 +1,23 @@
+{
+  "description": "web-component-designer addon: Parser Service using the Node HTML Parser",
+  "name": "@gokturk413/web-component-designer-htmlparserservice-nodehtmlparser",
+  "version": "0.1.12",
+  "type": "module",
+  "main": "./dist/service/htmlParserService/NodeHtmlParserService.js",
+  "author": "jochen.kuehner@gmx.de",
+  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "tsc",
+    "link": "npm link",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@node-projects/node-html-parser-esm": "^6.2.0",
+    "@gokturk413/web-component-designer": ">=0.1.278"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gokturk413/web-component-designer.git"
+  }
+}
