@@ -1,0 +1,31 @@
+{
+ "properties": {
+  "root": {
+   "type": "string",
+   "default": ""
+  },
+  "type": {
+   "type": "string",
+   "default": "P_AIn"
+  },
+  "field": {
+   "type": "string",
+   "default": ""
+  },
+  "action": {
+   "type": "string",
+   "default": "operate"
+  },
+  "options": {
+   "type": "string",
+   "default": "[{\"label\":\"Off\",\"value\":0},{\"label\":\"On\",\"value\":1}]"
+  }
+ },
+ "settings": {
+  "width": "160px",
+  "height": "28px"
+ },
+ "html": "<div id=\"rt\" class=\"rt\"></div>",
+ "style": ":host{display:block;font-family:'Segoe UI',sans-serif;color:var(--ui-text,#e8e8ea);}.rt{display:inline-flex;border:1px solid var(--ui-border,#4a5570);border-radius:4px;overflow:hidden;}.rt button{padding:5px 12px;background:var(--ui-surface-2,#2f3545);color:var(--ui-dim,#9aa3b0);border:none;cursor:pointer;font-size:12px;border-right:1px solid var(--ui-border,#4a5570);}.rt button:last-child{border-right:none;}.rt button.sel{background:var(--accent,#2680eb);color:#fff;}.rt button:disabled{opacity:.5;cursor:not-allowed;}",
+ "script": "\nfunction ppResolve(instance,field){ try{ return window.IOB.resolvePlantPaxField(instance.type,instance.root,field); }catch(e){ return null; } }\nfunction ppSubscribe(instance,field,onVal){\n  const id=ppResolve(instance,field); if(!id) return;\n  instance.__ppSubs=instance.__ppSubs||[];\n  const cb=(_i,s)=>{ onVal(s&&s.val); };\n  try{ window.IOB.getState(id).then(function(s){ onVal(s&&s.val); }).catch(function(){}); }catch(e){}\n  try{ window.IOB.subscribeState(id,cb); instance.__ppSubs.push([id,cb]); }catch(e){}\n}\nfunction ppCleanup(instance){\n  for(const pair of (instance.__ppSubs||[])){ try{ window.IOB.unsubscribeState(pair[0],pair[1]); }catch(e){} }\n  instance.__ppSubs=[];\n}\nfunction ppNum(v){ v=Number(v); return isFinite(v)&&Math.abs(v)<1e30 ? v : null; }\nasync function ppWrite(instance,field,val,action){\n  const id=ppResolve(instance,field); if(!id) return;\n  try{ await window.IOB.secWriteState(id,val,{action:action||'operate',element:instance}); }catch(e){ console.warn('[plantpax] write failed',field,e); }\n}\nfunction ppGate(instance,el,action){\n  const g=function(){ const ok=(window.IOB&&typeof window.IOB.secCan==='function')?window.IOB.secCan(action||'operate',instance):true; el.disabled=!ok; el.classList.toggle('pp-nogate',!ok); };\n  g(); try{ window.IOB&&window.IOB.securityChanged&&window.IOB.securityChanged.on&&window.IOB.securityChanged.on(g); }catch(e){}\n}\n// adapter-data-gating: hide el when the resolved member does not exist on the adapter\n// (real .gfx controls are included only when our adapter actually exposes the member).\nasync function ppHideIfMissing(instance,field,el){\n  if(!el) return;\n  const id=ppResolve(instance,field);\n  if(!id){ el.style.display='none'; return; }\n  try{\n    const o=await window.IOB.getObject(id).catch(function(){ return null; });\n    if(o){ el.style.display=''; return; }\n    const s=await window.IOB.getState(id).catch(function(){ return null; });\n    el.style.display=(s===null||s===undefined)?'none':'';\n  }catch(e){}\n}\n\nfunction rtApply(instance){ const cur=String(instance.__val);\n  for(const b of (instance._getDomElements?instance._getDomElements('#rt button'):[])) b.classList.toggle('sel', b.getAttribute('data-v')===cur); }\nfunction rtStart(instance){\n  ppCleanup(instance);\n  const box=instance._getDomElement('rt'); if(!box) return;\n  let opts=[]; try{ opts=JSON.parse(instance.options||'[]'); }catch(e){ opts=[]; }\n  box.innerHTML='';\n  for(const o of opts){ const b=document.createElement('button'); b.textContent=o.label; b.setAttribute('data-v',String(o.value));\n    ppGate(instance,b,instance.action||'operate');\n    b.addEventListener('click',function(){ if(b.disabled) return; let v=o.value; if(v!==''&&!isNaN(v))v=Number(v); ppWrite(instance,instance.field,v,instance.action||'operate'); });\n    box.appendChild(b); }\n  if(instance.root&&instance.field) ppSubscribe(instance,instance.field,function(v){ instance.__val=v; rtApply(instance); });\n}\nexport function init(instance){\n  if(!instance || typeof instance._getDomElement!=='function') return;\n  instance._ppReinit=function(){ rtStart(instance); };\n  rtStart(instance);\n}\nexport function disconnectedCallback(instance){ ppCleanup(instance); }\n"
+}
