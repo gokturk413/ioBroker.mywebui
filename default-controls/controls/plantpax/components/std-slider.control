@@ -1,0 +1,43 @@
+{
+ "properties": {
+  "root": {
+   "type": "string",
+   "default": ""
+  },
+  "type": {
+   "type": "string",
+   "default": "P_AIn"
+  },
+  "field": {
+   "type": "string",
+   "default": ""
+  },
+  "label": {
+   "type": "string",
+   "default": ""
+  },
+  "action": {
+   "type": "string",
+   "default": "setpointOverride"
+  },
+  "min": {
+   "type": "number",
+   "default": 0
+  },
+  "max": {
+   "type": "number",
+   "default": 100
+  },
+  "step": {
+   "type": "number",
+   "default": 1
+  }
+ },
+ "settings": {
+  "width": "220px",
+  "height": "28px"
+ },
+ "html": "<div id=\"sl\" class=\"sl\"><span class=\"sl-lbl\">[[this.label||'']]</span><input id=\"rng\" type=\"range\" class=\"sl-rng\"><span id=\"val\" class=\"sl-val\">--</span></div>",
+ "style": ":host{display:block;font-family:'Segoe UI',sans-serif;color:var(--ui-text,#e8e8ea);}.sl{display:flex;align-items:center;gap:8px;}.sl-lbl{font-size:12px;min-width:40px;}.sl-rng{flex:1;accent-color:var(--accent,#2680eb);}.sl-val{font-size:12px;min-width:40px;text-align:right;}.sl-rng:disabled{opacity:.4;}",
+ "script": "\nfunction ppResolve(instance,field){ try{ return window.IOB.resolvePlantPaxField(instance.type,instance.root,field); }catch(e){ return null; } }\nfunction ppSubscribe(instance,field,onVal){\n  const id=ppResolve(instance,field); if(!id) return;\n  instance.__ppSubs=instance.__ppSubs||[];\n  const cb=(_i,s)=>{ onVal(s&&s.val); };\n  try{ window.IOB.getState(id).then(function(s){ onVal(s&&s.val); }).catch(function(){}); }catch(e){}\n  try{ window.IOB.subscribeState(id,cb); instance.__ppSubs.push([id,cb]); }catch(e){}\n}\nfunction ppCleanup(instance){\n  for(const pair of (instance.__ppSubs||[])){ try{ window.IOB.unsubscribeState(pair[0],pair[1]); }catch(e){} }\n  instance.__ppSubs=[];\n}\nfunction ppNum(v){ v=Number(v); return isFinite(v)&&Math.abs(v)<1e30 ? v : null; }\nasync function ppWrite(instance,field,val,action){\n  const id=ppResolve(instance,field); if(!id) return;\n  try{ await window.IOB.secWriteState(id,val,{action:action||'operate',element:instance}); }catch(e){ console.warn('[plantpax] write failed',field,e); }\n}\nfunction ppGate(instance,el,action){\n  const g=function(){ const ok=(window.IOB&&typeof window.IOB.secCan==='function')?window.IOB.secCan(action||'operate',instance):true; el.disabled=!ok; el.classList.toggle('pp-nogate',!ok); };\n  g(); try{ window.IOB&&window.IOB.securityChanged&&window.IOB.securityChanged.on&&window.IOB.securityChanged.on(g); }catch(e){}\n}\n// adapter-data-gating: hide el when the resolved member does not exist on the adapter\n// (real .gfx controls are included only when our adapter actually exposes the member).\nasync function ppHideIfMissing(instance,field,el){\n  if(!el) return;\n  const id=ppResolve(instance,field);\n  if(!id){ el.style.display='none'; return; }\n  try{\n    const o=await window.IOB.getObject(id).catch(function(){ return null; });\n    if(o){ el.style.display=''; return; }\n    const s=await window.IOB.getState(id).catch(function(){ return null; });\n    el.style.display=(s===null||s===undefined)?'none':'';\n  }catch(e){}\n}\n\nfunction slStart(instance){\n  ppCleanup(instance);\n  const rng=instance._getDomElement('rng'), val=instance._getDomElement('val'); if(!rng) return;\n  rng.min=instance.min!=null?instance.min:0; rng.max=instance.max!=null?instance.max:100; rng.step=instance.step!=null?instance.step:1;\n  ppGate(instance,rng,instance.action||'setpointOverride');\n  if(instance.root&&instance.field) ppSubscribe(instance,instance.field,function(v){ const n=ppNum(v); if(n!=null){ rng.value=n; if(val) val.textContent=n.toFixed(1); } });\n}\nexport function init(instance){\n  if(!instance || typeof instance._getDomElement!=='function') return;\n  instance._ppReinit=function(){ slStart(instance); };\n  const rng=instance._getDomElement('rng'), val=instance._getDomElement('val');\n  if(rng){ rng.addEventListener('input',function(){ if(val) val.textContent=Number(rng.value).toFixed(1); });\n           rng.addEventListener('change',function(){ ppWrite(instance,instance.field,Number(rng.value),instance.action||'setpointOverride'); }); }\n  slStart(instance);\n}\nexport function disconnectedCallback(instance){ ppCleanup(instance); }\n"
+}
