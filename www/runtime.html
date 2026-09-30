@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" style="height: 100%;">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <script defer src="./node_modules/blockly/blockly_compressed.js"></script>
+  <script defer src="./node_modules/blockly/blocks_compressed.js"></script>
+  <script defer src="./node_modules/blockly/javascript_compressed.js"></script>
+  <script src="./node_modules/dayjs/dayjs.min.js"></script>
+
+  <link rel="stylesheet" href="./assets/main.css">
+
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
+  <title>MYWEBUI</title>
+
+  <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
+
+  <script>
+    let storedParentUrl;
+    window.esmsInitOptions = {
+      shimMode: true,
+      mapOverrides: true,
+      resolve: (id, parentUrl, resolve) => {
+        if (!storedParentUrl)
+          storedParentUrl = parentUrl;
+        if (parentUrl.startsWith('blob:'))
+          parentUrl = storedParentUrl;
+        return resolve(id, parentUrl)
+      }
+    }
+  </script>
+  <script src="./node_modules/es-module-shims/dist/es-module-shims.js"></script>
+  <script src="./dist/importmaps/importmap-runtime.js"></script>
+
+  <script src="config.js"></script>
+  
+  <!-- SCADA Utility Functions - Global for all screens -->
+  <script src="./default-additionalfiles/scada-utils.js" onerror="console.warn('SCADA utils not loaded from default-additionalfiles')"></script>
+</head>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Roboto', 'Noto', sans-serif;
+    line-height: 1.5;
+    background-color: white;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+</style>
+
+<body>
+  <iobroker-webui-screen-viewer id="viewer" style="width:100%;height:100%;position:fixed;top:0;left:0;"></iobroker-webui-screen-viewer>
+  <div id="viewer3dContainer" style="display:none;width:100%;height:100%;position:fixed;top:0;left:0;"></div>
+  <div id="overlayLayer"></div>
+</body>
+
+<script type="module">
+  // per-project widgets: runtime/kiosk picks the project from ?project= (else default)
+  const _webuiProject = (() => {
+    try {
+      let n = new URLSearchParams(location.search).get('project') || 'default';
+      n = (n || '').toString().trim().toLowerCase().replaceAll(' ', '-');
+      return /^[a-z0-9_-]+$/.test(n) ? n : 'default';
+    } catch (e) { return 'default'; }
+  })();
+  const _widgetsBase = 'mywebui.0.projects/' + _webuiProject + '/widgets/';
+  await new Promise((resolve) => {
+    const scp = document.createElement('script');
+    scp.src = iobrokerWebRootUrl + _widgetsBase + 'importmap.js';
+    scp.onload = resolve;
+    scp.onerror = resolve; // file may not exist (no widgets installed)
+    document.head.appendChild(scp);
+  });
+
+  // bundled runtime by default; ?debug=1 loads the original unbundled modules.
+  // 3d screens load the unbundled 3d viewer (imports original modules) - use
+  // unbundled mode there to avoid duplicate custom element definitions.
+  const useBundle = !new URLSearchParams(location.search).has('debug') && !location.hash.includes('3dscreen');
+  if (useBundle) {
+    // user control scripts import these modules by URL - redirect the original
+    // urls onto the bundle entries so everyone shares the same singletons
+    const u = p => new URL(p, location.href).href;
+    importShim.addImportMap({
+      imports: {
+        [u('./dist/frontend/common/IobrokerHandler.js')]: u('./dist/frontend/bundle/common/IobrokerHandler.js'),
+        [u('./dist/frontend/runtime/CustomControls.js')]: u('./dist/frontend/bundle/runtime/CustomControls.js'),
+        [u('./dist/frontend/runtime/ScreenViewer.js')]: u('./dist/frontend/bundle/runtime/ScreenViewer.js'),
+      }
+    });
+  }
+  const entryBase = useBundle ? './dist/frontend/bundle/runtime/' : './dist/frontend/runtime/';
+  await importShim(entryBase + 'init.js');
+  importShim(entryBase + 'controls.js');
+  importShim(iobrokerWebRootUrl + _widgetsBase + 'importWidgetFilesRuntime.js');
+
+  async function checkHash() {
+    const viewer = document.getElementById('viewer');
+    const par = new URLSearchParams(location.hash.substring(1));
+    const threeDScreen = par.get('3dscreen');
+
+    // Report mode replaced #viewer with the report viewer. Going from a report to a screen (or
+    // to a 3D screen) therefore has no screen viewer left to load into: reload, which rebuilds
+    // the page for the new hash. Report -> report is handled below without a reload.
+    if (viewer && viewer.localName === 'iobroker-webui-report-viewer' && !par.get('report')) {
+      location.reload();
+      return;
+    }
+
+    if (threeDScreen) {
+      // 3D screen runtime mode
+      viewer.style.display = 'none';
+      const container = document.getElementById('viewer3dContainer');
+      container.style.display = 'block';
+      container.innerHTML = '';
+      await importShim('./dist/frontend/config/IobrokerWebui3DScreenViewer.js');
+      await customElements.whenDefined('iobroker-webui-3dscreen-viewer');
+      const v3d = document.createElement('iobroker-webui-3dscreen-viewer');
+      v3d.setAttribute('scene-name', threeDScreen);
+      v3d.style.cssText = 'width:100%;height:100%;display:block;';
+      container.appendChild(v3d);
+      window.IOB.sendCommand("uiChangedView", threeDScreen);
+      return;
+    }
+
+    // Report mode: ?report=<name> shows the page at true size with the toolbox. The report
+    // itself is still rendered by ScreenViewer inside it — a .report has the same five fields
+    // as a .screen — so bindings and custom controls behave exactly as on a screen.
+    const reportName = par.get('report');
+    if (reportName) {
+      // Already in report mode: swap the report without rebuilding the page.
+      if (viewer && viewer.localName === 'iobroker-webui-report-viewer') {
+        viewer.reportName = reportName;
+        window.IOB.sendCommand("uiChangedView", reportName);
+        return;
+      }
+      // The screen viewer steps aside and the report viewer takes over its id, so the
+      // navigation shell positions the report exactly as it positions a screen — a report is
+      // reached through the same navigation and app bar as any other surface.
+      viewer.remove();
+      await importShim('./dist/frontend/runtime/ReportViewer.js');
+      await customElements.whenDefined('iobroker-webui-report-viewer');
+      const rv = document.createElement('iobroker-webui-report-viewer');
+      rv.id = 'viewer';
+      rv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;';
+      // Set the name BEFORE it is connected: the setter loads only when the component is
+      // already built, so assigning after append races with ready() and silently loads nothing.
+      rv.reportName = reportName;
+      if (par.get('toolbar') === 'false') rv.toolbarVisible = false;
+      document.body.appendChild(rv);
+      window.IOB.sendCommand("uiChangedView", reportName);
+      return;
+    }
+
+    let screen = par.get('screenName');
+    if (screen) {
+      await customElements.whenDefined(viewer.localName);
+    } else {
+      screen = 'start';
+    }
+    await viewer.setScreenNameAndLoad(screen);
+    let subScreen = par.get('subScreen');
+    if (subScreen) {
+      const targetSelector = par.get('targetSelector') ?? 'iobroker-webui-screen-viewer';
+      const sv = viewer._getDomElements(targetSelector)[0];
+      sv.removeAttribute('screen-name');
+      sv.screenName = subScreen;
+    }
+    // window.IOB is the iobrokerHandler instance set by init.js (works bundled and unbundled)
+    window.IOB.sendCommand("uiChangedView", screen);
+  }
+  checkHash();
+  window.onhashchange = checkHash;
+</script>
+
+</html>
