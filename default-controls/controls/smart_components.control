@@ -1,0 +1,1 @@
+{"style":":host {\n    background: transparent;\n}\n\n* {\n    box-sizing: border-box;\n}","script":"import  '/webui.0.widgets/node_modules/linear-gauge-card-main/linear-gauge-card.js';\r\n\r\n","settings":{"visibilityEnabled":"false","visibilityGroups":"","visibilityAction":"hide","visibilityRedirectScreen":""}}
