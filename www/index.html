@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en" style="height: 100%;">
+
+<head>
+  <meta charset="utf-8">
+
+  <script src="./node_modules/blockly/blockly_compressed.js"></script>
+  <script src="./node_modules/blockly/blocks_compressed.js"></script>
+  <script src="./node_modules/blockly/javascript_compressed.js"></script>
+  <script src="./node_modules/blockly/msg/en.js"></script>
+  <script src="./node_modules/@blockly/zoom-to-fit/dist/index.js"></script>
+  <script src="./node_modules/dayjs/dayjs.min.js"></script>
+
+  <!-- Drag/Drop support on touch devices -->
+  <link rel="stylesheet" href="./node_modules/mobile-drag-drop/default.css">
+  <link rel="stylesheet" href="./node_modules/dock-spawn-ts/lib/css/dock-manager.css">
+  <link rel="stylesheet" href="./assets/main.css">
+  <link rel="stylesheet" href="./assets/dockspawn.css">
+  <link rel="stylesheet" href="./node_modules/toastify-js/src/toastify.css">
+
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
+  <title>MYWEBUI DESIGNER</title>
+
+  <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
+
+  <script>
+    let storedParentUrl;
+    window.esmsInitOptions = {
+      shimMode: true,
+      mapOverrides: true,
+      resolve: (id, parentUrl, resolve) => {
+        if (!storedParentUrl)
+          storedParentUrl = parentUrl;
+        if (parentUrl.startsWith('blob:'))
+          parentUrl = storedParentUrl;
+        return resolve(id, parentUrl)
+      }
+    }
+  </script>
+  <script src="./node_modules/es-module-shims/dist/es-module-shims.js"></script>
+  <script src="./dist/importmaps/importmap-config.js"></script>
+
+  <script src="config.js"></script>
+  
+  <!-- SCADA Utility Functions - Global for editor and runtime -->
+  <script src="./default-additionalfiles/scada-utils.js" onerror="console.warn('SCADA utils not loaded from default-additionalfiles')"></script>
+
+    <!-- License validation - gokturk413 (obfuscated) -->
+  <script src="./license-check.obf.js"></script>
+
+  <script src="./node_modules/mobile-drag-drop/index.js"></script>
+
+  <script type="module">
+    // per-project widgets: resolve the active project (mirror of IobrokerHandler logic)
+    const _webuiProject = (() => {
+      try {
+        const u = new URLSearchParams(location.search).get('project');
+        let n = u || (location.pathname.endsWith('runtime.html') ? 'default' : (localStorage.getItem('webui-current-project') || 'default'));
+        n = (n || '').toString().trim().toLowerCase().replaceAll(' ', '-');
+        return /^[a-z0-9_-]+$/.test(n) ? n : 'default';
+      } catch (e) { return 'default'; }
+    })();
+    const _widgetsBase = 'mywebui.0.projects/' + _webuiProject + '/widgets/';
+    try {
+      await new Promise((resolve) => {
+        const scp = document.createElement('script');
+        scp.src = iobrokerWebRootUrl + _widgetsBase + 'importmap.js';
+        scp.onload = resolve;
+        scp.onerror = resolve; // file may not exist (no widgets installed)
+        document.head.appendChild(scp);
+      });
+      await importShim(iobrokerWebRootUrl + _widgetsBase + 'importWidgetFiles.js');
+    } catch (err) {
+      console.warn(err);
+    }
+    importShim('./dist/frontend/config/IobrokerWebuiAppShell.js');
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', 'Noto', sans-serif;
+      line-height: 1.5;
+      background-color: white;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    .lds-facebook {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      position: absolute;
+      left: calc(50% - 40px);
+      top: calc(50% - 40px);
+    }
+
+    .lds-facebook div {
+      animation-duration: 1s !important;
+      animation-iteration-count: infinite !important;
+      display: inline-block;
+      position: absolute;
+      left: 8px;
+      width: 16px;
+      background: black;
+      animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+    }
+
+    .lds-facebook div:nth-child(1) {
+      left: 8px;
+      animation-delay: -0.24s;
+    }
+
+    .lds-facebook div:nth-child(2) {
+      left: 32px;
+      animation-delay: -0.12s;
+    }
+
+    .lds-facebook div:nth-child(3) {
+      left: 56px;
+      animation-delay: 0;
+    }
+
+    @keyframes lds-facebook {
+      0% {
+        top: 8px;
+        height: 64px;
+      }
+
+      50%,
+      100% {
+        top: 24px;
+        height: 32px;
+      }
+    }
+
+    html {
+      --heightTop: 38px;
+      --heightStatus: 20px;
+    }
+
+    #shell {
+      height: calc(100% - var(--heightTop) - var(--heightStatus));
+      width: 100%;
+      position: absolute;
+    }
+
+    #statusbar {
+      display: flex;
+      height: var(--heightStatus);
+      background: linear-gradient(165deg, #0b1228 0%, #131c3f 100%);
+      color: #aebede;
+      border-top: 1px solid rgba(80, 190, 255, 0.35);
+      box-shadow: 0 0 14px rgba(46, 214, 255, 0.12);
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+
+    #statusbar {
+      padding-left: 10px;
+      font-size: 14px;
+      font-family: sans-serif;
+    }
+
+
+    #statusbar>div {
+      font-size: 14px;
+      font-family: sans-serif;
+    }
+
+    .blocklyDropDownDiv {
+      z-index: 99999;
+    }
+  </style>
+   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    nav {
+      background:
+        radial-gradient(ellipse 60% 120% at 15% 0%, rgba(110, 70, 220, 0.25), transparent 60%),
+        linear-gradient(165deg, #0b1228 0%, #111a3a 60%, #151d45 100%);
+      display: flex;
+      height: var(--heightTop);
+      padding: 4px 8px;
+      gap: 2px;
+      color: #8fa3cc;
+      border-bottom: 1px solid rgba(80, 190, 255, 0.35);
+      box-shadow: 0 0 16px rgba(46, 214, 255, 0.15);
+    }
+    nav div {
+      display: flex;
+      align-items: center;
+      font-family: monospace;
+      text-shadow: 0 0 8px rgba(46, 214, 255, 0.3);
+    }
+
+    nav button {
+      border: 1px solid transparent;
+      background: transparent;
+      position: relative;
+      border-radius: 8px;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+
+    nav button:not([disabled]):hover {
+      background: rgba(46, 214, 255, 0.12);
+      border-color: rgba(80, 190, 255, 0.4);
+      box-shadow: 0 0 10px rgba(46, 214, 255, 0.35);
+    }
+
+    /* https://codepen.io/sosuke/pen/Pjoqqp - css filter generator */
+    nav button img {
+      height: 24px;
+      filter: invert(75%) sepia(35%) saturate(1500%) hue-rotate(170deg) brightness(1.1);
+      user-select: none;
+    }
+
+    nav button[disabled] img {
+      filter: invert(38%) sepia(8%) saturate(700%) hue-rotate(190deg) brightness(85%);
+    }
+
+    nav button:not([disabled]) img:hover {
+      filter: invert(85%) sepia(45%) saturate(2200%) hue-rotate(160deg) brightness(1.3) drop-shadow(0 0 4px rgba(46, 214, 255, 0.8));
+    }
+
+    nav button:not([disabled]) img:active {
+      filter: invert(60%) sepia(80%) saturate(2500%) hue-rotate(280deg) brightness(1.1);
+    }
+
+    /* iobroker select object dialog */
+    .MuiDialog-root {
+      z-index: 100000 !important; 
+    }
+  </style>
+</head>
+
+<body style="height: 100%;">
+  <nav>
+    <button data-command="new" title="new"><img src="./libs/@gokturk413/web-component-designer/assets/icons/file.svg"></button>
+    <button data-command="new" data-command-parameter="grid" title="new grid">
+      <img src="./libs/@gokturk413/web-component-designer/assets/icons/file.svg">
+      <img style="height: 16px; position: absolute; right: 6px; bottom: 2px;" src="./assets/icons/grid.svg">
+    </button>
+    <button data-command="new" data-command-parameter="control" title="new control">
+      <img src="./libs/@gokturk413/web-component-designer/assets/icons/file.svg">
+      <img style="height: 16px; position: absolute; right: 6px; bottom: 2px;" src="./assets/icons/control.svg">
+    </button>
+    <button data-command="save" title="save" disabled><img src="./libs/@gokturk413/web-component-designer/assets/icons/save.svg"></button>
+    <div style="margin-left: 30px;">
+      webui - 1.42.99 - layout
+    </div>
+    <button style="margin-left: 30px;" data-command="paste" title="paste" disabled><img
+        src="./libs/@gokturk413/web-component-designer/assets/icons/paste.svg"></button>
+    <button data-command="cut" title="cut" disabled><img src="./libs/@gokturk413/web-component-designer/assets/icons/cut.svg"></button>
+    <button data-command="copy" title="copy" disabled><img src="./libs/@gokturk413/web-component-designer/assets/icons/copy.svg"></button>
+    <button data-command="delete" title="delete" disabled><img src="./libs/@gokturk413/web-component-designer/assets/icons/delete.svg"></button>
+    <div style="margin-left: 10px; flex-direction: column;">
+      <button ondragstart="return false;" data-command="undo" disabled title="click and hold to see the undo list"><img
+          src="./libs/@gokturk413/web-component-designer/assets/icons/undo.svg"></button>
+      <span id="undoCount" data-command="undo" disabled
+        style="font-family: monospace; font-size: 8px; position: relative; top: -8px; cursor: pointer;">(0/0)</span>
+    </div>
+    <div style="margin-left: 10px; flex-direction: column;">
+      <button ondragstart="return false;" data-command="redo" disabled title="click and hold to see the redo list"><img
+          src="./libs/@gokturk413/web-component-designer/assets/icons/redo.svg"></button>
+      <span id="redoCount" data-command="redo" disabled
+        style="font-family: monospace; font-size: 8px; position: relative; top: -8px; cursor: pointer;">(0/0)</span>
+    </div>
+    <!-- layout: align (2+ selected), distribute (3+), same size (2+), mirror/rotate and order (1+) -->
+    <div class="layout-tools" role="toolbar" aria-label="Layout">
+      <button data-command="arrangeLeft" title="Align left"><img src="./libs/@gokturk413/web-component-designer/assets/icons/alignHorizontalLeft.svg" alt=""></button>
+      <button data-command="arrangeCenter" title="Align centre"><img src="./libs/@gokturk413/web-component-designer/assets/icons/alignHorizontalCenter.svg" alt=""></button>
+      <button data-command="arrangeRight" title="Align right"><img src="./libs/@gokturk413/web-component-designer/assets/icons/alignHorizontalRight.svg" alt=""></button>
+      <button data-command="arrangeTop" title="Align top"><img src="./libs/@gokturk413/web-component-designer/assets/icons/alignVerticalTop.svg" alt=""></button>
+      <button data-command="arrangeMiddle" title="Align middle"><img src="./libs/@gokturk413/web-component-designer/assets/icons/alignVerticalCenter.svg" alt=""></button>
+      <button data-command="arrangeBottom" title="Align bottom"><img src="./libs/@gokturk413/web-component-designer/assets/icons/alignVerticalBottom.svg" alt=""></button>
+      <span class="sep"></span>
+      <button data-command="distributeHorizontal" title="Distribute horizontally (3 or more)"><img src="./libs/@gokturk413/web-component-designer/assets/icons/horizontalDistribute.svg" alt=""></button>
+      <button data-command="distributeVertical" title="Distribute vertically (3 or more)"><img src="./libs/@gokturk413/web-component-designer/assets/icons/verticalDistribute.svg" alt=""></button>
+      <button data-command="unifyWidth" title="Same width as the first selected"><img src="./assets/icons/layout/unifyWidth.svg" alt=""></button>
+      <button data-command="unifyHeight" title="Same height as the first selected"><img src="./assets/icons/layout/unifyHeight.svg" alt=""></button>
+      <span class="sep"></span>
+      <button data-command="mirrorHorizontal" title="Mirror horizontally"><img src="./assets/icons/layout/mirrorHorizontal.svg" alt=""></button>
+      <button data-command="mirrorVertical" title="Mirror vertically"><img src="./assets/icons/layout/mirrorVertical.svg" alt=""></button>
+      <button data-command="rotateCounterClockwise" title="Rotate left"><img src="./libs/@gokturk413/web-component-designer/assets/icons/rotateLeft.svg" alt=""></button>
+      <button data-command="rotateClockwise" title="Rotate right"><img src="./libs/@gokturk413/web-component-designer/assets/icons/rotateRight.svg" alt=""></button>
+      <span class="sep"></span>
+      <button data-command="moveToFront" title="Bring to front"><img src="./assets/icons/layout/toFront.svg" alt=""></button>
+      <button data-command="moveForward" title="Bring forward"><img src="./assets/icons/layout/forward.svg" alt=""></button>
+      <button data-command="moveBackward" title="Send backward"><img src="./assets/icons/layout/backward.svg" alt=""></button>
+      <button data-command="moveToBack" title="Send to back"><img src="./assets/icons/layout/toBack.svg" alt=""></button>
+    </div>
+    <style>
+      nav .layout-tools{display:flex;align-items:center;gap:0;margin-left:16px;padding-left:10px;border-left:1px solid var(--ui-border,#4a5570);padding-right:10px;border-right:1px solid var(--ui-border,#4a5570)}
+      nav .layout-tools button{padding:2px 3px}
+      nav .layout-tools button img{width:20px;height:20px}
+      nav .layout-tools .sep{width:1px;height:18px;margin:0 6px;background:var(--ui-border,#4a5570)}
+    </style>
+    <button style="margin-left: 10px;" data-command="runtime" title="runtime"><img src="./assets/icons/play.svg"></button>
+    <button style="margin-left: 30px; font-size:16px;" data-command="projectPermissions" title="Project Permissions (groups)">🔐</button>
+    <button style="font-size:16px;" data-command="screenAccess" title="Screen Access (per screen)">🗂️</button>
+    <!-- npm work in progress, where it is seen (the status bar keeps its own line too) -->
+    <div id="npmBadge" hidden role="status" aria-live="polite"
+      style="margin-left:16px;display:flex;align-items:center;gap:8px;padding:3px 12px;border-radius:14px;font:600 12px 'Segoe UI',sans-serif;white-space:nowrap;max-width:420px;overflow:hidden;text-overflow:ellipsis;background:var(--ui-warn,#f2b705);color:#1d1602;">
+      <span id="npmBadgeSpin" style="width:12px;height:12px;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;flex-shrink:0;animation:npmspin .8s linear infinite;"></span>
+      <span id="npmBadgeText"></span>
+    </div>
+    <style>@keyframes npmspin{to{transform:rotate(360deg)}}#npmBadge[hidden]{display:none!important}</style>
+  </nav>
+  <!-- Spectrum components (property-grid editors) registration -->
+  <script type="module" src="./libs/spectrum/spectrum-editors.bundle.js"></script>
+  <!-- sp-theme provides Spectrum design tokens to all sp-* components (inherits through shadow DOM).
+       display:contents → no layout impact. color synced by the theme switcher. -->
+  <sp-theme id="appTheme" system="spectrum-two" color="dark" scale="medium" style="display:contents;">
+    <iobroker-webui-app-shell id="shell">
+    </iobroker-webui-app-shell>
+  </sp-theme>
+  <div id="statusbar">
+    <div>npm status:&nbsp;&nbsp;</div>
+    <div id="npmState"></div>
+    <div style="margin-left: 15px; display: flex; align-items: center;">
+      <div id="connectionState"
+        style="background-color: yellow; margin-right: 5px; border-radius: 50%; border: 1px solid gray; height: 70%;aspect-ratio: 1;">
+      </div> Connection: <div style="margin-left: 3px;" id="connectionInfo"></div>
+    </div>
+    <div id="themeSwitch" style="margin-left:auto; display:flex; align-items:center; gap:8px; padding-right:10px;">
+      <span style="opacity:.7;">Theme:</span>
+      <select id="themeSel" style="background:transparent; color:inherit; border:1px solid #667; border-radius:4px; padding:1px 5px; font-size:12px;"></select>
+      <span id="accentDots" style="display:flex; gap:4px;"></span>
+    </div>
+  </div>
+  <script>
+    (function () {
+      function initThemeSwitch() {
+        var shell = document.getElementById('shell');
+        if (!shell || !shell.getTheme) { setTimeout(initThemeSwitch, 200); return; }
+        var t = shell.getTheme();
+        var sel = document.getElementById('themeSel');
+        var dots = document.getElementById('accentDots');
+        sel.innerHTML = '';
+        t.themes.forEach(function (n) {
+          var o = document.createElement('option'); o.value = n; o.textContent = n.charAt(0).toUpperCase() + n.slice(1);
+          if (n === t.name) o.selected = true; sel.appendChild(o);
+        });
+        sel.onchange = function () { shell.setTheme(sel.value); };
+        var hexes = { blue:'#2680eb', magenta:'#e91e63', green:'#16b364', orange:'#e08020', purple:'#9256d9', cyan:'#19b6c9' };
+        dots.innerHTML = '';
+        t.accents.forEach(function (a) {
+          var b = document.createElement('button');
+          b.title = a; b.dataset.acc = a;
+          b.style.cssText = 'width:14px;height:14px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;background:' + (hexes[a] || '#888');
+          b.onclick = function () { shell.setAccent(a); mark(); };
+          dots.appendChild(b);
+        });
+        function mark() { var cur = shell.getTheme().accent; dots.querySelectorAll('button').forEach(function (b) { b.style.borderColor = b.dataset.acc === cur ? '#fff' : 'transparent'; }); }
+        mark();
+      }
+      initThemeSwitch();
+    })();
+  </script>
+  <div id="load"
+    style="position: absolute; width: 100%; height: 100%; z-index: 9999999999; top: 0; left: 0; background: white;">
+    <div class="lds-facebook">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <div id="overlayLayer"></div>
+</body>
+
+<script>
+  window.onload = () => {
+    document.getElementById('load').style.display = 'none';
+  }
+  window.appShell = document.getElementById('shell');
+</script>
+
+</html>

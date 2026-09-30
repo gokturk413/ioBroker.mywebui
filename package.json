@@ -1,0 +1,62 @@
+{
+  "name": "iobroker.mywebui",
+  "version": "1.164.0",
+  "description": "ioBroker mywebui - Custom edited mywebui by gokturk413 with 3D Editor",
+  "main": "dist/backend/main.js",
+  "files": [
+    "admin/",
+    "dist/",
+    "native/index.js",
+    "native/package.json",
+    "native/*.node",
+    "lib/*.cjs",
+    "www/",
+    "!www/license-check.js",
+    "!www/**/*.map",
+    "!www/3d-editor/src/",
+    "!www/**/*.ts",
+    "!www/**/*.tsx",
+    "www/**/*.d.ts",
+    "widgets/",
+    "default-controls/",
+    "docs/",
+    "!docs/superpowers/",
+    "!default-controls/controls/test/",
+    "io-package.json",
+    "LICENSE",
+    "README.md",
+    "LICENSE_SETUP_PUBLIC.md",
+    "SCADA_SETUP.md",
+    "setup-scada-utils.js",
+    "webExtension.cjs"
+  ],
+  "dependencies": {
+    "@iobroker/adapter-core": "^3.3.2",
+    "@types/node": "^24.7.2",
+    "esbuild": "^0.28.1",
+    "happy-dom": "^20.14.5",
+    "quickjs-emscripten": "^0.32.0",
+    "takumi-pdf": "^0.15.0",
+    "three": "^0.184.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "gokturk413",
+  "keywords": [
+    "ioBroker",
+    "mywebui",
+    "visualization",
+    "web-components",
+    "gokturk413"
+  ],
+  "license": "CC-BY-NC-4.0",
+  "homepage": "https://github.com/gokturk413/iobroker.mywebui#readme",
+  "bugs": {
+    "url": "https://github.com/gokturk413/iobroker.mywebui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gokturk413/ioBroker.mywebui.git"
+  }
+}
