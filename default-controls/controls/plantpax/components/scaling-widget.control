@@ -1,0 +1,39 @@
+{
+ "properties": {
+  "root": {
+   "type": "string",
+   "default": ""
+  },
+  "type": {
+   "type": "string",
+   "default": "P_AIn"
+  },
+  "rawMinField": {
+   "type": "string",
+   "default": ""
+  },
+  "rawMaxField": {
+   "type": "string",
+   "default": ""
+  },
+  "euMinField": {
+   "type": "string",
+   "default": ""
+  },
+  "euMaxField": {
+   "type": "string",
+   "default": ""
+  },
+  "unit": {
+   "type": "string",
+   "default": ""
+  }
+ },
+ "settings": {
+  "width": "100%",
+  "height": "auto"
+ },
+ "html": "<div class=\"sw\"><div class=\"sw-col\"><div class=\"sw-h\">Raw</div><input id=\"rmax\" class=\"sw-i\" data-w=\"rawMaxField\"><input id=\"rmin\" class=\"sw-i\" data-w=\"rawMinField\"></div><div class=\"sw-arw\">&#8594;</div><div class=\"sw-col\"><div class=\"sw-h\">EU <span id=\"u\"></span></div><input id=\"emax\" class=\"sw-i\" data-w=\"euMaxField\"><input id=\"emin\" class=\"sw-i\" data-w=\"euMinField\"></div></div>",
+ "style": ":host{display:block;font-family:'Segoe UI',sans-serif;color:var(--ui-text,#e8e8ea);}.sw{display:flex;align-items:center;gap:10px;}.sw-col{flex:1;text-align:center;}.sw-h{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ui-dim,#9aa4b2);margin-bottom:5px;}.sw-i{width:100%;text-align:right;font:12px monospace;padding:4px 8px;margin-bottom:5px;border-radius:5px;border:1px solid var(--ui-border,#4a5570);background:var(--ui-surface,#1e222b);color:var(--ui-text,#e8e8ea);box-sizing:border-box;}.sw-arw{color:var(--accent,#2680eb);font-size:20px;padding-top:16px;}",
+ "script": "\nfunction ppResolve(instance,field){ try{ return window.IOB.resolvePlantPaxField(instance.type,instance.root,field); }catch(e){ return null; } }\nfunction ppSubscribe(instance,field,onVal){\n  const id=ppResolve(instance,field); if(!id) return;\n  instance.__ppSubs=instance.__ppSubs||[];\n  const cb=(_i,s)=>{ onVal(s&&s.val); };\n  try{ window.IOB.getState(id).then(function(s){ onVal(s&&s.val); }).catch(function(){}); }catch(e){}\n  try{ window.IOB.subscribeState(id,cb); instance.__ppSubs.push([id,cb]); }catch(e){}\n}\nfunction ppCleanup(instance){\n  for(const pair of (instance.__ppSubs||[])){ try{ window.IOB.unsubscribeState(pair[0],pair[1]); }catch(e){} }\n  instance.__ppSubs=[];\n}\nfunction ppNum(v){ v=Number(v); return isFinite(v)&&Math.abs(v)<1e30 ? v : null; }\nasync function ppWrite(instance,field,val,action){\n  const id=ppResolve(instance,field); if(!id) return;\n  try{ await window.IOB.secWriteState(id,val,{action:action||'operate',element:instance}); }catch(e){ console.warn('[plantpax] write failed',field,e); }\n}\nfunction ppGate(instance,el,action){\n  const g=function(){ const ok=(window.IOB&&typeof window.IOB.secCan==='function')?window.IOB.secCan(action||'operate',instance):true; el.disabled=!ok; el.classList.toggle('pp-nogate',!ok); };\n  g(); try{ window.IOB&&window.IOB.securityChanged&&window.IOB.securityChanged.on&&window.IOB.securityChanged.on(g); }catch(e){}\n}\n// adapter-data-gating: hide el when the resolved member does not exist on the adapter\n// (real .gfx controls are included only when our adapter actually exposes the member).\nasync function ppHideIfMissing(instance,field,el){\n  if(!el) return;\n  const id=ppResolve(instance,field);\n  if(!id){ el.style.display='none'; return; }\n  try{\n    const o=await window.IOB.getObject(id).catch(function(){ return null; });\n    if(o){ el.style.display=''; return; }\n    const s=await window.IOB.getState(id).catch(function(){ return null; });\n    el.style.display=(s===null||s===undefined)?'none':'';\n  }catch(e){}\n}\n\nfunction swStart(instance){\n  ppCleanup(instance);\n  const u=instance._getDomElement('u'); if(u) u.textContent=instance.unit||'';\n  if(!instance.root) return;\n  for(const cid of ['rmax','rmin','emax','emin']){\n    const el=instance._getDomElement(cid); if(!el) continue;\n    const fkey=el.getAttribute('data-w'); const field=instance[fkey]; if(!field){ el.disabled=true; continue; }\n    ppSubscribe(instance,field,function(v){ if(document.activeElement!==el){ const n=ppNum(v); el.value=(n==null?'':n); } });\n    el.addEventListener('change',function(){ ppWrite(instance,field,Number(el.value),'configure'); });\n  }\n}\nexport function init(instance){\n  if(!instance||typeof instance._getDomElement!=='function') return;\n  instance._ppReinit=function(){ swStart(instance); }; swStart(instance);\n}\nexport function disconnectedCallback(instance){ ppCleanup(instance); }\n"
+}
