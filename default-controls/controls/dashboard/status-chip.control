@@ -1,0 +1,74 @@
+{
+  "properties": {
+    "active": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "textOn": {
+      "type": "string",
+      "default": "HEATING ON"
+    },
+    "textOff": {
+      "type": "string",
+      "default": "HEATING OFF"
+    },
+    "toneOn": {
+      "type": "enum",
+      "values": [
+        "ok",
+        "warn",
+        "error",
+        "info",
+        "accent",
+        "glow",
+        "off"
+      ],
+      "default": "ok"
+    },
+    "toneOff": {
+      "type": "enum",
+      "values": [
+        "ok",
+        "warn",
+        "error",
+        "info",
+        "accent",
+        "glow",
+        "off"
+      ],
+      "default": "off"
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "text",
+        "chip",
+        "icon"
+      ],
+      "default": "text"
+    },
+    "icon": {
+      "type": "enum",
+      "values": [
+        "none",
+        "relay",
+        "pump",
+        "bell",
+        "flame",
+        "check"
+      ],
+      "default": "none"
+    },
+    "signal": {
+      "type": "signal",
+      "default": ""
+    }
+  },
+  "settings": {
+    "width": "190px",
+    "height": "40px"
+  },
+  "html": "<button id=\"c\" class=\"sc\" type=\"button\"><span id=\"ic\" class=\"ic\"></span><span id=\"tx\" class=\"tx\"></span></button>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n.sc{height:100%;width:100%;display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--tone);font:600 15px 'IBM Plex Sans',sans-serif;letter-spacing:.06em;padding:0;cursor:default;text-align:left}\n.sc.click{cursor:pointer}\n.sc.chip{justify-content:center;text-align:center;padding:6px 14px;border-radius:9px;font-size:13px;line-height:1.25;white-space:pre-line;background:linear-gradient(180deg,#e9ecf1,#c4cad3);color:#38404c}\n.sc.chip.on{color:#3a2a00;background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 45%,#fff),var(--tone));box-shadow:0 0 14px color-mix(in srgb,var(--tone) 60%,transparent)}\n.sc.icon{justify-content:center;border-radius:8px;background:var(--ui-surface-2,#3a414d);border:1px solid var(--ui-border,#4a5262);color:var(--ui-dim,#9aa5b5)}\n.sc.icon.on{color:var(--tone);box-shadow:0 0 0 1px var(--tone)}\n.sc.icon .tx{display:none}\n.ic:empty{display:none}.ic svg{width:26px;height:22px;display:block}\n.sc:focus-visible{outline:2px solid var(--accent,#57b6ff);outline-offset:2px}\n",
+  "script": "function dbSubscribe(instance, key, id, onVal){\n    dbUnsub(instance, key);\n    if(!id || !window.IOB) return;\n    instance.__dbSubs = instance.__dbSubs || {};\n    const cb = function(_i, s){ onVal(s ? s.val : null); };\n    instance.__dbSubs[key] = [id, cb];\n    try{ window.IOB.subscribeState(id, cb); }catch(e){}\n    try{ window.IOB.getState(id).then(function(s){ onVal(s ? s.val : null); }).catch(function(){}); }catch(e){}\n    // read quality knows this state (badge on the control when the value cannot be trusted)\n    try{ instance.__dbRq = instance.__dbRq || {}; instance.__dbRq[key] = window.IOB.watchReadQuality && window.IOB.watchReadQuality(instance, id, { prop: key, twoWay: true }); }catch(e){}\n}\nfunction dbUnsub(instance, key){\n    const p = instance.__dbSubs && instance.__dbSubs[key];\n    if(p){ try{ window.IOB.unsubscribeState(p[0], p[1]); }catch(e){} delete instance.__dbSubs[key]; }\n    const r = instance.__dbRq && instance.__dbRq[key];\n    if(typeof r === 'function'){ try{ r(); }catch(e){} }\n    if(instance.__dbRq) delete instance.__dbRq[key];\n}\nfunction dbUnsubAll(instance){ for(const k of Object.keys(instance.__dbSubs || {})) dbUnsub(instance, k); }\n// a write through IOB.setState: Confirm & Protect may ask first; cancelled = nothing written\nfunction dbWrite(instance, id, val, onCancel){\n    if(!id || !window.IOB) return Promise.resolve(false);\n    return Promise.resolve(window.IOB.setState(id, val, false, { feedback: instance })).then(function(){ return true; }, function(e){\n        if(e && e.cancelled){ if(onCancel) onCancel(); }\n        else console.warn('[dashboard] write failed', id, e);\n        return false;\n    });\n}\nfunction dbBool(v){ return v === true || v === 1 || v === 'true' || v === '1' || v === 'on'; }\nfunction dbNum(v, d){ const n = Number(v); return isFinite(n) ? n : d; }\nconst ICONS = {\"none\": \"\", \"relay\": \"<svg viewBox=\\\"0 0 26 22\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\"><rect x=\\\"1\\\" y=\\\"1\\\" width=\\\"24\\\" height=\\\"20\\\" rx=\\\"3\\\"/><path d=\\\"M5 14h4l3-7 3 9 2-4h4\\\"/></svg>\", \"pump\": \"<svg viewBox=\\\"0 0 26 22\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\"><rect x=\\\"1\\\" y=\\\"3\\\" width=\\\"24\\\" height=\\\"16\\\" rx=\\\"3\\\"/><path d=\\\"M8 7l9 4-9 4z\\\" fill=\\\"currentColor\\\"/></svg>\", \"bell\": \"<svg viewBox=\\\"0 0 24 24\\\" fill=\\\"currentColor\\\"><path d=\\\"M12 22a2.5 2.5 0 0 0 2.4-2h-4.8A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 0 0-5.5-6.8V3.5a1.5 1.5 0 0 0-3 0v.7A7 7 0 0 0 5 11v5l-2 2v1h18v-1z\\\"/></svg>\", \"flame\": \"<svg viewBox=\\\"0 0 24 24\\\" fill=\\\"currentColor\\\"><path d=\\\"M12 2c1 4 6 6 6 12a6 6 0 1 1-12 0c0-3 2-5 3-6 0 3 2 4 3 4-1-4 1-7 0-10z\\\"/></svg>\", \"check\": \"<svg viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2.4\\\"><path d=\\\"M4 12l5 5L20 6\\\"/></svg>\"};\nexport function init(instance){\n    const $ = (id) => instance._getDomElement(id);\n    let stateVal = null;\n    const isOn = () => instance.signal ? dbBool(stateVal) : dbBool(instance.active);\n    const upd = () => {\n        const on = isOn(), c = $('c'), v = instance.variant || 'text';\n        c.className = 'sc ' + v + (on ? ' on' : '') + (instance.signal ? ' click' : '') + ' t-' + (on ? (instance.toneOn || 'ok') : (instance.toneOff || 'off'));\n        $('tx').textContent = on ? (instance.textOn || '') : (instance.textOff || '');\n        $('ic').innerHTML = ICONS[instance.icon] || '';\n        c.setAttribute('aria-pressed', String(on));\n        c.title = $('tx').textContent;\n    };\n    // with a signal the chip is a switch: a click writes the opposite\n    $('c').addEventListener('click', () => { if(instance.signal) dbWrite(instance, instance.signal, !dbBool(stateVal)); });\n    const sub = () => { if(instance.signal) dbSubscribe(instance, 'signal', instance.signal, (v) => { stateVal = v; upd(); }); else dbUnsub(instance, 'signal'); upd(); };\n    for(const p of ['active', 'text-on', 'text-off', 'tone-on', 'tone-off', 'variant', 'icon']) instance._assignEvent(p + '-changed', upd);\n    instance._assignEvent('signal-changed', sub);\n    sub();\n}\nexport function disconnectedCallback(instance){ dbUnsubAll(instance); }\n"
+}
