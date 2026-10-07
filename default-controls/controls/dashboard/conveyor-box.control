@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "color": {
+      "type": "color",
+      "default": "#d9b37c"
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "settings": {
+    "width": "58px",
+    "height": "40px"
+  },
+  "html": "<div id=\"b\" class=\"box\"><span id=\"lbl\"></span></div>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n.box{height:100%;border-radius:5px;position:relative;display:grid;place-items:center;font:600 10px 'IBM Plex Mono',monospace;color:rgba(0,0,0,.55);\n  background:linear-gradient(180deg,color-mix(in srgb,var(--c) 100%,#fff 12%),color-mix(in srgb,var(--c) 85%,#000));box-shadow:inset 0 0 0 1px rgba(0,0,0,.18),0 4px 8px rgba(0,0,0,.25)}\n.box::after{content:\"\";position:absolute;left:46%;top:0;bottom:0;width:8%;background:rgba(0,0,0,.1)}\n",
+  "script": "export function init(instance){\n    const upd = () => { const b = instance._getDomElement('b'); b.style.setProperty('--c', instance.color || '#d9b37c'); instance._getDomElement('lbl').textContent = instance.label || ''; };\n    instance._assignEvent('color-changed', upd); instance._assignEvent('label-changed', upd);\n    upd();\n}\n"
+}

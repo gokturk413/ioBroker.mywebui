@@ -1,0 +1,228 @@
+{
+  "WebUI Adapter Configuration": {
+    "en": "WebUI Adapter Configuration",
+    "de": "WebUI-Adapter-Konfiguration",
+    "ru": "Конфигурация адаптера WebUI",
+    "pt": "Configuração do adaptador WebUI",
+    "nl": "WebUI-adapterconfiguratie",
+    "fr": "Configuration de l'adaptateur WebUI",
+    "it": "Configurazione dell'adattatore WebUI",
+    "es": "Configuración del adaptador WebUI",
+    "pl": "Konfiguracja adaptera WebUI",
+    "uk": "Конфігурація адаптера WebUI",
+    "zh-cn": "WebUI 适配器配置",
+    "az": "WebUI Adapter Konfiqurasiyası",
+    "tr": "WebUI Adaptör Yapılandırması"
+  },
+  "This adapter requires a valid license key to operate. The license is bound to your hardware for security purposes.": {
+    "en": "This adapter requires a valid license key to operate. The license is bound to your hardware for security purposes.",
+    "de": "Dieser Adapter benötigt einen gültigen Lizenzschlüssel. Die Lizenz ist aus Sicherheitsgründen an Ihre Hardware gebunden.",
+    "ru": "Для работы этого адаптера требуется действительный лицензионный ключ. Лицензия привязана к вашему оборудованию в целях безопасности.",
+    "az": "Bu adapter işləmək üçün etibarlı lisenziya açarı tələb edir. Lisenziya təhlükəsizlik məqsədləri üçün avadanlığınıza bağlıdır.",
+    "tr": "Bu adaptör çalışmak için geçerli bir lisans anahtarı gerektirir. Lisans güvenlik amacıyla donanımınıza bağlıdır."
+  },
+  "License Key": {
+    "en": "License Key",
+    "de": "Lizenzschlüssel",
+    "ru": "Лицензионный ключ",
+    "pt": "Chave de licença",
+    "nl": "Licentiesleutel",
+    "fr": "Clé de licence",
+    "it": "Chiave di licenza",
+    "es": "Clave de licencia",
+    "pl": "Klucz licencyjny",
+    "uk": "Ліцензійний ключ",
+    "zh-cn": "许可证密钥",
+    "az": "Lisenziya açarı",
+    "tr": "Lisans Anahtarı"
+  },
+  "Enter your license key here": {
+    "en": "Enter your license key here",
+    "de": "Geben Sie hier Ihren Lizenzschlüssel ein",
+    "ru": "Введите лицензионный ключ здесь",
+    "az": "Lisenziya açarınızı bura daxil edin",
+    "tr": "Lisans anahtarınızı buraya girin"
+  },
+  "Contact gokturk413 for a valid license key": {
+    "en": "Contact gokturk413 for a valid license key",
+    "de": "Kontaktieren Sie gokturk413 für einen gültigen Lizenzschlüssel",
+    "ru": "Свяжитесь с gokturk413 для получения действительного лицензионного ключа",
+    "az": "Etibarlı lisenziya açarı üçün gokturk413 ilə əlaqə saxlayın",
+    "tr": "Geçerli bir lisans anahtarı için gokturk413 ile iletişime geçin"
+  },
+  "Setup Instructions": {
+    "en": "Setup Instructions",
+    "de": "Einrichtungsanleitung",
+    "ru": "Инструкции по настройке",
+    "az": "Quraşdırma təlimatları",
+    "tr": "Kurulum Talimatları"
+  },
+  "License": {
+    "en": "License",
+    "de": "Lizenz",
+    "ru": "Лицензия",
+    "az": "Lisenziya",
+    "tr": "Lisans"
+  },
+  "Grafana": {
+    "en": "Grafana",
+    "de": "Grafana",
+    "ru": "Grafana",
+    "az": "Grafana",
+    "tr": "Grafana"
+  },
+  "Grafana Integration": {
+    "en": "Grafana Integration",
+    "de": "Grafana-Integration",
+    "ru": "Интеграция с Grafana",
+    "az": "Grafana İnteqrasiyası",
+    "tr": "Grafana Entegrasyonu"
+  },
+  "If Grafana is not installed or nginx is not configured, keep this disabled. The adapter will not throw any errors.": {
+    "en": "If Grafana is not installed or nginx is not configured, keep this disabled. The adapter will not throw any errors.",
+    "de": "Wenn Grafana nicht installiert oder nginx nicht konfiguriert ist, lassen Sie dies deaktiviert. Der Adapter wirft keine Fehler.",
+    "ru": "Если Grafana не установлена или nginx не настроен, оставьте это отключённым. Адаптер не будет выдавать ошибок.",
+    "az": "Grafana quraşdırılmayıbsa və ya nginx konfiqurasiya edilməyibsə, bu seçimi söndürün. Adapter heç bir xəta verməyəcək.",
+    "tr": "Grafana kurulu değilse veya nginx yapılandırılmamışsa, bunu devre dışı bırakın. Adaptör hata vermeyecektir."
+  },
+  "Enable Grafana Integration": {
+    "en": "Enable Grafana Integration",
+    "de": "Grafana-Integration aktivieren",
+    "ru": "Включить интеграцию с Grafana",
+    "az": "Grafana İnteqrasiyasını Aktivləşdir",
+    "tr": "Grafana Entegrasyonunu Etkinleştir"
+  },
+  "Grafana Connection": {
+    "en": "Grafana Connection",
+    "de": "Grafana-Verbindung",
+    "ru": "Подключение к Grafana",
+    "az": "Grafana Bağlantısı",
+    "tr": "Grafana Bağlantısı"
+  },
+  "Grafana Internal URL": {
+    "en": "Grafana Internal URL",
+    "de": "Grafana interne URL",
+    "ru": "Внутренний URL Grafana",
+    "az": "Grafana daxili URL",
+    "tr": "Grafana İç URL"
+  },
+  "Internal URL of Grafana (not nginx proxy URL)": {
+    "en": "Internal URL of Grafana (not nginx proxy URL)",
+    "de": "Interne URL von Grafana (nicht die nginx-Proxy-URL)",
+    "ru": "Внутренний URL Grafana (не URL nginx-прокси)",
+    "az": "Grafana-nın daxili URL-i (nginx proxy URL deyil)",
+    "tr": "Grafana'nın iç URL'si (nginx proxy URL'si değil)"
+  },
+  "Features": {
+    "en": "Features",
+    "de": "Funktionen",
+    "ru": "Функции",
+    "az": "Funksiyalar",
+    "tr": "Özellikler"
+  },
+  "Language Sync (webui → Grafana)": {
+    "en": "Language Sync (webui → Grafana)",
+    "de": "Sprachsynchronisierung (webui → Grafana)",
+    "ru": "Синхронизация языка (webui → Grafana)",
+    "az": "Dil sinxronizasiyası (webui → Grafana)",
+    "tr": "Dil Senkronizasyonu (webui → Grafana)"
+  },
+  "When user changes language in webui, also update Grafana UI language": {
+    "en": "When user changes language in webui, also update Grafana UI language",
+    "de": "Wenn der Benutzer die Sprache in webui ändert, auch die Grafana-UI-Sprache aktualisieren",
+    "ru": "При изменении языка в webui также обновлять язык интерфейса Grafana",
+    "az": "İstifadəçi webui-da dili dəyişdikdə, Grafana UI dilini də yenilə",
+    "tr": "Kullanıcı webui'de dil değiştirdiğinde Grafana arayüz dilini de güncelle"
+  },
+  "SSO via nginx auth_request": {
+    "en": "SSO via nginx auth_request",
+    "de": "SSO über nginx auth_request",
+    "ru": "SSO через nginx auth_request",
+    "az": "nginx auth_request vasitəsilə SSO",
+    "tr": "nginx auth_request ile SSO"
+  },
+  "nginx auth_request forwards ioBroker session to Grafana — users auto-login to Grafana iframe": {
+    "en": "nginx auth_request forwards ioBroker session to Grafana — users auto-login to Grafana iframe",
+    "de": "nginx auth_request leitet die ioBroker-Sitzung an Grafana weiter — Benutzer werden automatisch im Grafana-iframe angemeldet",
+    "ru": "nginx auth_request передаёт сессию ioBroker в Grafana — пользователи автоматически входят в iframe Grafana",
+    "az": "nginx auth_request ioBroker sesiyasını Grafana-ya ötürür — istifadəçilər Grafana iframe-ə avtomatik daxil olur",
+    "tr": "nginx auth_request ioBroker oturumunu Grafana'ya iletir — kullanıcılar Grafana iframe'e otomatik giriş yapar"
+  },
+  "A 14-day trial starts on the first run. After that the adapter needs a licence key bound to this computer.": {
+    "en": "A 14-day trial starts on the first run. After that the adapter needs a licence key bound to this computer.",
+    "az": "İlk işə düşmədə 14 günlük sınaq müddəti başlayır. Sonra adapterə bu kompüterə bağlı lisenziya açarı lazımdır.",
+    "tr": "İlk çalıştırmada 14 günlük deneme süresi başlar. Ardından adaptör bu bilgisayara bağlı bir lisans anahtarı gerektirir.",
+    "ru": "При первом запуске начинается 14-дневный пробный период. После него адаптеру нужен лицензионный ключ, привязанный к этому компьютеру.",
+    "de": "Beim ersten Start beginnt eine 14-tägige Testphase. Danach benötigt der Adapter einen an diesen Computer gebundenen Lizenzschlüssel."
+  },
+  "⚠️ Important: a licence key is bound to the Hardware ID of one computer, VM or container. Each of them needs its own licence; copying or moving a licensed VM is not allowed.": {
+    "en": "⚠️ Important: a licence key is bound to the Hardware ID of one computer, VM or container. Each of them needs its own licence; copying or moving a licensed VM is not allowed.",
+    "az": "⚠️ Vacib: lisenziya açarı bir kompüterin, VM-in və ya konteynerin Hardware ID-sinə bağlıdır. Hər birinə ayrıca lisenziya lazımdır; lisenziyalı VM-i kopyalamaq və ya köçürmək olmaz.",
+    "tr": "⚠️ Önemli: lisans anahtarı tek bir bilgisayarın, VM'in veya konteynerin Hardware ID'sine bağlıdır. Her biri kendi lisansını gerektirir; lisanslı bir VM kopyalanamaz veya taşınamaz.",
+    "ru": "⚠️ Важно: лицензионный ключ привязан к Hardware ID одного компьютера, ВМ или контейнера. Каждому нужна своя лицензия; копировать или переносить лицензированную ВМ нельзя.",
+    "de": "⚠️ Wichtig: Ein Lizenzschlüssel ist an die Hardware-ID eines Computers, einer VM oder eines Containers gebunden. Jeder braucht eine eigene Lizenz; eine lizenzierte VM darf nicht kopiert oder verschoben werden."
+  },
+  "Copy the whole line (copy button) and send it to gokturk413. It usually holds two IDs: the mainboard and the operating-system installation.": {
+    "en": "Copy the whole line (copy button) and send it to gokturk413. It usually holds two IDs: the mainboard and the operating-system installation.",
+    "az": "Sətrin hamısını kopyalayın (kopyalama düyməsi) və gokturk413-ə göndərin. Adətən iki ID olur: ana plata və əməliyyat sisteminin quraşdırılması.",
+    "tr": "Satırın tamamını kopyalayın (kopyala düğmesi) ve gokturk413'e gönderin. Genellikle iki ID içerir: anakart ve işletim sistemi kurulumu.",
+    "ru": "Скопируйте всю строку (кнопка копирования) и отправьте gokturk413. Обычно в ней два ID: материнская плата и установка операционной системы.",
+    "de": "Kopieren Sie die ganze Zeile (Kopier-Schaltfläche) und senden Sie sie an gokturk413. Sie enthält meist zwei IDs: das Mainboard und die Betriebssystem-Installation."
+  },
+  "ℹ️ Why two IDs: if only one of them changes (a new mainboard, or a reinstalled operating system), the key keeps working for 14 days of grace, so there is time to request a new key. If both change, it is another computer and the key does not work.": {
+    "en": "ℹ️ Why two IDs: if only one of them changes (a new mainboard, or a reinstalled operating system), the key keeps working for 14 days of grace, so there is time to request a new key. If both change, it is another computer and the key does not work.",
+    "az": "ℹ️ Niyə iki ID: onlardan yalnız biri dəyişsə (yeni ana plata və ya yenidən quraşdırılmış əməliyyat sistemi), açar 14 günlük güzəşt müddəti işləməyə davam edir və yeni açar istəməyə vaxt olur. İkisi də dəyişsə, bu başqa kompüterdir və açar işləmir.",
+    "tr": "ℹ️ Neden iki ID: yalnızca biri değişirse (yeni anakart veya yeniden kurulan işletim sistemi), anahtar 14 günlük ek süre boyunca çalışmaya devam eder ve yeni anahtar istemek için zaman olur. İkisi de değişirse bu başka bir bilgisayardır ve anahtar çalışmaz.",
+    "ru": "ℹ️ Почему два ID: если меняется только один (новая материнская плата или переустановленная ОС), ключ продолжает работать 14 дней льготного периода, и есть время запросить новый ключ. Если меняются оба, это другой компьютер, и ключ не работает.",
+    "de": "ℹ️ Warum zwei IDs: Ändert sich nur eine (neues Mainboard oder neu installiertes Betriebssystem), funktioniert der Schlüssel 14 Tage Kulanzzeit weiter, sodass Zeit bleibt, einen neuen Schlüssel anzufordern. Ändern sich beide, ist es ein anderer Computer und der Schlüssel funktioniert nicht."
+  },
+  "1. Start the adapter: a 14-day trial starts automatically\n2. Copy the whole Hardware ID line above\n3. Send it to gokturk413 to get a licence key\n4. Enter the licence key here and save (the adapter restarts)\n\n💡 When the trial ends without a key, the runtime stops. A project made during the trial keeps working once the key is entered.\n💡 For a new computer, send its Hardware ID to get a key for it.": {
+    "en": "1. Start the adapter: a 14-day trial starts automatically\n2. Copy the whole Hardware ID line above\n3. Send it to gokturk413 to get a licence key\n4. Enter the licence key here and save (the adapter restarts)\n\n💡 When the trial ends without a key, the runtime stops. A project made during the trial keeps working once the key is entered.\n💡 For a new computer, send its Hardware ID to get a key for it.",
+    "az": "1. Adapteri işə salın: 14 günlük sınaq avtomatik başlayır\n2. Yuxarıdakı Hardware ID sətrini tam kopyalayın\n3. Lisenziya açarı almaq üçün onu gokturk413-ə göndərin\n4. Açarı buraya daxil edib yadda saxlayın (adapter yenidən başlayır)\n\n💡 Sınaq müddəti açarsız bitəndə runtime dayanır. Sınaqda yaradılmış layihə açar daxil ediləndən sonra işləməyə davam edir.\n💡 Yeni kompüter üçün onun Hardware ID-sini göndərib ayrıca açar alın.",
+    "tr": "1. Adaptörü başlatın: 14 günlük deneme otomatik başlar\n2. Yukarıdaki Hardware ID satırının tamamını kopyalayın\n3. Lisans anahtarı almak için gokturk413'e gönderin\n4. Anahtarı buraya girip kaydedin (adaptör yeniden başlar)\n\n💡 Deneme süresi anahtarsız biterse runtime durur. Deneme sırasında yapılan proje, anahtar girildikten sonra çalışmaya devam eder.\n💡 Yeni bir bilgisayar için onun Hardware ID'sini gönderip ayrı bir anahtar alın.",
+    "ru": "1. Запустите адаптер: 14-дневный пробный период начнётся автоматически\n2. Скопируйте всю строку Hardware ID выше\n3. Отправьте её gokturk413, чтобы получить лицензионный ключ\n4. Введите ключ здесь и сохраните (адаптер перезапустится)\n\n💡 Если пробный период закончится без ключа, runtime останавливается. Проект, созданный в пробный период, продолжит работать после ввода ключа.\n💡 Для нового компьютера отправьте его Hardware ID и получите для него ключ.",
+    "de": "1. Adapter starten: eine 14-tägige Testphase beginnt automatisch\n2. Die ganze Hardware-ID-Zeile oben kopieren\n3. An gokturk413 senden, um einen Lizenzschlüssel zu erhalten\n4. Den Schlüssel hier eingeben und speichern (der Adapter startet neu)\n\n💡 Endet die Testphase ohne Schlüssel, stoppt die Runtime. Ein in der Testphase erstelltes Projekt läuft nach Eingabe des Schlüssels weiter.\n💡 Für einen neuen Computer dessen Hardware-ID senden und einen eigenen Schlüssel erhalten."
+  },
+  "Offline activation": {
+    "en": "Offline activation",
+    "az": "Oflayn aktivləşdirmə",
+    "tr": "Çevrimdışı etkinleştirme",
+    "ru": "Офлайн-активация",
+    "de": "Offline-Aktivierung"
+  },
+  "No internet on site? Create an activation request, send it to gokturk413 (email, USB), and paste the key or the whole response file you get back into the License Key field above.": {
+    "en": "No internet on site? Create an activation request, send it to gokturk413 (email, USB), and paste the key or the whole response file you get back into the License Key field above.",
+    "az": "Obyektdə internet yoxdur? Aktivləşdirmə sorğusu yaradın, gokturk413-ə göndərin (e-poçt, USB) və geri gələn açarı və ya cavab faylının hamısını yuxarıdakı License Key sahəsinə yapışdırın.",
+    "tr": "Sahada internet yok mu? Bir etkinleştirme isteği oluşturun, gokturk413'e gönderin (e-posta, USB) ve gelen anahtarı veya yanıt dosyasının tamamını yukarıdaki License Key alanına yapıştırın.",
+    "ru": "Нет интернета на объекте? Создайте запрос активации, отправьте его gokturk413 (почта, USB) и вставьте полученный ключ или весь файл ответа в поле License Key выше.",
+    "de": "Kein Internet vor Ort? Aktivierungsanfrage erstellen, an gokturk413 senden (E-Mail, USB) und den erhaltenen Schlüssel oder die ganze Antwortdatei oben in das Feld License Key einfügen."
+  },
+  "Create activation request": {
+    "en": "Create activation request",
+    "az": "Aktivləşdirmə sorğusu yarat",
+    "tr": "Etkinleştirme isteği oluştur",
+    "ru": "Создать запрос активации",
+    "de": "Aktivierungsanfrage erstellen"
+  },
+  "Activation request": {
+    "en": "Activation request",
+    "az": "Aktivləşdirmə sorğusu",
+    "tr": "Etkinleştirme isteği",
+    "ru": "Запрос активации",
+    "de": "Aktivierungsanfrage"
+  },
+  "Copy this line (copy button) and send it. It holds the Hardware IDs of this computer, the environment (physical, VM or container) and the host name; it contains no secret.": {
+    "en": "Copy this line (copy button) and send it. It holds the Hardware IDs of this computer, the environment (physical, VM or container) and the host name; it contains no secret.",
+    "az": "Bu sətri kopyalayın (kopyalama düyməsi) və göndərin. İçində bu kompüterin Hardware ID-ləri, mühit (fiziki, VM və ya konteyner) və host adı var; gizli məlumat yoxdur.",
+    "tr": "Bu satırı kopyalayın (kopyala düğmesi) ve gönderin. Bu bilgisayarın Hardware ID'lerini, ortamı (fiziksel, VM veya konteyner) ve ana bilgisayar adını içerir; gizli bilgi içermez.",
+    "ru": "Скопируйте эту строку (кнопка копирования) и отправьте. В ней Hardware ID этого компьютера, среда (физическая, ВМ или контейнер) и имя хоста; секретов нет.",
+    "de": "Diese Zeile kopieren (Kopier-Schaltfläche) und senden. Sie enthält die Hardware-IDs dieses Computers, die Umgebung (physisch, VM oder Container) und den Hostnamen; keine Geheimnisse."
+  },
+  "Paste the licence key, or the whole activation response file. Contact gokturk413 for a key.": {
+    "en": "Paste the licence key, or the whole activation response file. Contact gokturk413 for a key.",
+    "az": "Lisenziya açarını və ya aktivləşdirmə cavab faylının hamısını yapışdırın. Açar üçün gokturk413 ilə əlaqə saxlayın.",
+    "tr": "Lisans anahtarını veya etkinleştirme yanıt dosyasının tamamını yapıştırın. Anahtar için gokturk413 ile iletişime geçin.",
+    "ru": "Вставьте лицензионный ключ или весь файл ответа активации. За ключом обращайтесь к gokturk413.",
+    "de": "Lizenzschlüssel oder die ganze Aktivierungs-Antwortdatei einfügen. Schlüssel bei gokturk413 anfragen."
+  }
+}

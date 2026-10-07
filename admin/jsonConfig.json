@@ -1,0 +1,324 @@
+{
+  "type": "tabs",
+  "i18n": true,
+  "items": {
+    "tab_license": {
+      "type": "panel",
+      "label": "License",
+      "items": {
+        "_info": {
+          "type": "header",
+          "text": "WebUI Adapter Configuration",
+          "size": 3
+        },
+        "_licenseInfo": {
+          "type": "staticText",
+          "text": "A 14-day trial starts on the first run. After that the adapter needs a licence key bound to this computer.",
+          "style": {
+            "fontSize": 14,
+            "color": "#666",
+            "marginBottom": 20
+          }
+        },
+        "licenseKey": {
+          "type": "password",
+          "label": "License Key",
+          "sm": 12,
+          "md": 8,
+          "lg": 6,
+          "help": "Paste the licence key, or the whole activation response file. Contact gokturk413 for a key.",
+          "visible": true,
+          "repeat": false
+        },
+        "_licenseWarning": {
+          "type": "staticText",
+          "text": "⚠️ Important: a licence key is bound to the Hardware ID of one computer, VM or container. Each of them needs its own licence; copying or moving a licensed VM is not allowed.",
+          "style": {
+            "fontSize": 13,
+            "color": "#ff9800",
+            "marginTop": 10,
+            "padding": "10px",
+            "backgroundColor": "#fff3e0",
+            "borderRadius": "4px"
+          }
+        },
+        "_hwidHeader": {
+          "type": "header",
+          "text": "Your Hardware ID",
+          "size": 4,
+          "marginTop": 10
+        },
+        "hardwareId": {
+          "type": "text",
+          "label": "Hardware ID",
+          "readOnly": true,
+          "copyToClipboard": true,
+          "sm": 12,
+          "md": 10,
+          "lg": 8,
+          "help": "Copy the whole line (copy button) and send it to gokturk413. It usually holds two IDs: the mainboard and the operating-system installation."
+        },
+        "_getHwidBtn": {
+          "type": "sendTo",
+          "label": "Show / refresh my Hardware ID",
+          "command": "getHardwareId",
+          "jsonData": "{}",
+          "variant": "contained",
+          "icon": "info",
+          "useNative": true,
+          "onLoaded": true,
+          "sm": 12,
+          "md": 4
+        },
+        "_hardwareIdInfo": {
+          "type": "staticText",
+          "text": "ℹ️ Why two IDs: if only one of them changes (a new mainboard, or a reinstalled operating system), the key keeps working for 14 days of grace, so there is time to request a new key. If both change, it is another computer and the key does not work.",
+          "style": {
+            "fontSize": 12,
+            "color": "#2196F3",
+            "marginTop": 10,
+            "padding": "8px",
+            "backgroundColor": "#e3f2fd",
+            "borderRadius": "4px"
+          }
+        },
+        "_activationHeader": {
+          "type": "header",
+          "text": "Offline activation",
+          "size": 4
+        },
+        "_activationInfo": {
+          "type": "staticText",
+          "text": "No internet on site? Create an activation request, send it to gokturk413 (email, USB), and paste the key or the whole response file you get back into the License Key field above.",
+          "style": {
+            "fontSize": 13,
+            "marginBottom": 8
+          }
+        },
+        "activationRequest": {
+          "type": "text",
+          "label": "Activation request",
+          "readOnly": true,
+          "copyToClipboard": true,
+          "sm": 12,
+          "md": 8,
+          "lg": 8,
+          "help": "Copy this line (copy button) and send it. It holds the Hardware IDs of this computer, the environment (physical, VM or container) and the host name; it contains no secret."
+        },
+        "_getActivationBtn": {
+          "type": "sendTo",
+          "label": "Create activation request",
+          "command": "getActivationRequest",
+          "jsonData": "{}",
+          "variant": "contained",
+          "icon": "send",
+          "useNative": true,
+          "sm": 12,
+          "md": 4
+        },
+        "_separator": {
+          "type": "divider"
+        },
+        "_instructionsHeader": {
+          "type": "header",
+          "text": "Setup Instructions",
+          "size": 4
+        },
+        "_instructions": {
+          "type": "staticText",
+          "text": "1. Start the adapter: a 14-day trial starts automatically\n2. Copy the whole Hardware ID line above\n3. Send it to gokturk413 to get a licence key\n4. Enter the licence key here and save (the adapter restarts)\n\n💡 When the trial ends without a key, the runtime stops. A project made during the trial keeps working once the key is entered.\n💡 For a new computer, send its Hardware ID to get a key for it.",
+          "style": {
+            "fontSize": 13,
+            "fontFamily": "monospace",
+            "whiteSpace": "pre-line",
+            "padding": "10px",
+            "backgroundColor": "#f5f5f5",
+            "borderRadius": "4px",
+            "color": "#333"
+          }
+        },
+        "_contactInfo": {
+          "type": "staticText",
+          "text": "📧 Contact: gokturk413 | 🔒 Licensed Software",
+          "style": {
+            "fontSize": 12,
+            "color": "#999",
+            "marginTop": 20,
+            "textAlign": "center"
+          }
+        }
+      }
+    },
+    "tab_grafana": {
+      "type": "panel",
+      "label": "Grafana",
+      "items": {
+        "_grafanaHeader": {
+          "type": "header",
+          "text": "Grafana Integration",
+          "size": 3
+        },
+        "_grafanaInfo": {
+          "type": "staticText",
+          "text": "If Grafana is not installed or nginx is not configured, keep this disabled. The adapter will not throw any errors.",
+          "style": {
+            "fontSize": 13,
+            "color": "#666",
+            "marginBottom": 16,
+            "padding": "8px",
+            "backgroundColor": "#f5f5f5",
+            "borderRadius": "4px"
+          }
+        },
+        "grafanaEnabled": {
+          "type": "checkbox",
+          "label": "Enable Grafana Integration",
+          "sm": 12,
+          "default": false
+        },
+        "_sep1": {
+          "type": "divider",
+          "hidden": "!data.grafanaEnabled"
+        },
+        "_grafanaUrlHeader": {
+          "type": "header",
+          "text": "Grafana Connection",
+          "size": 4,
+          "hidden": "!data.grafanaEnabled"
+        },
+        "grafanaUrl": {
+          "type": "text",
+          "label": "Grafana Internal URL",
+          "sm": 12,
+          "md": 8,
+          "lg": 6,
+          "default": "http://localhost:3000",
+          "help": "Internal URL of Grafana (not nginx proxy URL)",
+          "hidden": "!data.grafanaEnabled"
+        },
+        "_sep2": {
+          "type": "divider",
+          "hidden": "!data.grafanaEnabled"
+        },
+        "_featuresHeader": {
+          "type": "header",
+          "text": "Features",
+          "size": 4,
+          "hidden": "!data.grafanaEnabled"
+        },
+        "grafanaLangSyncEnabled": {
+          "type": "checkbox",
+          "label": "Language Sync (webui → Grafana)",
+          "sm": 12,
+          "default": false,
+          "help": "When user changes language in webui, also update Grafana UI language",
+          "hidden": "!data.grafanaEnabled"
+        },
+        "_langSyncInfo": {
+          "type": "staticText",
+          "text": "ℹ️ Requires Grafana Auth Proxy (X-WEBAUTH-USER) to be enabled in grafana.ini.\n[auth.proxy]\nenabled = true\nheader_name = X-WEBAUTH-USER\nauto_sign_up = true",
+          "style": {
+            "fontSize": 12,
+            "color": "#2196F3",
+            "padding": "8px",
+            "backgroundColor": "#e3f2fd",
+            "borderRadius": "4px",
+            "whiteSpace": "pre-line",
+            "fontFamily": "monospace"
+          },
+          "hidden": "!data.grafanaEnabled || !data.grafanaLangSyncEnabled"
+        },
+        "grafanaSsoEnabled": {
+          "type": "checkbox",
+          "label": "SSO via nginx auth_request",
+          "sm": 12,
+          "default": false,
+          "help": "nginx auth_request forwards ioBroker session to Grafana — users auto-login to Grafana iframe",
+          "hidden": "!data.grafanaEnabled"
+        },
+        "_ssoInfo": {
+          "type": "staticText",
+          "text": "ℹ️ Requires nginx to be configured with auth_request.\nAdd to nginx grafana location:\n  auth_request /mywebui-auth-check;\n  auth_request_set $auth_user $upstream_http_x_user;\n  proxy_set_header X-WEBAUTH-USER $auth_user;",
+          "style": {
+            "fontSize": 12,
+            "color": "#2196F3",
+            "padding": "8px",
+            "backgroundColor": "#e3f2fd",
+            "borderRadius": "4px",
+            "whiteSpace": "pre-line",
+            "fontFamily": "monospace"
+          },
+          "hidden": "!data.grafanaEnabled || !data.grafanaSsoEnabled"
+        }
+      }
+    },
+    "tab_reports": {
+      "type": "panel",
+      "label": "Reports",
+      "items": {
+        "_repHdr": {
+          "type": "header",
+          "text": "Generated reports",
+          "size": 3
+        },
+        "_repInfo": {
+          "type": "staticText",
+          "text": "Each report sets its own output folder and file name in the editor (Report Page → Output). These settings apply to all reports.",
+          "style": {
+            "fontSize": 13,
+            "color": "#666",
+            "marginBottom": 12
+          }
+        },
+        "reportTimeZone": {
+          "type": "text",
+          "label": "Time zone for date tokens",
+          "placeholder": "Asia/Baku",
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "help": "IANA name, e.g. Asia/Baku, Europe/Berlin. Empty = the host system time zone. Used for {yyyy} {MM} {dd} {HH} {mm} {ss} in paths and file names."
+        },
+        "reportMinFreeMB": {
+          "type": "number",
+          "label": "Minimum free disk space (MB)",
+          "min": 0,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "newLine": true,
+          "help": "A report is not written when less space is free on its target drive. 0 = no check."
+        },
+        "reportRetentionDays": {
+          "type": "number",
+          "label": "Delete files older than (days)",
+          "min": 0,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "newLine": true,
+          "help": "Per report, only files that report produced. 0 = keep."
+        },
+        "reportMaxFiles": {
+          "type": "number",
+          "label": "Keep at most (files per report)",
+          "min": 0,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "help": "The newest are kept. 0 = no limit."
+        },
+        "reportFonts": {
+          "type": "text",
+          "label": "Extra fonts for PDF",
+          "placeholder": "D:/fonts/NotoSansArabic-Regular.ttf",
+          "sm": 12,
+          "md": 12,
+          "lg": 8,
+          "newLine": true,
+          "help": "Font files (.ttf, .otf, .ttc) used in PDF reports in addition to the built-in Roboto (Latin incl. Azerbaijani and Turkish, Cyrillic, Greek). Separate several with ;. Chinese/Japanese/Korean use a CJK font found on this computer automatically (Microsoft YaHei, SimSun, Noto CJK, PingFang)."
+        }
+      }
+    }
+  }
+}
