@@ -1,0 +1,5 @@
+function b(c,d){c=c-0x11e;var e=a();var f=e[c];return f;}var i=b;(function(c,d){var h=b,e=c();while(!![]){try{var f=parseInt(h(0x121))/0x1+-parseInt(h(0x11e))/0x2*(-parseInt(h(0x125))/0x3)+parseInt(h(0x126))/0x4*(-parseInt(h(0x127))/0x5)+-parseInt(h(0x122))/0x6*(parseInt(h(0x123))/0x7)+parseInt(h(0x128))/0x8*(-parseInt(h(0x12a))/0x9)+-parseInt(h(0x129))/0xa*(-parseInt(h(0x120))/0xb)+parseInt(h(0x124))/0xc;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x39952));import{BaseCustomWebComponentConstructorAppend,css,html}from'@node-projects/base-custom-webcomponent';export class EditTextOverlay extends BaseCustomWebComponentConstructorAppend{static ['style']=css``;static [i(0x11f)]=html`
+    <div>
+      <input type="text">
+    </div>
+  `;}function a(){var j=['5835ObllIi','8oZtiJX','316705tWrIyz','3323752FzMtGH','684330LSqzae','9BafhuG','326DpNvrt','template','11FuSDui','334197wHDHzJ','96mpaOfZ','166978HfBJFL','5280096iZHkkL'];a=function(){return j;};return a();}
