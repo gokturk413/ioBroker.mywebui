@@ -1,0 +1,5 @@
+var i=b;(function(c,d){var h=b,e=c();while(!![]){try{var f=-parseInt(h(0xdc))/0x1*(parseInt(h(0xde))/0x2)+parseInt(h(0xd7))/0x3+-parseInt(h(0xd6))/0x4*(parseInt(h(0xdd))/0x5)+-parseInt(h(0xdf))/0x6+-parseInt(h(0xe0))/0x7+parseInt(h(0xdb))/0x8*(-parseInt(h(0xda))/0x9)+parseInt(h(0xd8))/0xa;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xe60c6));function b(c,d){c=c-0xd6;var e=a();var f=e[c];return f;}import{html}from'@node-projects/base-custom-webcomponent';import{BasicStackedToolbarExtension}from'../BasicStackedToolbarExtension.js';function a(){var j=['template','2515689SzpCxz','16nGQAhD','1199hkNaTV','5OdywFu','1582YzxEcV','8561874qoetIC','11267158ftRwar','403820nSMLgp','1013463WscAdl','52494360wqAriR'];a=function(){return j;};return a();}export class BlockToolbarExtension extends BasicStackedToolbarExtension{static [i(0xd9)]=html`
+      <div style="height: 100%; width: 100%;">
+        ${BasicStackedToolbarExtension['basicTemplate']}
+      </div>
+    `;constructor(c,d,e){super(c,d,e);}['extend'](c,d){super['extend'](c,d),this['refresh'](c,d);}}

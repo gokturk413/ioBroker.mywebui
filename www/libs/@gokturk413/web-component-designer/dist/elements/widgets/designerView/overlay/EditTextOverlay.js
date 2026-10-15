@@ -1,0 +1,5 @@
+function a(){var j=['8835RtXGcS','16560968CQVFhW','style','template','900138aiOPoU','2359098uRDqKX','1509742yjJqFp','1263UVOKUU','732egXBie','5271343HplANR'];a=function(){return j;};return a();}var i=b;(function(c,d){var h=b,e=c();while(!![]){try{var f=-parseInt(h(0x19e))/0x1+parseInt(h(0x1a0))/0x2+-parseInt(h(0x1a1))/0x3+parseInt(h(0x1a2))/0x4*(-parseInt(h(0x19a))/0x5)+-parseInt(h(0x19f))/0x6+-parseInt(h(0x199))/0x7+parseInt(h(0x19b))/0x8;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x6f0b8));function b(c,d){c=c-0x199;var e=a();var f=e[c];return f;}import{BaseCustomWebComponentConstructorAppend,css,html}from'@node-projects/base-custom-webcomponent';export class EditTextOverlay extends BaseCustomWebComponentConstructorAppend{static [i(0x19c)]=css``;static [i(0x19d)]=html`
+    <div>
+      <input type="text">
+    </div>
+  `;}
