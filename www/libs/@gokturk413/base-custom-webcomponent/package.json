@@ -1,0 +1,37 @@
+{
+    "description": "Base Custom Webcomponent",
+    "name": "@gokturk413/base-custom-webcomponent",
+    "version": "0.47.0",
+    "type": "module",
+    "main": "./dist/index.js",
+    "author": "",
+    "license": "BSD-3-Clause",
+    "scripts": {
+        "tsc": "tsc",
+        "tsc-demo": "tsc -p ./tsconfig-demo.json",
+        "build": "npm run tsc && npm run bundle",
+        "test": "npm run tsc && npm run tsc-demo && web-test-runner",
+        "test:browser": "web-test-runner",
+        "test:watch": "web-test-runner --watch",
+        "test:coverage": "npm run tsc && npm run tsc-demo && web-test-runner --coverage",
+        "check": "npm run build && npm run tsc-demo && npm run test:browser",
+        "start": "web-dev-server --node-resolve --open sample/index.html",
+        "prepublishOnly": "npm run build",
+        "bundle": "esbuild ./dist/index.js --format=esm --minify --platform=neutral --bundle --outfile=./dist/index-min.js"
+    },
+    "devDependencies": {
+        "@web/dev-server": "^1.0.0",
+        "@web/test-runner": "^1.0.0",
+        "esbuild": "^0.28.0",
+        "polyfill-symbol-metadata": "^0.0.2",
+        "typescript": "^7.0.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/node-projects/base-custom-webcomponent.git"
+    },
+    "bugs": {
+        "url": "https://github.com/node-projects/base-custom-webcomponent/issues"
+    },
+    "homepage": "https://github.com/node-projects/base-custom-webcomponent#readme"
+}
