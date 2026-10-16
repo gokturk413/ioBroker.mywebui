@@ -1,0 +1,62 @@
+(function(c,d){const h=b,e=c();while(!![]){try{const f=-parseInt(h(0xf6))/0x1+parseInt(h(0xef))/0x2*(-parseInt(h(0xf7))/0x3)+-parseInt(h(0xf9))/0x4*(parseInt(h(0xff))/0x5)+-parseInt(h(0xf8))/0x6*(-parseInt(h(0x101))/0x7)+parseInt(h(0x102))/0x8+parseInt(h(0xfd))/0x9+parseInt(h(0xf3))/0xa*(parseInt(h(0xfc))/0xb);if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x2fb15));import{BaseCustomWebComponentConstructorAppend,css}from'@node-projects/base-custom-webcomponent';function b(c,d){c=c-0xef;const e=a();let f=e[c];return f;}function a(){const j=['title','2870830hbQveg','getRootNode','setTool','175282KVWyjE','167343EzPhQj','1572yqqimZ','4rWtBkd','onclick','querySelectorAll','11NfjNzX','1594926TkRsVp','host','736825QpcYIT','setAttribute','3920qwCSud','1487072hpCUmV','10Jprqtf','shadowRoot','dataset'];a=function(){return j;};return a();}export class AbstractBaseToolPopup extends BaseCustomWebComponentConstructorAppend{static ['style']=css`
+      :host {
+          display: block;
+          font: 12px system-ui, sans-serif;
+          color: var(--wcd-designer-view-statusbar-color, #354348);
+      }
+      .container {
+          width: max-content;
+          min-width: 112px;
+          box-sizing: border-box;
+          background: var(--wcd-tool-popup-background, var(--wcd-designer-view-statusbar-background, #787f82));
+          border: 1px solid var(--wcd-tool-popup-border-color, var(--wcd-color-border, #596c7a));
+          border-radius: 6px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, .25);
+      }
+      header {
+          padding: 6px 8px;
+          border-radius: 5px 5px 0 0;
+          border-bottom: 1px solid var(--wcd-tool-popup-border-color, var(--wcd-color-border, #596c7a));
+          background: var(--wcd-tool-popup-title-background, rgba(255, 255, 255, .08));
+      }
+      h2 {
+          margin: 0;
+          font: 600 11px/16px system-ui, sans-serif;
+      }
+      main {
+          padding: 8px;
+      }
+      .tool {
+          box-sizing: border-box;
+          height: 24px;
+          width: 24px;
+          padding: 4px;
+          border: 0;
+          border-radius: 4px;
+          background: transparent;
+          color: inherit;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          cursor: pointer;
+      }
+      .tool::before {
+          content: '';
+          width: 16px;
+          height: 16px;
+          background: currentColor;
+          mask: var(--tool-icon) center / contain no-repeat;
+      }
+      .tool:hover {
+          background: var(--wcd-designer-view-tool-hover-background, rgba(164,206,249,.6));
+      }
+      .tool:focus-visible {
+          outline: 2px solid var(--wcd-color-focus, #47977c);
+          outline-offset: -2px;
+      }
+      .tools {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+      }`;constructor(){const i=b;super();for(let c of[...this[i(0xf0)][i(0xfb)]('button.tool')]){c[i(0x100)]('aria-label',c[i(0xf2)]),c[i(0xfa)]=()=>this[i(0xf4)]()[i(0xfe)][i(0xf5)](c[i(0xf1)]['commandParameter']);}}}

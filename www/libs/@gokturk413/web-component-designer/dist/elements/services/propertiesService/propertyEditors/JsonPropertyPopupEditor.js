@@ -1,0 +1,6 @@
+(function(c,d){var h=b,e=c();while(!![]){try{var f=-parseInt(h(0x95))/0x1*(-parseInt(h(0x9b))/0x2)+parseInt(h(0x9f))/0x3*(parseInt(h(0x98))/0x4)+-parseInt(h(0x9d))/0x5*(-parseInt(h(0x9c))/0x6)+-parseInt(h(0x96))/0x7*(-parseInt(h(0x99))/0x8)+parseInt(h(0x9e))/0x9*(parseInt(h(0x9a))/0xa)+parseInt(h(0x97))/0xb+-parseInt(h(0x94))/0xc;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x273c1));import{html,BaseCustomWebComponentConstructorAppend}from'@node-projects/base-custom-webcomponent';function a(){var i=['30FXeBrr','7870MSUCix','1233981hEaXLs','4146wFDyzY','9919812VUnrNw','98403JGFtqy','84OCsWjI','663498bsBWyQ','548TqNcYb','198344PLNmGk','10FuRcjo','6PEtIXw'];a=function(){return i;};return a();}function b(c,d){c=c-0x94;var e=a();var f=e[c];return f;}export class JsonPropertyPopupEditor extends BaseCustomWebComponentConstructorAppend{static ['template']=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;constructor(){super();}}
