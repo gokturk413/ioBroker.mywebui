@@ -1,0 +1,5 @@
+var i=b;function a(){var j=['6zmCsjX','670BvNlJX','8987984HTcyWK','12EMtIRA','1034815AAkfZt','3VWTgiI','6684048oDwWXA','7BhGpsO','14695486fTtxeA','3662724lFYzYR','style','template','2733610HTKnHZ','2OuZrsu','145937ZgwjFo'];a=function(){return j;};return a();}function b(c,d){c=c-0xd4;var e=a();var f=e[c];return f;}(function(c,d){var h=b,e=c();while(!![]){try{var f=parseInt(h(0xdd))/0x1*(-parseInt(h(0xd7))/0x2)+-parseInt(h(0xde))/0x3*(parseInt(h(0xe2))/0x4)+parseInt(h(0xd6))/0x5*(parseInt(h(0xd9))/0x6)+parseInt(h(0xe0))/0x7*(parseInt(h(0xdb))/0x8)+-parseInt(h(0xdf))/0x9+-parseInt(h(0xda))/0xa*(-parseInt(h(0xd8))/0xb)+-parseInt(h(0xdc))/0xc*(-parseInt(h(0xe1))/0xd);if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xf340b));import{BaseCustomWebComponentConstructorAppend,css,html}from'@node-projects/base-custom-webcomponent';export class EditTextOverlay extends BaseCustomWebComponentConstructorAppend{static [i(0xd4)]=css``;static [i(0xd5)]=html`
+    <div>
+      <input type="text">
+    </div>
+  `;}
