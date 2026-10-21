@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "ON Time"
+    },
+    "icon": {
+      "type": "enum",
+      "values": [
+        "sun",
+        "moon",
+        "bell",
+        "none"
+      ],
+      "default": "bell"
+    },
+    "signal": {
+      "type": "signal",
+      "default": ""
+    },
+    "hour12": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "minuteStep": {
+      "type": "number",
+      "default": 5
+    }
+  },
+  "settings": {
+    "width": "230px",
+    "height": "150px"
+  },
+  "html": "<div class=\"tsp\"><span class=\"h\"><span id=\"ic\"></span><span id=\"lbl\"></span></span><span class=\"big mono\"><span id=\"big\"></span><small id=\"ap\"></small></span><div class=\"spin\"><button type=\"button\" data-d=\"h+\" aria-label=\"Hour up\">▲</button><span></span><button type=\"button\" data-d=\"m+\" aria-label=\"Minute up\">▲</button><b id=\"hh\" class=\"mono\"></b><span class=\"sep mono\">:</span><b id=\"mm\" class=\"mono\"></b><button type=\"button\" data-d=\"h-\" aria-label=\"Hour down\">▼</button><span></span><button type=\"button\" data-d=\"m-\" aria-label=\"Minute down\">▼</button></div></div>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n.tsp{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 10px;border-radius:12px;background:var(--ui-surface-2,#3a414d);border:1px solid var(--ui-border,#4a5262)}\n.h{display:flex;align-items:center;gap:6px;color:var(--ui-dim,#9aa5b5);font-size:14px}\n.big{font-size:30px;font-weight:500}.big small{font-size:14px;color:var(--ui-dim,#9aa5b5);margin-left:4px}\n.spin{display:grid;grid-template-columns:auto auto auto;align-items:center;gap:2px 6px;background:var(--ui-input,#2a3039);border:1px solid var(--ui-border,#4a5262);border-radius:9px;padding:4px 10px}\n.spin button{background:transparent;border:0;color:var(--ui-dim,#9aa5b5);cursor:pointer;font-size:13px;padding:0 6px;line-height:1}\n.spin button:hover{color:var(--ui-text,#e6ebf2)}\n.spin b,.spin .sep{grid-row:2;font-size:22px;font-weight:500}\n",
+  "script": "function dbSubscribe(instance, key, id, onVal){\n    dbUnsub(instance, key);\n    if(!id || !window.IOB) return;\n    instance.__dbSubs = instance.__dbSubs || {};\n    const cb = function(_i, s){ onVal(s ? s.val : null); };\n    instance.__dbSubs[key] = [id, cb];\n    try{ window.IOB.subscribeState(id, cb); }catch(e){}\n    try{ window.IOB.getState(id).then(function(s){ onVal(s ? s.val : null); }).catch(function(){}); }catch(e){}\n    // read quality knows this state (badge on the control when the value cannot be trusted)\n    try{ instance.__dbRq = instance.__dbRq || {}; instance.__dbRq[key] = window.IOB.watchReadQuality && window.IOB.watchReadQuality(instance, id, { prop: key, twoWay: true }); }catch(e){}\n}\nfunction dbUnsub(instance, key){\n    const p = instance.__dbSubs && instance.__dbSubs[key];\n    if(p){ try{ window.IOB.unsubscribeState(p[0], p[1]); }catch(e){} delete instance.__dbSubs[key]; }\n    const r = instance.__dbRq && instance.__dbRq[key];\n    if(typeof r === 'function'){ try{ r(); }catch(e){} }\n    if(instance.__dbRq) delete instance.__dbRq[key];\n}\nfunction dbUnsubAll(instance){ for(const k of Object.keys(instance.__dbSubs || {})) dbUnsub(instance, k); }\n// a write through IOB.setState: Confirm & Protect may ask first; cancelled = nothing written\nfunction dbWrite(instance, id, val, onCancel){\n    if(!id || !window.IOB) return Promise.resolve(false);\n    return Promise.resolve(window.IOB.setState(id, val, false, { feedback: instance })).then(function(){ return true; }, function(e){\n        if(e && e.cancelled){ if(onCancel) onCancel(); }\n        else console.warn('[dashboard] write failed', id, e);\n        return false;\n    });\n}\nfunction dbBool(v){ return v === true || v === 1 || v === 'true' || v === '1' || v === 'on'; }\nfunction dbNum(v, d){ const n = Number(v); return isFinite(n) ? n : d; }\nexport function parseTime(v){\n    const m = /^(\\d{1,2}):(\\d{2})/.exec(String(v ?? ''));\n    if(!m) return null;\n    const h = Number(m[1]), mi = Number(m[2]);\n    return h < 24 && mi < 60 ? [h, mi] : null;\n}\nexport function stepTime(t, part, dir, minuteStep){\n    let [h, m] = t;\n    if(part === 'h') h = (h + dir + 24) % 24;\n    else { const s = minuteStep > 0 ? minuteStep : 1; m = m + dir * s; if(m >= 60) m -= 60; if(m < 0) m += 60; m = Math.round(m / s) * s % 60; }\n    return [h, m];\n}\nexport function fmtTime(t){ return String(t[0]).padStart(2, '0') + ':' + String(t[1]).padStart(2, '0'); }\nconst ICON = { sun: '☀', moon: '🌙', bell: '🔔', none: '' };\nexport function init(instance){\n    const $ = (id) => instance._getDomElement(id);\n    let t = [6, 30], timer = 0;\n    const draw = () => {\n        $('lbl').textContent = instance.label || ''; $('ic').textContent = ICON[instance.icon] ?? '';\n        const h12 = instance.hour12 !== false && instance.hour12 !== 'false';\n        $('big').textContent = h12 ? String(((t[0] + 11) % 12) + 1).padStart(2, '0') + ':' + String(t[1]).padStart(2, '0') : fmtTime(t);\n        $('ap').textContent = h12 ? (t[0] < 12 ? 'AM' : 'PM') : '';\n        $('hh').textContent = String(t[0]).padStart(2, '0'); $('mm').textContent = String(t[1]).padStart(2, '0');\n    };\n    // several clicks in a row are written once, 700 ms after the last one\n    const refresh = () => { if(instance.signal) window.IOB.getState(instance.signal).then(s => { const v = parseTime(s && s.val); if(v){ t = v; draw(); } }).catch(() => {}); };\n    for(const b of instance.shadowRoot.querySelectorAll('button[data-d]')) b.addEventListener('click', () => {\n        const d = b.dataset.d;\n        t = stepTime(t, d[0], d[1] === '+' ? 1 : -1, Number(instance.minuteStep) || 1);\n        draw();\n        clearTimeout(timer);\n        timer = setTimeout(() => dbWrite(instance, instance.signal, fmtTime(t), refresh), 700);\n    });\n    const sub = () => dbSubscribe(instance, 'signal', instance.signal, (v) => { const p = parseTime(v); if(p){ t = p; draw(); } });\n    for(const p of ['label', 'icon', 'hour12', 'minute-step']) instance._assignEvent(p + '-changed', draw);\n    instance._assignEvent('signal-changed', sub);\n    instance.__tsTimer = () => clearTimeout(timer);\n    draw(); sub();\n}\nexport function disconnectedCallback(instance){ try{ instance.__tsTimer && instance.__tsTimer(); }catch(e){} dbUnsubAll(instance); }\n"
+}

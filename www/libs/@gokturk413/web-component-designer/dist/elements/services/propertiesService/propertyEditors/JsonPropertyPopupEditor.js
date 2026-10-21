@@ -1,0 +1,6 @@
+var i=b;(function(c,d){var h=b,e=c();while(!![]){try{var f=parseInt(h(0x133))/0x1+-parseInt(h(0x12b))/0x2*(parseInt(h(0x12f))/0x3)+parseInt(h(0x12e))/0x4*(parseInt(h(0x12c))/0x5)+-parseInt(h(0x131))/0x6*(parseInt(h(0x130))/0x7)+parseInt(h(0x12d))/0x8*(-parseInt(h(0x134))/0x9)+-parseInt(h(0x12a))/0xa+parseInt(h(0x135))/0xb;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x98be4));function b(c,d){c=c-0x12a;var e=a();var f=e[c];return f;}import{html,BaseCustomWebComponentConstructorAppend}from'@node-projects/base-custom-webcomponent';export class JsonPropertyPopupEditor extends BaseCustomWebComponentConstructorAppend{static [i(0x132)]=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;constructor(){super();}}function a(){var j=['37728cTYYoM','10960620bVdGmi','3434200bXyjdg','74eNaZov','1429685jOFCig','712OGgVuJ','4UyxIja','13251jzgnBB','350lFeONS','54966KnGPdz','template','681266sBjniw'];a=function(){return j;};return a();}
