@@ -1,0 +1,45 @@
+{
+  "properties": {
+    "title": {
+      "type": "string",
+      "default": "Panel"
+    },
+    "activeDot": {
+      "type": "number",
+      "default": 1
+    },
+    "showMenu": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "direction": {
+      "type": "enum",
+      "values": [
+        "row",
+        "column"
+      ],
+      "default": "row"
+    },
+    "gap": {
+      "type": "string",
+      "default": "12px"
+    },
+    "align": {
+      "type": "enum",
+      "values": [
+        "stretch",
+        "flex-start",
+        "center",
+        "flex-end"
+      ],
+      "default": "center"
+    }
+  },
+  "settings": {
+    "width": "600px",
+    "height": "360px"
+  },
+  "html": "<div class=\"ch\"><span id=\"ttl\"></span><span id=\"dots\" class=\"dots\" title=\"Menu\"><i></i><i></i><i></i></span></div><slot></slot>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n:host{display:flex;flex-wrap:wrap;align-content:flex-start;align-items:center;gap:12px;padding:0 16px 16px;position:relative;min-width:0;\n  border-radius:14px;border:1px solid var(--ui-border,#4a5262);\n  background:linear-gradient(180deg,color-mix(in srgb,var(--ui-surface,#323843) 92%,#fff 3%),var(--ui-surface,#323843));box-shadow:0 10px 30px rgba(0,0,0,.25)}\n.ch{flex:0 0 calc(100% + 32px);align-self:stretch;margin:0 -16px 4px;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--ui-border,#4a5262);font-weight:500;font-size:16px}\n.dots{display:flex;gap:5px;cursor:pointer;padding:4px}.dots i{width:6px;height:6px;border-radius:50%;background:var(--ui-dim,#9aa5b5);opacity:.6}\n.dots i.on{background:var(--db-glow);opacity:1;box-shadow:0 0 6px var(--db-glow)}\n::slotted(*){max-width:100%;min-width:0}\n",
+  "script": "export function init(instance){\n    const upd = () => {\n        instance._getDomElement('ttl').textContent = instance.title || '';\n        const dots = instance._getDomElement('dots');\n        dots.style.display = (instance.showMenu === false || instance.showMenu === 'false') ? 'none' : '';\n        const a = Number(instance.activeDot) || 0;\n        [...dots.children].forEach((d, i) => d.classList.toggle('on', i + 1 === a));\n        const col = instance.direction === 'column';\n        instance.style.flexDirection = col ? 'column' : 'row';\n        instance.style.flexWrap = col ? 'nowrap' : 'wrap';\n        instance.style.gap = instance.gap || '12px';\n        instance.style.alignItems = col ? 'stretch' : (instance.align || 'center');\n    };\n    instance._getDomElement('dots').addEventListener('click', () =>\n        instance.dispatchEvent(new CustomEvent('menu', { bubbles: true, composed: true })));\n    for(const p of ['title', 'active-dot', 'show-menu', 'direction', 'gap', 'align']) instance._assignEvent(p + '-changed', upd);\n    upd();\n    // at runtime the controls inside flow: a position left over from the designer's free\n    // placement is dropped (the designer keeps it while editing)\n    if(!document.querySelector('iobroker-webui-app-shell')){\n        const flow = () => { for(const c of instance.children) if(c.style && c.style.position === 'absolute'){ c.style.position = ''; c.style.left = ''; c.style.top = ''; } };\n        flow();\n        instance.__pcMo = new MutationObserver(flow);\n        instance.__pcMo.observe(instance, { childList: true });\n    }\n}\nexport function disconnectedCallback(instance){ try{ instance.__pcMo && instance.__pcMo.disconnect(); }catch(e){} }\n"
+}

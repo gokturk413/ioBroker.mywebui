@@ -1,0 +1,187 @@
+{
+ "properties": {},
+ "settings": {
+  "width": "720px",
+  "height": "480px"
+ },
+ "html": "<div id=\"box\"></div>",
+ "style": ":host{display:block;width:100%;height:100%;}\n#box{width:100%;height:100%;overflow:hidden;}",
+ "script": "// Messages placed on the screen (no window). Its texts come from this\n// control's Translations (every language there, add more), then the project's and the built-in ones;\n// they follow the language at once when it changes.\nexport function init(instance) {\n    const box = instance._getDomElement('box');\n    if (!box || !window.IOB?.mountMessages) return;\n    instance._view = window.IOB.mountMessages(box);\n}\nexport function disconnectedCallback(instance) {\n    instance._view?.dispose();\n    instance._view = null;\n}\n",
+ "translations": {
+  "en": {
+   "writeFeedback": {
+    "pending": "Sent — waiting for the driver to confirm",
+    "ok": "Confirmed by the driver",
+    "same": "The value was already there — drivers do not confirm a non-change",
+    "mismatch": "Confirmed with another value",
+    "timeout": "No confirmation",
+    "quality": "Confirmed with bad quality",
+    "denied": "No write permission",
+    "deniedShort": "denied",
+    "refused": "The write was refused"
+   },
+   "msgs": {
+    "title": "Messages",
+    "ping": "Ping the changes",
+    "gray": "Gray what shows no state",
+    "altHint": "Hold Alt to see the states of the elements",
+    "filter": "Filter: an element or a user",
+    "filterAdmin": "Filter: an element, a state or a user",
+    "pick": "Pick an element on the screen",
+    "all": "All",
+    "updates": "Updates",
+    "commands": "Commands",
+    "update": "update",
+    "command": "command",
+    "empty": "No messages yet",
+    "foot": "{n} messages · {states} states since the page opened",
+    "standsFor": "for {d}",
+    "stood": "stood {d}",
+    "waiting": "waiting for {by}",
+    "restored": "back to {v}",
+    "button": "Messages",
+    "notAllowed": "Messages: not allowed for this user"
+   }
+  },
+  "az": {
+   "writeFeedback": {
+    "pending": "Göndərildi — driver-in təsdiqi gözlənilir",
+    "ok": "Driver təsdiqlədi",
+    "same": "Dəyər onsuz da belə idi — driver dəyişməyən dəyəri təsdiqləmir",
+    "mismatch": "Başqa dəyərlə təsdiqləndi",
+    "timeout": "Təsdiq gəlmədi",
+    "quality": "Pis keyfiyyətlə təsdiqləndi",
+    "denied": "Yazma icazəsi yoxdur",
+    "deniedShort": "icazə yoxdur",
+    "refused": "Yazma rədd edildi"
+   },
+   "msgs": {
+    "title": "Mesajlar",
+    "ping": "Dəyişənləri işıqlandır",
+    "gray": "State göstərməyənləri boz et",
+    "altHint": "Elementlərin state-lərini görmək üçün Alt-ı basılı saxlayın",
+    "filter": "Filtr: element və ya istifadəçi",
+    "filterAdmin": "Filtr: element, state və ya istifadəçi",
+    "pick": "Ekranda element seçin",
+    "all": "Hamısı",
+    "updates": "Yeniləmələr",
+    "commands": "Əmrlər",
+    "update": "yeniləmə",
+    "command": "əmr",
+    "empty": "Hələ mesaj yoxdur",
+    "foot": "Səhifə açılandan bəri {n} mesaj · {states} state",
+    "standsFor": "{d}",
+    "stood": "{d} qaldı",
+    "waiting": "{by} gözlənilir",
+    "restored": "{v}-ə qayıtdı",
+    "button": "Mesajlar",
+    "notAllowed": "Mesajlar: bu istifadəçiyə icazə yoxdur"
+   }
+  },
+  "ru": {
+   "writeFeedback": {
+    "pending": "Отправлено — ожидается подтверждение драйвера",
+    "ok": "Подтверждено драйвером",
+    "same": "Значение уже было таким — драйвер не подтверждает неизменное значение",
+    "mismatch": "Подтверждено с другим значением",
+    "timeout": "Нет подтверждения",
+    "quality": "Подтверждено с плохим качеством",
+    "denied": "Нет права на запись",
+    "deniedShort": "запрещено",
+    "refused": "Запись отклонена"
+   },
+   "msgs": {
+    "title": "Сообщения",
+    "ping": "Подсвечивать изменения",
+    "gray": "Затенить элементы без состояний",
+    "altHint": "Удерживайте Alt, чтобы увидеть состояния элементов",
+    "filter": "Фильтр: элемент или пользователь",
+    "filterAdmin": "Фильтр: элемент, состояние или пользователь",
+    "pick": "Выбрать элемент на экране",
+    "all": "Все",
+    "updates": "Обновления",
+    "commands": "Команды",
+    "update": "обновл.",
+    "command": "команда",
+    "empty": "Сообщений пока нет",
+    "foot": "{n} сообщений · {states} состояний с открытия страницы",
+    "standsFor": "уже {d}",
+    "stood": "держалось {d}",
+    "waiting": "ждём {by}",
+    "restored": "вернулось к {v}",
+    "button": "Сообщения",
+    "notAllowed": "Сообщения: нет доступа для этого пользователя"
+   }
+  },
+  "de": {
+   "writeFeedback": {
+    "pending": "Gesendet — warte auf Bestätigung des Treibers",
+    "ok": "Vom Treiber bestätigt",
+    "same": "Der Wert war schon da — Treiber bestätigen keine Nicht-Änderung",
+    "mismatch": "Mit anderem Wert bestätigt",
+    "timeout": "Keine Bestätigung",
+    "quality": "Mit schlechter Qualität bestätigt",
+    "denied": "Keine Schreibberechtigung",
+    "deniedShort": "verweigert",
+    "refused": "Das Schreiben wurde abgelehnt"
+   },
+   "msgs": {
+    "title": "Meldungen",
+    "ping": "Änderungen aufblinken",
+    "gray": "Elemente ohne Datenpunkt grau",
+    "altHint": "Alt gedrückt halten zeigt die Datenpunkte der Elemente",
+    "filter": "Filter: Element oder Benutzer",
+    "filterAdmin": "Filter: Element, Datenpunkt oder Benutzer",
+    "pick": "Element auf dem Bild wählen",
+    "all": "Alle",
+    "updates": "Werte",
+    "commands": "Befehle",
+    "update": "Wert",
+    "command": "Befehl",
+    "empty": "Noch keine Meldungen",
+    "foot": "{n} Meldungen · {states} Datenpunkte seit dem Öffnen",
+    "standsFor": "seit {d}",
+    "stood": "stand {d}",
+    "waiting": "wartet auf {by}",
+    "restored": "zurück auf {v}",
+    "button": "Meldungen",
+    "notAllowed": "Meldungen: für diesen Benutzer nicht erlaubt"
+   }
+  },
+  "tr": {
+   "writeFeedback": {
+    "pending": "Gönderildi — sürücünün onayı bekleniyor",
+    "ok": "Sürücü onayladı",
+    "same": "Değer zaten böyleydi — sürücüler değişmeyen değeri onaylamaz",
+    "mismatch": "Başka bir değerle onaylandı",
+    "timeout": "Onay gelmedi",
+    "quality": "Kötü kaliteyle onaylandı",
+    "denied": "Yazma izni yok",
+    "deniedShort": "izin yok",
+    "refused": "Yazma reddedildi"
+   },
+   "msgs": {
+    "title": "Mesajlar",
+    "ping": "Değişenleri vurgula",
+    "gray": "Durum göstermeyenleri gri yap",
+    "altHint": "Öğelerin durumlarını görmek için Alt tuşunu basılı tutun",
+    "filter": "Filtre: öğe veya kullanıcı",
+    "filterAdmin": "Filtre: öğe, durum veya kullanıcı",
+    "pick": "Ekranda bir öğe seçin",
+    "all": "Tümü",
+    "updates": "Güncellemeler",
+    "commands": "Komutlar",
+    "update": "güncelleme",
+    "command": "komut",
+    "empty": "Henüz mesaj yok",
+    "foot": "Sayfa açıldığından beri {n} mesaj · {states} durum",
+    "standsFor": "{d}",
+    "stood": "{d} kaldı",
+    "waiting": "{by} bekleniyor",
+    "restored": "{v} değerine döndü",
+    "button": "Mesajlar",
+    "notAllowed": "Mesajlar: bu kullanıcıya izin yok"
+   }
+  }
+ }
+}
