@@ -1,0 +1,5 @@
+function a(){var i=['5986308fywNGv','45AAnxPS','2368910bwUrqV','11VfBkoD','5qkUfyh','8255178HUXWig','758572moHEPb','1480527gWvRph','36184UdgaoG','3ZEHUGy','7teCpeJ','1016832LYgROF'];a=function(){return i;};return a();}function b(c,d){c=c-0x18a;var e=a();var f=e[c];return f;}(function(c,d){var h=b,e=c();while(!![]){try{var f=-parseInt(h(0x195))/0x1+-parseInt(h(0x18d))/0x2+parseInt(h(0x18b))/0x3*(-parseInt(h(0x194))/0x4)+-parseInt(h(0x192))/0x5*(-parseInt(h(0x193))/0x6)+parseInt(h(0x18c))/0x7*(-parseInt(h(0x18a))/0x8)+-parseInt(h(0x18f))/0x9*(-parseInt(h(0x190))/0xa)+-parseInt(h(0x191))/0xb*(-parseInt(h(0x18e))/0xc);if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xd5e24));import{BaseCustomWebComponentConstructorAppend,css,html}from'@node-projects/base-custom-webcomponent';export class EditTextOverlay extends BaseCustomWebComponentConstructorAppend{static ['style']=css``;static ['template']=html`
+    <div>
+      <input type="text">
+    </div>
+  `;}

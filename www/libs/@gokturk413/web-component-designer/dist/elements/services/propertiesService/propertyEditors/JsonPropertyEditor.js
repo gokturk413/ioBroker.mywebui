@@ -1,0 +1,6 @@
+(function(c,d){const h=b,e=c();while(!![]){try{const f=-parseInt(h(0xb7))/0x1*(-parseInt(h(0xb6))/0x2)+-parseInt(h(0xb9))/0x3*(-parseInt(h(0xc1))/0x4)+-parseInt(h(0xc0))/0x5+parseInt(h(0xbe))/0x6*(parseInt(h(0xba))/0x7)+-parseInt(h(0xbb))/0x8+parseInt(h(0xbc))/0x9+parseInt(h(0xb3))/0xa;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xc041a));function b(c,d){c=c-0xb2;const e=a();let f=e[c];return f;}import{BasePropertyEditor}from'./BasePropertyEditor.js';function a(){const k=['readonly','10215JZDoWZ','59143UdUVFu','5562672OLcKRc','4326399AclkAv','element','246bzOyqi','_valueChanged','3105615YLQCvs','36TaZmru','input','765340zGUJxo','cloneNode','_input','155952fmlnNq','15vBzkAL'];a=function(){return k;};return a();}import{html}from'@node-projects/base-custom-webcomponent';export class JsonPropertyEditor extends BasePropertyEditor{static ['template']=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;['_input'];constructor(c){const i=b;super(c);let d=JsonPropertyEditor['template']['content'][i(0xb4)](!![]);this[i(0xb5)]=d['getElementById'](i(0xb2));if(c[i(0xb8)])this['_input']['readOnly']=!![];this['_input']['onchange']=f=>this[i(0xbf)](this[i(0xb5)]['value']),this[i(0xbd)]=d;}['refreshValue'](c,d){const j=b;this[j(0xb5)]['value']=d;}}

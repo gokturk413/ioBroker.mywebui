@@ -1,0 +1,40 @@
+{
+  "properties": {
+    "gate": {
+      "type": "enum",
+      "values": [
+        "AND",
+        "OR",
+        "XOR",
+        "NAND",
+        "NOR",
+        "NOT",
+        "ARROW"
+      ],
+      "default": "AND"
+    },
+    "in1": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "in2": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "out": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "settings": {
+    "width": "150px",
+    "height": "50px"
+  },
+  "html": "<div id=\"g\" class=\"lg\"><i id=\"i1\" class=\"pin p1\"></i><i id=\"i2\" class=\"pin p2\"></i><span class=\"w w1\"></span><span class=\"w w2\"></span><span id=\"body\" class=\"gate\"></span><span class=\"w wo\"></span><i id=\"o\" class=\"pin po\"></i></div>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n.lg{position:relative;height:100%}\n.gate{position:absolute;left:24px;right:24px;top:50%;height:34px;transform:translateY(-50%);border-radius:17px;display:grid;place-items:center;font:700 14px 'IBM Plex Sans',sans-serif;letter-spacing:.04em;\n  background:linear-gradient(180deg,#f2f4f7,#c9cfd8);color:#2a313b;box-shadow:0 3px 8px rgba(0,0,0,.3)}\n.lg.on .gate{box-shadow:0 0 0 2px var(--db-glow),0 0 16px var(--db-glow)}\n.w{position:absolute;height:2px;background:var(--ui-border,#4a5262)}\n.w1{left:8px;width:16px;top:calc(50% - 9px)}.w2{left:8px;width:16px;top:calc(50% + 7px)}.wo{right:8px;width:16px;top:calc(50% - 1px)}\n.w.on{background:var(--db-glow);box-shadow:0 0 6px var(--db-glow)}\n.pin{position:absolute;width:9px;height:9px;border-radius:50%;border:2px solid var(--ui-dim,#9aa5b5);background:var(--ui-surface,#323843)}\n.p1{left:0;top:calc(50% - 13px)}.p2{left:0;top:calc(50% + 3px)}.po{right:0;top:calc(50% - 5px)}\n.pin.on{background:var(--db-glow);border-color:var(--db-glow);box-shadow:0 0 8px var(--db-glow)}\n.lg.one .p2,.lg.one .w2{display:none}.lg.one .w1{top:calc(50% - 1px)}.lg.one .p1{top:calc(50% - 5px)}\n",
+  "script": "export function evalGate(gate, a, b){\n    switch(gate){\n        case 'AND': return a && b;\n        case 'OR': return a || b;\n        case 'XOR': return a !== b;\n        case 'NAND': return !(a && b);\n        case 'NOR': return !(a || b);\n        case 'NOT': return !a;\n        default: return a;          // ARROW passes its input on\n    }\n}\nexport function init(instance){\n    const $ = (id) => instance._getDomElement(id);\n    const yes = (v) => v === true || v === 1 || v === 'true' || v === '1';\n    const upd = () => {\n        const gate = instance.gate || 'AND', one = gate === 'NOT' || gate === 'ARROW';\n        const a = yes(instance.in1), b = yes(instance.in2);\n        const out = instance.out === '' || instance.out == null ? evalGate(gate, a, b) : yes(instance.out);\n        $('body').textContent = instance.label || (gate === 'ARROW' ? '⇒' : gate);\n        const g = $('g');\n        g.classList.toggle('one', one); g.classList.toggle('on', out);\n        $('i1').classList.toggle('on', a); $('i2').classList.toggle('on', b); $('o').classList.toggle('on', out);\n        const w = g.querySelectorAll('.w'); w[0].classList.toggle('on', a); w[1].classList.toggle('on', b); w[2].classList.toggle('on', out);\n        if(instance.__out !== out){ instance.__out = out; instance.dispatchEvent(new CustomEvent('output-changed', { detail: { value: out }, bubbles: true, composed: true })); }\n    };\n    for(const p of ['gate', 'in1', 'in2', 'out', 'label']) instance._assignEvent(p + '-changed', upd);\n    upd();\n}\n"
+}
