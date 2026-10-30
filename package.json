@@ -34,7 +34,7 @@
     "@iobroker/adapter-core": "^3.3.2",
     "@types/node": "^24.7.2",
     "esbuild": "^0.28.1",
-    "happy-dom": "^20.14.5",
+    "happy-dom": "^21.0.0",
     "quickjs-emscripten": "^0.32.0",
     "takumi-pdf": "^0.15.0",
     "three": "^0.184.0"
