@@ -1,0 +1,6 @@
+function a(){const l=['template','1248338JWKhGw','2211748XLAhry','2611034MywKpx','_input','8705448KGHrsc','input','36847032gASRyS','content','351idAqvA','534150DLXsMj','cloneNode','readonly','element','41896KqHUbO','value','onchange'];a=function(){return l;};return a();}const i=b;(function(c,d){const h=b,e=c();while(!![]){try{const f=parseInt(h(0x6f))/0x1+parseInt(h(0x71))/0x2+parseInt(h(0x66))/0x3*(parseInt(h(0x6b))/0x4)+-parseInt(h(0x67))/0x5+parseInt(h(0x73))/0x6+parseInt(h(0x70))/0x7+-parseInt(h(0x75))/0x8;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xcb7c4));function b(c,d){c=c-0x65;const e=a();let f=e[c];return f;}import{BasePropertyEditor}from'./BasePropertyEditor.js';import{html}from'@node-projects/base-custom-webcomponent';export class JsonPropertyEditor extends BasePropertyEditor{static [i(0x6e)]=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;[i(0x72)];constructor(c){const j=i;super(c);let d=JsonPropertyEditor[j(0x6e)][j(0x65)][j(0x68)](!![]);this['_input']=d['getElementById'](j(0x74));if(c[j(0x69)])this['_input']['readOnly']=!![];this['_input'][j(0x6d)]=f=>this['_valueChanged'](this[j(0x72)][j(0x6c)]),this[j(0x6a)]=d;}['refreshValue'](c,d){const k=i;this[k(0x72)][k(0x6c)]=d;}}

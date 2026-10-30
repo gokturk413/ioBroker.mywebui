@@ -1,0 +1,32 @@
+{
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "Remaining Time"
+    },
+    "seconds": {
+      "type": "number",
+      "default": 38
+    },
+    "endTime": {
+      "type": "number",
+      "default": 0
+    },
+    "format": {
+      "type": "enum",
+      "values": [
+        "auto",
+        "mm:ss",
+        "hh:mm:ss"
+      ],
+      "default": "auto"
+    }
+  },
+  "settings": {
+    "width": "200px",
+    "height": "72px"
+  },
+  "html": "<div class=\"kpi\"><span id=\"lbl\" class=\"lbl\"></span><span id=\"val\" class=\"val mono\"></span></div>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n.kpi{height:100%;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:10px 14px;border-radius:12px;background:var(--ui-surface-2,#3a414d);border:1px solid var(--ui-border,#4a5262)}\n.lbl{font-size:13px;color:var(--ui-dim,#9aa5b5)}.val{font-size:28px;font-weight:500}\n",
+  "script": "export function fmtDuration(sec, format){\n    sec = Math.max(0, Math.floor(Number(sec) || 0));\n    const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60;\n    const p = (n) => String(n).padStart(2, '0');\n    if(format === 'hh:mm:ss' || (format !== 'mm:ss' && h > 0)) return p(h) + ':' + p(m) + ':' + p(s);\n    return p(h * 60 + m) + ':' + p(s);\n}\nexport function init(instance){\n    const $ = (id) => instance._getDomElement(id);\n    const left = () => {\n        const end = Number(instance.endTime) || 0;\n        return end > 0 ? (end - Date.now()) / 1000 : Number(instance.seconds) || 0;\n    };\n    const upd = () => { $('lbl').textContent = instance.label || ''; $('val').textContent = fmtDuration(left(), instance.format); };\n    for(const p of ['label', 'seconds', 'end-time', 'format']) instance._assignEvent(p + '-changed', upd);\n    clearInterval(instance.__cdTimer);\n    // with an end time the tile counts down by itself\n    instance.__cdTimer = setInterval(() => { if(Number(instance.endTime) > 0) upd(); }, 1000);\n    upd();\n}\nexport function disconnectedCallback(instance){ clearInterval(instance.__cdTimer); }\n"
+}
