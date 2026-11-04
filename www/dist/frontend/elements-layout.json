@@ -1,0 +1,44 @@
+{
+    "elements": [
+        {
+            "tag": "webui-flex-container",
+            "name": "Flex Container",
+            "defaultWidth": "300px",
+            "defaultHeight": "150px",
+            "defaultStyles": { "position": "relative" }
+        },
+        {
+            "tag": "webui-split-container",
+            "name": "Split Container",
+            "defaultWidth": "400px",
+            "defaultHeight": "300px",
+            "defaultStyles": { "position": "relative" },
+            "defaultContent": "<div data-split-pane=\"1\"></div><div data-split-handle=\"\"></div><div data-split-pane=\"2\"></div>"
+        },
+        {
+            "tag": "webui-tab-container",
+            "name": "Tab Container",
+            "defaultWidth": "400px",
+            "defaultHeight": "300px",
+            "defaultStyles": { "position": "relative" },
+            "defaultAttributes": { "tab-labels": "Tab 1|Tab 2", "active-tab": "0" },
+            "defaultContent": "<div class=\"webui-tab-active\"></div><div></div>"
+        },
+        {
+            "tag": "webui-breakpoint-container",
+            "name": "Breakpoint Container",
+            "defaultWidth": "300px",
+            "defaultHeight": "150px",
+            "defaultStyles": { "position": "relative" },
+            "defaultAttributes": { "breakpoint": "768" }
+        },
+        {
+            "tag": "webui-flex-repeater",
+            "name": "Flex Repeater",
+            "defaultWidth": "300px",
+            "defaultHeight": "80px",
+            "defaultStyles": { "position": "relative" },
+            "defaultAttributes": { "count": "3", "direction": "row", "gap": "8px" }
+        }
+    ]
+}
