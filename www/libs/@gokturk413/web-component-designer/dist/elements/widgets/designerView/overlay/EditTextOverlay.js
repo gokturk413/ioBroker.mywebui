@@ -1,0 +1,5 @@
+var i=b;function a(){var j=['518995XPYHnb','1156OjpaLO','14ibqHaN','117kDpSEW','5378scaUHC','4878fkZSZU','7338232ULwVJP','238130bxnwRO','54oYPELY','649092IWJndH','style','1720696NvkFEL'];a=function(){return j;};return a();}(function(c,d){var h=b,e=c();while(!![]){try{var f=parseInt(h(0x127))/0x1*(parseInt(h(0x123))/0x2)+-parseInt(h(0x124))/0x3*(-parseInt(h(0x120))/0x4)+parseInt(h(0x12b))/0x5+-parseInt(h(0x128))/0x6*(parseInt(h(0x121))/0x7)+parseInt(h(0x12a))/0x8+-parseInt(h(0x122))/0x9*(-parseInt(h(0x126))/0xa)+-parseInt(h(0x125))/0xb;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x57ea3));function b(c,d){c=c-0x120;var e=a();var f=e[c];return f;}import{BaseCustomWebComponentConstructorAppend,css,html}from'@node-projects/base-custom-webcomponent';export class EditTextOverlay extends BaseCustomWebComponentConstructorAppend{static [i(0x129)]=css``;static ['template']=html`
+    <div>
+      <input type="text">
+    </div>
+  `;}

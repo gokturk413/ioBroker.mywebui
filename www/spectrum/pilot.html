@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spectrum 2 — 2D Property Grid + Theme System</title>
+  <style>
+    html, body { margin: 0; min-height: 100%; font-family: 'Adobe Clean', 'Segoe UI', system-ui, sans-serif; }
+    body { display: flex; gap: 24px; padding: 24px; box-sizing: border-box; align-items: flex-start;
+      background: #0e0e10; color: #e6e6e6; transition: background .2s; }
+    body[data-theme="light"] { background: #f4f4f5; color: #1d1d1f; }
+    .intro { max-width: 300px; opacity: .9; font-size: 13px; line-height: 1.6; }
+    .intro h1 { font-size: 17px; margin: 0 0 8px; }
+    .intro b { color: var(--accent, #5b9dff); }
+
+    #app { width: 360px; }
+
+    /* theme switcher bar */
+    .pg-themebar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .pg-tb-lbl { font-size: 12px; font-weight: 700; opacity: .7; }
+    .pg-accents { display: flex; gap: 5px; }
+    .pg-acc { width: 18px; height: 18px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0; }
+    .pg-acc.on { border-color: #fff; box-shadow: 0 0 0 1px #000; }
+
+    /* ── 2D property grid ── */
+    .pg-panel { background: var(--spectrum-gray-100, #1d1d1f); border: 1px solid var(--spectrum-gray-300, #2c2c2e);
+      border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+
+    .pg-head { padding: 8px 10px; background: var(--spectrum-gray-75, #161618); border-bottom: 1px solid var(--spectrum-gray-300, #2c2c2e); }
+    .pg-head-row { display: grid; grid-template-columns: 14px 14px auto 1fr; align-items: center; gap: 5px; margin: 4px 0; }
+    .pg-head-row.two { grid-template-columns: auto 1fr; }
+    .pg-head-lbl { font-size: 11px; font-weight: 700; color: var(--spectrum-gray-700, #9aa4b2); }
+    .pg-type { color: var(--accent, #7ab4d8); font-size: 12px; }
+    .pg-hi { width: 100%; }
+
+    /* tabs — accent active underline */
+    .pg-tabs { display: flex; background: var(--spectrum-gray-75, #161618); border-bottom: 1px solid var(--spectrum-gray-300, #2c2c2e); overflow-x: auto; }
+    .pg-tab { padding: 8px 12px; font-size: 11px; font-weight: 700; letter-spacing: .3px; color: var(--spectrum-gray-600, #8a8a90);
+      cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; }
+    .pg-tab:hover { color: var(--spectrum-gray-900, #cfd6e0); }
+    .pg-tab.active { color: var(--spectrum-gray-900, #fff); border-bottom-color: var(--accent, #e54c8a); }
+
+    .pg-rows { padding: 4px 0; max-height: 520px; overflow-y: auto; }
+    .pg-row { display: grid; grid-template-columns: 14px 96px 1fr; align-items: center; gap: 8px; padding: 2px 10px; min-height: 30px; }
+    .pg-row:hover { background: var(--spectrum-gray-200, #232327); }
+
+    /* □ binding indicator — preserved look/behavior */
+    .pg-sq { width: 11px; height: 11px; box-sizing: border-box; border: 1px solid var(--spectrum-gray-600, #8a93a0);
+      cursor: pointer; display: inline-block; border-radius: 1px; }
+    .pg-sq:hover { border-color: var(--accent, #5b9dff); }
+
+    .pg-name { font-size: 12px; color: var(--spectrum-gray-800, #d6dae0); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pg-cell { display: flex; align-items: center; gap: 4px; min-width: 0; }
+    .pg-cell > sp-textfield, .pg-cell > sp-number-field, .pg-cell > sp-picker { flex: 1; min-width: 0; }
+    .pg-bound { flex: 1; color: #e08020; font-family: Consolas, monospace; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .pg-ctx { display: none; position: fixed; z-index: 50; background: var(--spectrum-gray-200, #232327); border: 1px solid var(--spectrum-gray-400, #3a3a3e);
+      border-radius: 6px; min-width: 140px; box-shadow: 0 6px 18px rgba(0,0,0,.6); padding: 4px 0; }
+    .pg-ctx-i { padding: 6px 14px; font-size: 12px; color: var(--spectrum-gray-800, #d6dae0); cursor: pointer; }
+    .pg-ctx-i:hover { background: var(--accent, #3a6ea8); color: #fff; }
+    .pg-ctx-sep { height: 1px; background: var(--spectrum-gray-400, #3a3a3e); margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <div class="intro">
+    <h1>🅢 Spectrum 2 — 2D Property Grid</h1>
+    <p><b>Theme sistemi:</b> yuxarıdan Light / Dark / Darkest seçin + accent rəng dəyişin (yadda saxlanılır).</p>
+    <p><b>□ binding</b> qorunur: kvadrata klik (boş→ağ→bound), sağ-klik → menu. Content sətrində <b>2 kvadrat</b> (innerHTML + textContent).</p>
+    <p>Dəyər xanaları Spectrum: number-field, textfield, switch, picker, swatch.</p>
+  </div>
+  <div id="app"></div>
+  <script type="module" src="./pilot.bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+/* dock-spawn-ts panel chrome — Spectrum-inspired, themed via CSS vars from AppShell.
+   Loaded into the dock-spawn-ts shadowRoot (see IobrokerWebuiAppShell.ready()).
+   CSS custom properties (--text-color, --dark-grey …) inherit across the shadow
+   boundary from documentElement, so they resolve here.
+   NOTE: dock-spawn ships its own base stylesheet inside the same shadow root with
+   hardcoded colours (#808080 tabs, #333 titlebars). Visual declarations below use
+   !important so the themed values win in every theme (light / dark / others). */
+
+/* ── Tab host (the strip that holds the tab handles) ──────────────────── */
+.dockspan-tab-host {
+  background: var(--dark-grey, #232733) !important;
+}
+
+/* the row of tab handles */
+.dockspan-tab-handle-list-container {
+  background: var(--dark-grey, #232733) !important;
+  border-bottom: 1px solid var(--input-border-color, #4a5570) !important;
+}
+
+/* ── Individual tab handle ────────────────────────────────────────────── */
+.dockspan-tab-handle {
+  background: transparent !important;
+  border-bottom: 2px solid transparent;
+  border-radius: 4px 4px 0 0;
+  color: var(--text-color, #e8eaf0) !important;
+  opacity: 0.55;
+  transition: background 0.12s, opacity 0.12s;
+}
+
+.dockspan-tab-handle:hover {
+  background: var(--medium-grey, #2f3545) !important;
+  opacity: 0.85;
+}
+
+/* active / selected tab — dock-spawn adds the *-selected class */
+.dockspan-tab-handle-selected {
+  background: var(--medium-grey, #2f3545) !important;
+  border-bottom: 2px solid var(--highlight-pink, #e91e63) !important;
+  opacity: 1 !important;
+}
+
+.dockspan-tab-handle-text {
+  margin-top: 2px;
+  color: inherit !important;
+  font-family: 'Adobe Clean', 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.dockspan-tab-handle-selected .dockspan-tab-handle-text {
+  font-weight: 600;
+}
+
+.dockspan-tab-handle-close-button:hover {
+  color: var(--highlight-pink, #e91e63) !important;
+}
+
+/* ── Multi-row tab strip (Properties dock only) ───────────────────────────
+   The Properties dock carries 11 tabs in a ~20% wide panel. dock-spawn's
+   TabHost.resizeTabListElement() shrinks every handle with an inline
+   style.width so they all fit ONE row, which truncates the labels to
+   "Pr… S… R… Vi…". Here the strip wraps onto as many rows as it needs and
+   every tab shows its full name instead.
+
+   `width: auto !important` is what defeats that inline width — without it
+   nothing below has any effect. Scoped to .webui-tabs-wrap, which AppShell
+   puts on this one tab host, so the left and bottom docks keep the stock
+   single-row behaviour. */
+.webui-tabs-wrap .dockspan-tab-handle-list-container {
+  flex-wrap: wrap;
+  height: auto !important;
+  overflow: visible;
+  padding: 2px 2px 0;
+}
+
+.webui-tabs-wrap .dockspan-tab-handle {
+  width: auto !important;
+  flex: 1 1 auto;
+  float: none;
+  text-align: center;
+  height: 21px;
+  padding-right: 0;
+  border: 1px solid var(--input-border-color, #4a5570);
+  border-bottom: 2px solid transparent;
+  border-radius: 4px 4px 0 0;
+}
+
+.webui-tabs-wrap .dockspan-tab-handle-text {
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  width: auto;
+  float: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0 3px;
+}
+
+.webui-tabs-wrap .dockspan-tab-handle-selected {
+  border-bottom: 2px solid var(--highlight-pink, #e91e63) !important;
+}
+
+/* ── Content area below tabs ──────────────────────────────────────────── */
+.dockspan-tab-content {
+  background: var(--medium-grey, #2f3545) !important;
+  color: var(--text-color, #e8eaf0) !important;
+}
+
+/* ── Panel title bar (PROPERTIES / SETTINGS … row with float/close) ───── */
+.panel-titlebar {
+  background: var(--dark-grey, #232733) !important;
+  border-bottom: 1px solid var(--input-border-color, #4a5570) !important;
+  color: var(--text-color, #e8eaf0) !important;
+}
+
+.panel-titlebar-text {
+  color: var(--text-color, #e8eaf0) !important;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-top: 5px;
+}
+
+/* titlebar buttons (close / float / maximize / minimize) */
+.panel-titlebar-button-close,
+.panel-titlebar-button-float,
+.panel-titlebar-button-maximize,
+.panel-titlebar-button-minimize {
+  color: var(--text-color, #e8eaf0) !important;
+  opacity: 0.75;
+}
+
+.panel-titlebar-button-close:hover,
+.panel-titlebar-button-float:hover,
+.panel-titlebar-button-maximize:hover,
+.panel-titlebar-button-minimize:hover {
+  color: var(--highlight-pink, #e91e63) !important;
+  opacity: 1;
+}
+
+/* Panel text colour only. NOTE: do NOT force an opaque background on these
+   wrappers — in floating dialogs the panel-base background paints OVER the
+   editor content (e.g. Monaco), turning dialogs into a black box. Docked panel
+   content components supply their own themed backgrounds. */
+.dock-container,
+.panel-content,
+.panel-content-wrapper,
+.panel-base {
+  color: var(--text-color, #e8eaf0) !important;
+}
