@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Editor Demo - mywebui</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-accent: #0098ff;
+      --color-bg-primary: #1e1e1e;
+      --color-bg-secondary: #2a2a2a;
+      --color-bg-tertiary: #333333;
+      --color-text-primary: #e0e0e0;
+      --color-text-secondary: #999999;
+      --color-border: #444444;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      overflow: hidden;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--color-bg-secondary);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      background: var(--color-accent);
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      box-shadow: 0 2px 8px rgba(0, 152, 255, 0.3);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .content {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #viewport {
+      flex: 1;
+      width: 100%;
+      background: var(--color-bg-tertiary);
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 18px;
+      color: var(--color-text-secondary);
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      background: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border);
+      font-size: 12px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4caf50;
+    }
+
+    .info-panel {
+      padding: 12px 16px;
+      background: var(--color-bg-tertiary);
+      border-top: 1px solid var(--color-border);
+      font-size: 12px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+    }
+
+    .label {
+      color: var(--color-text-secondary);
+    }
+
+    .value {
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <div class="header">
+      <h1>🎨 3D Editor Demo</h1>
+      <div class="header-actions">
+        <button class="btn" onclick="loadSampleModel()">📦 Load Sample Model</button>
+        <button class="btn" onclick="toggleGrid()">🎯 Toggle Grid</button>
+        <button class="btn" onclick="exportScene()">📤 Export Scene</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div id="viewport">
+        <div class="loading">🚀 Loading 3D Editor...</div>
+      </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-panel">
+      <div class="info-item">
+        <span class="label">Status:</span>
+        <span class="value" id="status">Initializing...</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Selected Object:</span>
+        <span class="value" id="selected">None</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Models Loaded:</span>
+        <span class="value" id="model-count">0</span>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-item">
+        <span class="status-indicator"></span>
+        <span>3D Editor Ready</span>
+      </div>
+      <div class="status-item" style="margin-left: auto;">
+        <span>Version 1.39.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import Three.js from npm (local node_modules) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/mywebui/node_modules/three/build/three.module.js",
+        "three/addons/": "/mywebui/node_modules/three/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    let editor = null;
+    let scene = null;
+    let camera = null;
+    let renderer = null;
+    let controls = null;
+    let gridHelper = null;
+    let models = [];
+
+    async function initializeEditor() {
+      try {
+        const viewport = document.getElementById('viewport');
+
+        // Setup Three.js scene
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x333333);
+
+        // Camera
+        const width = viewport.clientWidth;
+        const height = viewport.clientHeight;
+        camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+        camera.position.set(10, 10, 10);
+
+        // Renderer
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(width, height);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFShadowShadowMap;
+        viewport.innerHTML = '';
+        viewport.appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(10, 10, 10);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.mapSize.width = 2048;
+        directionalLight.shadow.mapSize.height = 2048;
+        scene.add(directionalLight);
+
+        // Grid
+        gridHelper = new THREE.GridHelper(20, 20, 0x888888, 0x444444);
+        gridHelper.position.y = -0.01;
+        scene.add(gridHelper);
+
+        // Axes helper
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
+
+        // Controls
+        controls = new OrbitControls(camera, renderer.domElement);
+        controls.autoRotate = false;
+        controls.enableZoom = true;
+        controls.enablePan = true;
+
+        // Animation loop
+        function animate() {
+          requestAnimationFrame(animate);
+          controls.update();
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', onWindowResize);
+
+        // Update status
+        updateStatus('Ready');
+
+        console.log('✅ 3D Editor initialized successfully');
+      } catch (error) {
+        console.error('❌ Failed to initialize editor:', error);
+        updateStatus('Error: ' + error.message);
+      }
+    }
+
+    function onWindowResize() {
+      const viewport = document.getElementById('viewport');
+      const width = viewport.clientWidth;
+      const height = viewport.clientHeight;
+
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+
+    function updateStatus(message) {
+      document.getElementById('status').textContent = message;
+    }
+
+    function loadSampleModel() {
+      if (!scene) return;
+
+      // Create a sample box
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshStandardMaterial({
+        color: 0x0098ff,
+        metalness: 0.3,
+        roughness: 0.4
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.position.set(0, 0.5, 0);
+
+      scene.add(mesh);
+      models.push(mesh);
+
+      document.getElementById('model-count').textContent = models.length;
+      updateStatus(`Model loaded: Box (${models.length})`);
+
+      // Select it
+      selectObject(mesh);
+    }
+
+    function toggleGrid() {
+      if (!gridHelper) return;
+      gridHelper.visible = !gridHelper.visible;
+      updateStatus(gridHelper.visible ? 'Grid: On' : 'Grid: Off');
+    }
+
+    function selectObject(object) {
+      document.getElementById('selected').textContent = object.type;
+    }
+
+    function exportScene() {
+      const sceneData = {
+        camera: {
+          position: camera.position.toArray(),
+          rotation: camera.rotation.toArray(),
+        },
+        objects: models.map(obj => ({
+          type: obj.type,
+          position: obj.position.toArray(),
+          rotation: obj.rotation.toArray(),
+          scale: obj.scale.toArray(),
+        })),
+      };
+
+      const json = JSON.stringify(sceneData, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `3d-scene-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      updateStatus('Scene exported');
+    }
+
+    // Make functions global
+    window.loadSampleModel = loadSampleModel;
+    window.toggleGrid = toggleGrid;
+    window.exportScene = exportScene;
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', initializeEditor);
+  </script>
+</body>
+</html>
