@@ -1,0 +1,5 @@
+function b(c,d){c=c-0x1c1;var e=a();var f=e[c];return f;}var i=b;(function(c,d){var h=b,e=c();while(!![]){try{var f=-parseInt(h(0x1c3))/0x1*(-parseInt(h(0x1c6))/0x2)+parseInt(h(0x1c4))/0x3*(parseInt(h(0x1c9))/0x4)+-parseInt(h(0x1c8))/0x5*(parseInt(h(0x1ce))/0x6)+parseInt(h(0x1cc))/0x7+parseInt(h(0x1c1))/0x8*(parseInt(h(0x1c5))/0x9)+-parseInt(h(0x1c2))/0xa+-parseInt(h(0x1c7))/0xb;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x7e8cd));import{html}from'@node-projects/base-custom-webcomponent';import{BasicStackedToolbarExtension}from'../BasicStackedToolbarExtension.js';export class BlockToolbarExtension extends BasicStackedToolbarExtension{static [i(0x1cb)]=html`
+      <div style="height: 100%; width: 100%;">
+        ${BasicStackedToolbarExtension['basicTemplate']}
+      </div>
+    `;constructor(c,d,e){super(c,d,e);}[i(0x1cd)](c,d){var j=i;super[j(0x1cd)](c,d),this[j(0x1ca)](c,d);}}function a(){var k=['3GbOjWO','697908GKBIXk','803637sClQPw','577086WAxSIE','8336097lgHbKZ','4002415tDplJC','4IpyURB','refresh','template','4274627FRnYPf','extend','6gPRmTU','72UtjpZR','4359040JCPtaP'];a=function(){return k;};return a();}
