@@ -1,0 +1,6 @@
+const i=b;(function(c,d){const h=b,e=c();while(!![]){try{const f=parseInt(h(0x1c4))/0x1+-parseInt(h(0x1c9))/0x2*(parseInt(h(0x1c8))/0x3)+-parseInt(h(0x1d2))/0x4+-parseInt(h(0x1c5))/0x5+-parseInt(h(0x1d1))/0x6+-parseInt(h(0x1cb))/0x7*(-parseInt(h(0x1ca))/0x8)+parseInt(h(0x1cc))/0x9;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xaa5e8));import{BasePropertyEditor}from'./BasePropertyEditor.js';function b(c,d){c=c-0x1c4;const e=a();let f=e[c];return f;}import{html}from'@node-projects/base-custom-webcomponent';export class JsonPropertyEditor extends BasePropertyEditor{static ['template']=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;[i(0x1cd)];constructor(c){const j=i;super(c);let d=JsonPropertyEditor['template'][j(0x1c6)]['cloneNode'](!![]);this[j(0x1cd)]=d['getElementById']('input');if(c[j(0x1cf)])this['_input'][j(0x1d0)]=!![];this[j(0x1cd)][j(0x1ce)]=f=>this['_valueChanged'](this[j(0x1cd)]['value']),this['element']=d;}[i(0x1c7)](c,d){this['_input']['value']=d;}}function a(){const k=['readonly','readOnly','3788754rZUXaG','5280088cCXAni','173833ypOoow','2758215iYXJSl','content','refreshValue','413577fmbsBn','2yaLbYX','2959224iaMYjt','7UHnXTA','25155711gATmgl','_input','onchange'];a=function(){return k;};return a();}
