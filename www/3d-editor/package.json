@@ -1,0 +1,24 @@
+{
+  "name": "@mywebui/3d-editor",
+  "version": "1.0.0",
+  "description": "3D Editor for mywebui using Three.js and webcomponents",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./control": "./dist/3d-editor-control.js",
+    "./webcomponent": "./dist/3d-editor.element.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "three": "^r128"
+  },
+  "devDependencies": {
+    "@types/three": "^r128",
+    "typescript": "^5.7"
+  }
+}

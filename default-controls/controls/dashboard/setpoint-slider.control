@@ -1,0 +1,47 @@
+{
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "Main motor"
+    },
+    "signal": {
+      "type": "signal",
+      "default": ""
+    },
+    "signalHigh": {
+      "type": "signal",
+      "default": ""
+    },
+    "min": {
+      "type": "number",
+      "default": 1000
+    },
+    "max": {
+      "type": "number",
+      "default": 1400
+    },
+    "step": {
+      "type": "number",
+      "default": 10
+    },
+    "unit": {
+      "type": "string",
+      "default": ""
+    },
+    "decimals": {
+      "type": "number",
+      "default": 0
+    },
+    "showLabel": {
+      "type": "boolean",
+      "default": "true"
+    }
+  },
+  "settings": {
+    "width": "520px",
+    "height": "86px"
+  },
+  "html": "<div class=\"sld\"><span id=\"nm\" class=\"nm\"></span><div id=\"tr\" class=\"track\"><div class=\"ticks\"></div><div id=\"fill\" class=\"fill\"></div><div id=\"t1\" class=\"thumb\" tabindex=\"0\" role=\"slider\"><span class=\"bub mono\"></span></div><div id=\"t2\" class=\"thumb\" tabindex=\"0\" role=\"slider\"><span class=\"bub mono\"></span></div></div><div class=\"mm mono\"><span id=\"mn\"></span><span id=\"mx\"></span></div></div>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n.sld{height:100%;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;align-items:center;padding-top:22px;box-sizing:border-box}\n.sld.nolabel{grid-template-columns:minmax(0,1fr)}.sld.nolabel .nm{display:none}.sld.nolabel .mm{grid-column:1}\n.nm{font-size:14px;color:var(--ui-dim,#9aa5b5)}\n.track{position:relative;height:30px;margin:0 11px}\n.ticks{position:absolute;left:0;right:0;top:4px;height:16px;background:repeating-linear-gradient(90deg,var(--ui-border,#4a5262) 0 1px,transparent 1px 8px)}\n.ticks::after{content:\"\";position:absolute;inset:0;background:repeating-linear-gradient(90deg,var(--ui-dim,#9aa5b5) 0 1px,transparent 1px 40px);opacity:.6}\n.fill{position:absolute;top:11px;height:3px;border-radius:2px;background:var(--accent,#57b6ff);box-shadow:0 0 8px var(--accent,#57b6ff)}\n.thumb{position:absolute;top:2px;width:22px;height:22px;margin-left:-11px;border-radius:50%;cursor:grab;touch-action:none;\n  background:radial-gradient(circle,#fff 30%,color-mix(in srgb,var(--accent,#57b6ff) 60%,#fff));border:3px solid var(--accent,#57b6ff);box-shadow:0 0 12px var(--accent,#57b6ff)}\n.thumb:focus-visible{outline:2px solid var(--ui-text,#fff);outline-offset:2px}\n.bub{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;background:var(--ui-surface-2,#3a414d);border:1px solid var(--ui-border,#4a5262);border-radius:5px;padding:1px 5px;white-space:nowrap}\n.mm{grid-column:2;display:flex;justify-content:space-between;font-size:12px;color:var(--ui-dim,#9aa5b5);margin:0 4px}\n",
+  "script": "function dbSubscribe(instance, key, id, onVal){\n    dbUnsub(instance, key);\n    if(!id || !window.IOB) return;\n    instance.__dbSubs = instance.__dbSubs || {};\n    const cb = function(_i, s){ onVal(s ? s.val : null); };\n    instance.__dbSubs[key] = [id, cb];\n    try{ window.IOB.subscribeState(id, cb); }catch(e){}\n    try{ window.IOB.getState(id).then(function(s){ onVal(s ? s.val : null); }).catch(function(){}); }catch(e){}\n    // read quality knows this state (badge on the control when the value cannot be trusted)\n    try{ instance.__dbRq = instance.__dbRq || {}; instance.__dbRq[key] = window.IOB.watchReadQuality && window.IOB.watchReadQuality(instance, id, { prop: key, twoWay: true }); }catch(e){}\n}\nfunction dbUnsub(instance, key){\n    const p = instance.__dbSubs && instance.__dbSubs[key];\n    if(p){ try{ window.IOB.unsubscribeState(p[0], p[1]); }catch(e){} delete instance.__dbSubs[key]; }\n    const r = instance.__dbRq && instance.__dbRq[key];\n    if(typeof r === 'function'){ try{ r(); }catch(e){} }\n    if(instance.__dbRq) delete instance.__dbRq[key];\n}\nfunction dbUnsubAll(instance){ for(const k of Object.keys(instance.__dbSubs || {})) dbUnsub(instance, k); }\n// a write through IOB.setState: Confirm & Protect may ask first; cancelled = nothing written\nfunction dbWrite(instance, id, val, onCancel){\n    if(!id || !window.IOB) return Promise.resolve(false);\n    return Promise.resolve(window.IOB.setState(id, val, false, { feedback: instance })).then(function(){ return true; }, function(e){\n        if(e && e.cancelled){ if(onCancel) onCancel(); }\n        else console.warn('[dashboard] write failed', id, e);\n        return false;\n    });\n}\nfunction dbBool(v){ return v === true || v === 1 || v === 'true' || v === '1' || v === 'on'; }\nfunction dbNum(v, d){ const n = Number(v); return isFinite(n) ? n : d; }\nexport function snap(v, min, max, step){\n    v = Math.min(max, Math.max(min, Number(v)));\n    if(step > 0) v = min + Math.round((v - min) / step) * step;\n    return Math.round(Math.min(max, Math.max(min, v)) * 1e6) / 1e6;\n}\n/** the two thumbs never cross: the moved one stops one step before the other */\nexport function orderRange(lo, hi, moved, step){\n    const gap = step > 0 ? step : 0;\n    if(moved === 'lo') return [Math.min(lo, hi - gap), hi];\n    return [lo, Math.max(hi, lo + gap)];\n}\nexport function init(instance){\n    const $ = (id) => instance._getDomElement(id);\n    const st = { lo: null, hi: null };\n    const range = () => !!instance.signalHigh;\n    const P = () => ({ min: dbNum(instance.min, 0), max: dbNum(instance.max, 100), step: dbNum(instance.step, 1) });\n    const draw = () => {\n        const { min, max } = P(), dec = Math.max(0, dbNum(instance.decimals, 0));\n        const pct = (v) => ((dbNum(v, min) - min) / ((max - min) || 1)) * 100;\n        $('nm').textContent = instance.label || '';\n        $('nm').parentElement.classList.toggle('nolabel', instance.showLabel === false || instance.showLabel === 'false');\n        $('mn').textContent = String(min); $('mx').textContent = String(max);\n        const lo = st.lo ?? min, hi = st.hi ?? max;\n        for(const [t, v] of [[$('t1'), lo], [$('t2'), hi]]){\n            t.style.left = pct(v) + '%';\n            t.querySelector('.bub').textContent = dbNum(v, min).toFixed(dec) + (instance.unit ? ' ' + instance.unit : '');\n            t.setAttribute('aria-valuenow', String(v)); t.setAttribute('aria-valuemin', String(min)); t.setAttribute('aria-valuemax', String(max));\n        }\n        $('t2').style.display = range() ? '' : 'none';\n        const f = $('fill');\n        if(range()){ f.style.left = pct(lo) + '%'; f.style.width = Math.max(0, pct(hi) - pct(lo)) + '%'; }\n        else { f.style.left = '0'; f.style.width = pct(lo) + '%'; }\n    };\n    const idOf = (k) => k === 'lo' ? instance.signal : instance.signalHigh;\n    const refresh = (k) => { const id = idOf(k); if(id) window.IOB.getState(id).then(s => { st[k] = s ? dbNum(s.val, null) : null; draw(); }).catch(() => {}); };\n    const setV = (k, v) => {\n        const { min, max, step } = P();\n        st[k] = snap(v, min, max, step);\n        if(range()){ const [a, b] = orderRange(st.lo ?? min, st.hi ?? max, k, step); st.lo = a; st.hi = b; }\n        draw();\n    };\n    const commit = (k) => dbWrite(instance, idOf(k), st[k], () => refresh(k));\n    for(const [el, k] of [[$('t1'), 'lo'], [$('t2'), 'hi']]){\n        el.addEventListener('pointerdown', (e) => {\n            el.setPointerCapture(e.pointerId);\n            const { min, max } = P();\n            const mv = (ev) => { const r = $('tr').getBoundingClientRect(); setV(k, min + (ev.clientX - r.left) / (r.width || 1) * (max - min)); };\n            const up = () => { el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); commit(k); };\n            el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up);\n        });\n        el.addEventListener('keydown', (e) => {\n            const { step, min, max } = P(), d = step > 0 ? step : (max - min) / 100;\n            if(e.key === 'ArrowRight' || e.key === 'ArrowUp'){ setV(k, (st[k] ?? min) + d); commit(k); e.preventDefault(); }\n            if(e.key === 'ArrowLeft' || e.key === 'ArrowDown'){ setV(k, (st[k] ?? min) - d); commit(k); e.preventDefault(); }\n        });\n    }\n    const sub = () => {\n        dbSubscribe(instance, 'signal', instance.signal, (v) => { st.lo = dbNum(v, null); draw(); });\n        if(instance.signalHigh) dbSubscribe(instance, 'signalHigh', instance.signalHigh, (v) => { st.hi = dbNum(v, null); draw(); });\n        else dbUnsub(instance, 'signalHigh');\n        draw();\n    };\n    for(const p of ['label', 'min', 'max', 'step', 'unit', 'decimals', 'show-label']) instance._assignEvent(p + '-changed', draw);\n    instance._assignEvent('signal-changed', sub); instance._assignEvent('signal-high-changed', sub);\n    sub();\n}\nexport function disconnectedCallback(instance){ dbUnsubAll(instance); }\n"
+}

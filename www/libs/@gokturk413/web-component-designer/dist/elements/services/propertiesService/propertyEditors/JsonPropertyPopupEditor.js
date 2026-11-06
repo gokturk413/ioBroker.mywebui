@@ -1,0 +1,6 @@
+var i=b;(function(c,d){var h=b,e=c();while(!![]){try{var f=parseInt(h(0x16c))/0x1*(-parseInt(h(0x16e))/0x2)+-parseInt(h(0x170))/0x3*(-parseInt(h(0x168))/0x4)+-parseInt(h(0x16b))/0x5+parseInt(h(0x165))/0x6*(parseInt(h(0x167))/0x7)+-parseInt(h(0x16a))/0x8+-parseInt(h(0x169))/0x9+parseInt(h(0x16f))/0xa*(parseInt(h(0x166))/0xb);if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xe1eba));function b(c,d){c=c-0x165;var e=a();var f=e[c];return f;}function a(){var j=['12405033PCDSIl','7278976OrIUWh','8544335uBTIGW','60463eVKUAD','template','46ONTnPt','246020PkmaPu','3XdljXd','6iQsAZy','2167HbseCn','6035911mLnTDM','2416912ueGYnB'];a=function(){return j;};return a();}import{html,BaseCustomWebComponentConstructorAppend}from'@node-projects/base-custom-webcomponent';export class JsonPropertyPopupEditor extends BaseCustomWebComponentConstructorAppend{static [i(0x16d)]=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;constructor(){super();}}
