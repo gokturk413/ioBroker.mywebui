@@ -1,0 +1,672 @@
+{
+ "properties": {},
+ "settings": {
+  "width": "900px",
+  "height": "520px"
+ },
+ "html": "<div id=\"box\"></div>",
+ "style": ":host{display:block;width:100%;height:100%;}\n#box{width:100%;height:100%;overflow:hidden;}",
+ "script": "// Journal placed on the screen (no window). Its texts come from this\n// control's Translations (every language there, add more), then the project's and the built-in ones;\n// they follow the language at once when it changes.\nexport function init(instance) {\n    const box = instance._getDomElement('box');\n    if (!box || !window.IOB?.mountJournal) return;\n    instance._view = window.IOB.mountJournal(box);\n}\nexport function disconnectedCallback(instance) {\n    instance._view?.dispose();\n    instance._view = null;\n}\n",
+ "translations": {
+  "en": {
+   "find": {
+    "close": "Close"
+   },
+   "msgs": {
+    "pick": "Pick an element on the screen"
+   },
+   "journal": {
+    "title": "Journal",
+    "tab": {
+     "journal": "Journal",
+     "clients": "Clients"
+    },
+    "history": "History",
+    "live": "Live",
+    "range": {
+     "1h": "Last hour",
+     "8h": "Shift (8 h)",
+     "24h": "24 h",
+     "7d": "7 days",
+     "30d": "30 days",
+     "from": "from",
+     "to": "to"
+    },
+    "export": "Export CSV",
+    "loading": "Loading…",
+    "unavailable": "The journal is not available {reason}",
+    "youSee": "You see: {what} · back {back}",
+    "noIp": "no IP addresses",
+    "noIds": "no state ids",
+    "all": "All",
+    "kind": {
+     "command": "Command",
+     "update": "Value",
+     "system": "System",
+     "log": "Log",
+     "client": "Client",
+     "note": "Note"
+    },
+    "lvl": {
+     "all": "all",
+     "area": "area",
+     "own": "own"
+    },
+    "search": {
+     "admin": "element, state, user, IP, text …",
+     "user": "element or screen …"
+    },
+    "empty": "Nothing in this range",
+    "col": {
+     "time": "Time",
+     "kind": "Kind",
+     "what": "Element · state",
+     "value": "Value",
+     "who": "Who",
+     "outcome": "Accepted · outcome"
+    },
+    "foot": {
+     "stored": "Stored in {inst}",
+     "queue": "Waiting to be stored: {n}",
+     "count": "{n} entries"
+    },
+    "det": {
+     "state": "State",
+     "element": "Element",
+     "screen": "Screen",
+     "value": "Value",
+     "who": "Asked by",
+     "where": "From",
+     "confirm": "Confirm",
+     "driver": "Driver",
+     "outcome": "Outcome",
+     "text": "Text"
+    },
+    "confirmed": "confirmed in the dialog",
+    "comment": "Add a comment…",
+    "save": "Save",
+    "showOnScreen": "Show on screen",
+    "sameState": "All of this state",
+    "sameUser": "All of {u}",
+    "clientsDenied": "Your role may not see clients",
+    "cl": {
+     "user": "User",
+     "ip": "IP address",
+     "device": "Device",
+     "page": "Page",
+     "screen": "Screen now",
+     "since": "Connected",
+     "last": "Last signal",
+     "runtime": "runtime"
+    },
+    "online": "{n} online",
+    "stood": "stood {d}",
+    "out": {
+     "clamped": "the PLC clamped it",
+     "timeout": "No confirmation",
+     "quality": "Bad quality",
+     "refused": "Refused",
+     "denied": "No permission",
+     "none": "— no driver confirms it",
+     "superseded": "replaced by the next write",
+     "pending": "waiting for the driver"
+    },
+    "sys": {
+     "driverConnected": "Driver connected",
+     "driverDisconnected": "Driver disconnected",
+     "driverStarted": "Driver started",
+     "scriptSaved": "Server script saved: {script}",
+     "scriptDeleted": "Server script deleted: {script}",
+     "scriptStarted": "Server script started: {script}",
+     "scriptStopped": "Server script stopped: {script}",
+     "scriptError": "Server script error: {script} — {reason}",
+     "scriptLibAdded": "Script library added: {script}",
+     "scriptLibRemoved": "Script library removed: {script}",
+     "driverStopped": "Driver stopped",
+     "refused": "Refused: {reason}"
+    },
+    "cli": {
+     "connected": "connected",
+     "designerOpened": "opened the designer",
+     "screen": "opened {scr}",
+     "left": "left",
+     "disconnected": "disconnected (no signal)",
+     "logout": "logged out",
+     "designer": "designer",
+     "loginBlocked": "sign-in refused (already signed in elsewhere)",
+     "logoutNotice": "logged out after the notice",
+     "holder": "already signed in at {where}"
+    },
+    "button": "Journal"
+   }
+  },
+  "az": {
+   "find": {
+    "close": "Bağla"
+   },
+   "msgs": {
+    "pick": "Ekranda element seçin"
+   },
+   "journal": {
+    "title": "Jurnal",
+    "tab": {
+     "journal": "Jurnal",
+     "clients": "Klientlər"
+    },
+    "history": "Tarixçə",
+    "live": "Canlı",
+    "range": {
+     "1h": "Son saat",
+     "8h": "Növbə (8 s)",
+     "24h": "24 s",
+     "7d": "7 gün",
+     "30d": "30 gün",
+     "from": "başlanğıc",
+     "to": "son"
+    },
+    "export": "CSV ixrac",
+    "loading": "Yüklənir…",
+    "unavailable": "Jurnal əlçatan deyil {reason}",
+    "youSee": "Görürsünüz: {what} · geriyə {back}",
+    "noIp": "IP ünvanları yoxdur",
+    "noIds": "state id-ləri yoxdur",
+    "all": "Hamısı",
+    "kind": {
+     "command": "Əmr",
+     "update": "Dəyər",
+     "system": "Sistem",
+     "log": "Log",
+     "client": "Klient",
+     "note": "Qeyd"
+    },
+    "lvl": {
+     "all": "hamısı",
+     "area": "sahə",
+     "own": "özünün"
+    },
+    "search": {
+     "admin": "element, state, istifadəçi, IP, mətn …",
+     "user": "element və ya ekran …"
+    },
+    "empty": "Bu aralıqda heç nə yoxdur",
+    "col": {
+     "time": "Vaxt",
+     "kind": "Növ",
+     "what": "Element · state",
+     "value": "Dəyər",
+     "who": "Kim",
+     "outcome": "Qəbul · nəticə"
+    },
+    "foot": {
+     "stored": "Saxlanır: {inst}",
+     "queue": "Saxlanmağı gözləyir: {n}",
+     "count": "{n} qeyd"
+    },
+    "det": {
+     "state": "State",
+     "element": "Element",
+     "screen": "Ekran",
+     "value": "Dəyər",
+     "who": "Göndərən",
+     "where": "Haradan",
+     "confirm": "Təsdiq",
+     "driver": "Driver",
+     "outcome": "Nəticə",
+     "text": "Mətn"
+    },
+    "confirmed": "dialoqda təsdiqlənib",
+    "comment": "Şərh yazın…",
+    "save": "Saxla",
+    "showOnScreen": "Ekranda göstər",
+    "sameState": "Bu state-in hamısı",
+    "sameUser": "{u} — hamısı",
+    "clientsDenied": "Rolunuz klientləri görə bilməz",
+    "cl": {
+     "user": "İstifadəçi",
+     "ip": "IP ünvanı",
+     "device": "Cihaz",
+     "page": "Səhifə",
+     "screen": "İndiki ekran",
+     "since": "Qoşulub",
+     "last": "Son siqnal",
+     "runtime": "runtime"
+    },
+    "online": "{n} onlayn",
+    "stood": "{d} qaldı",
+    "out": {
+     "clamped": "PLC məhdudlaşdırdı",
+     "timeout": "Təsdiq gəlmədi",
+     "quality": "Pis keyfiyyət",
+     "refused": "Rədd edildi",
+     "denied": "İcazə yoxdur",
+     "none": "— heç bir driver təsdiqləmir",
+     "superseded": "növbəti yazma ilə əvəz olundu",
+     "pending": "driver gözlənilir"
+    },
+    "sys": {
+     "driverConnected": "Driver qoşuldu",
+     "driverDisconnected": "Driver ayrıldı",
+     "driverStarted": "Driver işə düşdü",
+     "scriptSaved": "Server script saxlanıldı: {script}",
+     "scriptDeleted": "Server script silindi: {script}",
+     "scriptStarted": "Server script işə düşdü: {script}",
+     "scriptStopped": "Server script dayandı: {script}",
+     "scriptError": "Server script xətası: {script} — {reason}",
+     "scriptLibAdded": "Script kitabxanası əlavə edildi: {script}",
+     "scriptLibRemoved": "Script kitabxanası silindi: {script}",
+     "driverStopped": "Driver dayandı",
+     "refused": "Rədd edildi: {reason}"
+    },
+    "cli": {
+     "connected": "qoşuldu",
+     "designerOpened": "designer-i açdı",
+     "screen": "{scr} açdı",
+     "left": "çıxdı",
+     "disconnected": "ayrıldı (siqnal yoxdur)",
+     "logout": "sistemdən çıxdı",
+     "designer": "designer",
+     "loginBlocked": "giriş rədd edildi (artıq başqa yerdə daxil olub)",
+     "logoutNotice": "xəbərdarlıqdan sonra çıxış etdi",
+     "holder": "artıq daxil olduğu yer: {where}"
+    },
+    "button": "Jurnal"
+   }
+  },
+  "ru": {
+   "find": {
+    "close": "Закрыть"
+   },
+   "msgs": {
+    "pick": "Выбрать элемент на экране"
+   },
+   "journal": {
+    "title": "Журнал",
+    "tab": {
+     "journal": "Журнал",
+     "clients": "Клиенты"
+    },
+    "history": "История",
+    "live": "Онлайн",
+    "range": {
+     "1h": "Последний час",
+     "8h": "Смена (8 ч)",
+     "24h": "24 ч",
+     "7d": "7 дней",
+     "30d": "30 дней",
+     "from": "с",
+     "to": "по"
+    },
+    "export": "Экспорт CSV",
+    "loading": "Загрузка…",
+    "unavailable": "Журнал недоступен {reason}",
+    "youSee": "Вы видите: {what} · назад {back}",
+    "noIp": "без IP-адресов",
+    "noIds": "без id состояний",
+    "all": "Все",
+    "kind": {
+     "command": "Команда",
+     "update": "Значение",
+     "system": "Система",
+     "log": "Лог",
+     "client": "Клиент",
+     "note": "Заметка"
+    },
+    "lvl": {
+     "all": "все",
+     "area": "зона",
+     "own": "свои"
+    },
+    "search": {
+     "admin": "элемент, состояние, пользователь, IP, текст …",
+     "user": "элемент или экран …"
+    },
+    "empty": "В этом диапазоне ничего нет",
+    "col": {
+     "time": "Время",
+     "kind": "Тип",
+     "what": "Элемент · состояние",
+     "value": "Значение",
+     "who": "Кто",
+     "outcome": "Принято · результат"
+    },
+    "foot": {
+     "stored": "Хранится в {inst}",
+     "queue": "Ожидают записи: {n}",
+     "count": "{n} записей"
+    },
+    "det": {
+     "state": "Состояние",
+     "element": "Элемент",
+     "screen": "Экран",
+     "value": "Значение",
+     "who": "Запросил",
+     "where": "Откуда",
+     "confirm": "Подтверждение",
+     "driver": "Драйвер",
+     "outcome": "Результат",
+     "text": "Текст"
+    },
+    "confirmed": "подтверждено в диалоге",
+    "comment": "Добавить комментарий…",
+    "save": "Сохранить",
+    "showOnScreen": "Показать на экране",
+    "sameState": "Всё по этому состоянию",
+    "sameUser": "Всё от {u}",
+    "clientsDenied": "Ваша роль не может видеть клиентов",
+    "cl": {
+     "user": "Пользователь",
+     "ip": "IP-адрес",
+     "device": "Устройство",
+     "page": "Страница",
+     "screen": "Экран сейчас",
+     "since": "Подключён",
+     "last": "Последний сигнал",
+     "runtime": "runtime"
+    },
+    "online": "{n} онлайн",
+    "stood": "держалось {d}",
+    "out": {
+     "clamped": "ПЛК ограничил",
+     "timeout": "Нет подтверждения",
+     "quality": "Плохое качество",
+     "refused": "Отклонено",
+     "denied": "Нет прав",
+     "none": "— драйвер не подтверждает",
+     "superseded": "заменено следующей записью",
+     "pending": "ожидание драйвера"
+    },
+    "sys": {
+     "driverConnected": "Драйвер подключён",
+     "driverDisconnected": "Драйвер отключён",
+     "driverStarted": "Драйвер запущен",
+     "scriptSaved": "Серверный скрипт сохранён: {script}",
+     "scriptDeleted": "Серверный скрипт удалён: {script}",
+     "scriptStarted": "Серверный скрипт запущен: {script}",
+     "scriptStopped": "Серверный скрипт остановлен: {script}",
+     "scriptError": "Ошибка серверного скрипта: {script} — {reason}",
+     "scriptLibAdded": "Библиотека скриптов добавлена: {script}",
+     "scriptLibRemoved": "Библиотека скриптов удалена: {script}",
+     "driverStopped": "Драйвер остановлен",
+     "refused": "Отклонено: {reason}"
+    },
+    "cli": {
+     "connected": "подключился",
+     "designerOpened": "открыл дизайнер",
+     "screen": "открыл {scr}",
+     "left": "вышел",
+     "disconnected": "отключился (нет сигнала)",
+     "logout": "вышел из системы",
+     "designer": "дизайнер",
+     "loginBlocked": "вход отклонён (уже вошёл в другом месте)",
+     "logoutNotice": "вышел после уведомления",
+     "holder": "уже вошёл: {where}"
+    },
+    "button": "Журнал"
+   }
+  },
+  "de": {
+   "find": {
+    "close": "Schließen"
+   },
+   "msgs": {
+    "pick": "Element auf dem Bild wählen"
+   },
+   "journal": {
+    "title": "Journal",
+    "tab": {
+     "journal": "Journal",
+     "clients": "Clients"
+    },
+    "history": "Verlauf",
+    "live": "Live",
+    "range": {
+     "1h": "Letzte Stunde",
+     "8h": "Schicht (8 h)",
+     "24h": "24 h",
+     "7d": "7 Tage",
+     "30d": "30 Tage",
+     "from": "von",
+     "to": "bis"
+    },
+    "export": "CSV-Export",
+    "loading": "Lädt…",
+    "unavailable": "Das Journal ist nicht verfügbar {reason}",
+    "youSee": "Sie sehen: {what} · zurück {back}",
+    "noIp": "keine IP-Adressen",
+    "noIds": "keine Datenpunkt-IDs",
+    "all": "Alle",
+    "kind": {
+     "command": "Befehl",
+     "update": "Wert",
+     "system": "System",
+     "log": "Log",
+     "client": "Client",
+     "note": "Notiz"
+    },
+    "lvl": {
+     "all": "alle",
+     "area": "Bereich",
+     "own": "eigene"
+    },
+    "search": {
+     "admin": "Element, Datenpunkt, Benutzer, IP, Text …",
+     "user": "Element oder Bild …"
+    },
+    "empty": "Nichts in diesem Zeitraum",
+    "col": {
+     "time": "Zeit",
+     "kind": "Art",
+     "what": "Element · Datenpunkt",
+     "value": "Wert",
+     "who": "Wer",
+     "outcome": "Angenommen · Ergebnis"
+    },
+    "foot": {
+     "stored": "Gespeichert in {inst}",
+     "queue": "Wartet auf Speicherung: {n}",
+     "count": "{n} Einträge"
+    },
+    "det": {
+     "state": "Datenpunkt",
+     "element": "Element",
+     "screen": "Bild",
+     "value": "Wert",
+     "who": "Angefordert von",
+     "where": "Von",
+     "confirm": "Bestätigung",
+     "driver": "Treiber",
+     "outcome": "Ergebnis",
+     "text": "Text"
+    },
+    "confirmed": "im Dialog bestätigt",
+    "comment": "Kommentar hinzufügen…",
+    "save": "Speichern",
+    "showOnScreen": "Auf dem Bild zeigen",
+    "sameState": "Alles zu diesem Datenpunkt",
+    "sameUser": "Alles von {u}",
+    "clientsDenied": "Ihre Rolle darf keine Clients sehen",
+    "cl": {
+     "user": "Benutzer",
+     "ip": "IP-Adresse",
+     "device": "Gerät",
+     "page": "Seite",
+     "screen": "Bild jetzt",
+     "since": "Verbunden",
+     "last": "Letztes Signal",
+     "runtime": "Runtime"
+    },
+    "online": "{n} online",
+    "stood": "stand {d}",
+    "out": {
+     "clamped": "die SPS hat begrenzt",
+     "timeout": "Keine Bestätigung",
+     "quality": "Schlechte Qualität",
+     "refused": "Abgelehnt",
+     "denied": "Keine Berechtigung",
+     "none": "— kein Treiber bestätigt",
+     "superseded": "durch den nächsten Schreibvorgang ersetzt",
+     "pending": "wartet auf den Treiber"
+    },
+    "sys": {
+     "driverConnected": "Treiber verbunden",
+     "driverDisconnected": "Treiber getrennt",
+     "driverStarted": "Treiber gestartet",
+     "scriptSaved": "Serverskript gespeichert: {script}",
+     "scriptDeleted": "Serverskript gelöscht: {script}",
+     "scriptStarted": "Serverskript gestartet: {script}",
+     "scriptStopped": "Serverskript gestoppt: {script}",
+     "scriptError": "Serverskript-Fehler: {script} — {reason}",
+     "scriptLibAdded": "Skriptbibliothek hinzugefügt: {script}",
+     "scriptLibRemoved": "Skriptbibliothek entfernt: {script}",
+     "driverStopped": "Treiber gestoppt",
+     "refused": "Abgelehnt: {reason}"
+    },
+    "cli": {
+     "connected": "verbunden",
+     "designerOpened": "hat den Designer geöffnet",
+     "screen": "hat {scr} geöffnet",
+     "left": "verlassen",
+     "disconnected": "getrennt (kein Signal)",
+     "logout": "abgemeldet",
+     "designer": "Designer",
+     "loginBlocked": "Anmeldung abgelehnt (bereits anderswo angemeldet)",
+     "logoutNotice": "nach dem Hinweis abgemeldet",
+     "holder": "bereits angemeldet: {where}"
+    },
+    "button": "Journal"
+   }
+  },
+  "tr": {
+   "find": {
+    "close": "Kapat"
+   },
+   "msgs": {
+    "pick": "Ekranda bir öğe seçin"
+   },
+   "journal": {
+    "title": "Günlük",
+    "tab": {
+     "journal": "Günlük",
+     "clients": "İstemciler"
+    },
+    "history": "Geçmiş",
+    "live": "Canlı",
+    "range": {
+     "1h": "Son saat",
+     "8h": "Vardiya (8 sa)",
+     "24h": "24 sa",
+     "7d": "7 gün",
+     "30d": "30 gün",
+     "from": "başlangıç",
+     "to": "bitiş"
+    },
+    "export": "CSV dışa aktar",
+    "loading": "Yükleniyor…",
+    "unavailable": "Günlük kullanılamıyor {reason}",
+    "youSee": "Görürsünüz: {what} · geriye {back}",
+    "noIp": "IP adresi yok",
+    "noIds": "durum kimliği yok",
+    "all": "Tümü",
+    "kind": {
+     "command": "Komut",
+     "update": "Değer",
+     "system": "Sistem",
+     "log": "Log",
+     "client": "İstemci",
+     "note": "Not"
+    },
+    "lvl": {
+     "all": "tümü",
+     "area": "alan",
+     "own": "kendi"
+    },
+    "search": {
+     "admin": "öğe, durum, kullanıcı, IP, metin …",
+     "user": "öğe veya ekran …"
+    },
+    "empty": "Bu aralıkta bir şey yok",
+    "col": {
+     "time": "Zaman",
+     "kind": "Tür",
+     "what": "Öğe · durum",
+     "value": "Değer",
+     "who": "Kim",
+     "outcome": "Kabul · sonuç"
+    },
+    "foot": {
+     "stored": "{inst} içinde saklanıyor",
+     "queue": "Saklanmayı bekliyor: {n}",
+     "count": "{n} kayıt"
+    },
+    "det": {
+     "state": "Durum",
+     "element": "Öğe",
+     "screen": "Ekran",
+     "value": "Değer",
+     "who": "İsteyen",
+     "where": "Nereden",
+     "confirm": "Onay",
+     "driver": "Sürücü",
+     "outcome": "Sonuç",
+     "text": "Metin"
+    },
+    "confirmed": "iletişim kutusunda onaylandı",
+    "comment": "Yorum ekleyin…",
+    "save": "Kaydet",
+    "showOnScreen": "Ekranda göster",
+    "sameState": "Bu durumun tümü",
+    "sameUser": "{u} — tümü",
+    "clientsDenied": "Rolünüz istemcileri göremez",
+    "cl": {
+     "user": "Kullanıcı",
+     "ip": "IP adresi",
+     "device": "Cihaz",
+     "page": "Sayfa",
+     "screen": "Şu anki ekran",
+     "since": "Bağlandı",
+     "last": "Son sinyal",
+     "runtime": "runtime"
+    },
+    "online": "{n} çevrimiçi",
+    "stood": "{d} kaldı",
+    "out": {
+     "clamped": "PLC sınırladı",
+     "timeout": "Onay gelmedi",
+     "quality": "Kötü kalite",
+     "refused": "Reddedildi",
+     "denied": "Yetki yok",
+     "none": "— hiçbir sürücü onaylamaz",
+     "superseded": "sonraki yazma ile değiştirildi",
+     "pending": "sürücü bekleniyor"
+    },
+    "sys": {
+     "driverConnected": "Sürücü bağlandı",
+     "driverDisconnected": "Sürücü bağlantısı kesildi",
+     "driverStarted": "Sürücü başladı",
+     "scriptSaved": "Sunucu betiği kaydedildi: {script}",
+     "scriptDeleted": "Sunucu betiği silindi: {script}",
+     "scriptStarted": "Sunucu betiği başladı: {script}",
+     "scriptStopped": "Sunucu betiği durdu: {script}",
+     "scriptError": "Sunucu betiği hatası: {script} — {reason}",
+     "scriptLibAdded": "Betik kütüphanesi eklendi: {script}",
+     "scriptLibRemoved": "Betik kütüphanesi kaldırıldı: {script}",
+     "driverStopped": "Sürücü durdu",
+     "refused": "Reddedildi: {reason}"
+    },
+    "cli": {
+     "connected": "bağlandı",
+     "designerOpened": "tasarımcıyı açtı",
+     "screen": "{scr} açtı",
+     "left": "ayrıldı",
+     "disconnected": "bağlantı kesildi (sinyal yok)",
+     "logout": "oturumu kapattı",
+     "designer": "tasarımcı",
+     "loginBlocked": "giriş reddedildi (zaten başka yerde giriş yapılmış)",
+     "logoutNotice": "bildirimden sonra çıkış yaptı",
+     "holder": "zaten giriş yaptığı yer: {where}"
+    },
+    "button": "Günlük"
+   }
+  }
+ }
+}

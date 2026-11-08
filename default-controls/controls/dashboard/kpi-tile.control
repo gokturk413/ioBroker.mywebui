@@ -1,0 +1,52 @@
+{
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "Accumulated Items"
+    },
+    "value": {
+      "type": "string",
+      "default": "1264"
+    },
+    "unit": {
+      "type": "string",
+      "default": ""
+    },
+    "decimals": {
+      "type": "number",
+      "default": -1
+    },
+    "alarmCount": {
+      "type": "number",
+      "default": 0
+    },
+    "ringMax": {
+      "type": "number",
+      "default": 0
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "ok",
+        "warn",
+        "error",
+        "info",
+        "accent",
+        "glow",
+        "off"
+      ],
+      "default": "warn"
+    },
+    "frame": {
+      "type": "boolean",
+      "default": "true"
+    }
+  },
+  "settings": {
+    "width": "330px",
+    "height": "72px"
+  },
+  "html": "<div id=\"k\" class=\"kpi\"><svg id=\"ring\" class=\"ring\" viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"15\" class=\"rt\"/><circle id=\"rv\" cx=\"20\" cy=\"20\" r=\"15\" class=\"rv\" transform=\"rotate(-90 20 20)\"/></svg><span id=\"lbl\" class=\"lbl\"></span><span class=\"val mono\"><span id=\"val\"></span><small id=\"unit\"></small></span><span id=\"al\" class=\"al\">🔔<span id=\"aln\"></span></span></div>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n.kpi{height:100%;display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:var(--ui-surface-2,#3a414d);border:1px solid var(--ui-border,#4a5262);min-width:0}\n.kpi.bare{background:none;border:0;padding:0}\n.ring{width:38px;height:38px;flex:none}.rt{fill:none;stroke:var(--ui-border,#4a5262);stroke-width:4}\n.rv{fill:none;stroke:var(--tone);stroke-width:4;stroke-linecap:round;stroke-dasharray:94.25;transition:stroke-dashoffset .4s}\n.lbl{font-size:13px;color:var(--ui-dim,#9aa5b5);line-height:1.3;white-space:pre-line}\n.val{margin-left:auto;font-size:30px;font-weight:500;white-space:nowrap}.val small{font-size:14px;color:var(--ui-dim,#9aa5b5);margin-left:4px}\n.al{display:flex;align-items:center;gap:3px;color:var(--ui-warn,#f2a531);font:600 13px 'IBM Plex Mono',monospace}\n",
+  "script": "export function fmtValue(v, decimals){\n    const n = Number(v);\n    if(v === null || v === undefined || v === '') return '—';\n    if(!isFinite(n) || typeof v === 'boolean') return String(v);\n    const d = Number(decimals);\n    return d >= 0 ? n.toFixed(d) : String(Math.round(n * 1000) / 1000);\n}\nexport function init(instance){\n    const $ = (id) => instance._getDomElement(id);\n    const upd = () => {\n        $('k').className = 'kpi t-' + (instance.tone || 'warn') + ((instance.frame === false || instance.frame === 'false') ? ' bare' : '');\n        $('lbl').textContent = instance.label || '';\n        $('val').textContent = fmtValue(instance.value, instance.decimals);\n        $('unit').textContent = instance.unit || '';\n        const al = Number(instance.alarmCount) || 0;\n        $('al').style.display = al > 0 ? '' : 'none';\n        $('aln').textContent = String(al);\n        const max = Number(instance.ringMax) || 0;\n        $('ring').style.display = max > 0 ? '' : 'none';\n        if(max > 0){ const p = Math.max(0, Math.min(1, (Number(instance.value) || 0) % (max + 1e-9) / max)); $('rv').style.strokeDashoffset = String(94.25 * (1 - p)); }\n    };\n    for(const p of ['label', 'value', 'unit', 'decimals', 'alarm-count', 'ring-max', 'tone', 'frame']) instance._assignEvent(p + '-changed', upd);\n    upd();\n}\n"
+}
