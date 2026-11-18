@@ -1,0 +1,77 @@
+{
+ "properties": {
+  "query": {
+   "type": "string",
+   "default": ""
+  }
+ },
+ "settings": {
+  "width": "360px",
+  "height": "420px"
+ },
+ "html": "<div id=\"box\"></div>",
+ "style": ":host{display:block;width:100%;height:100%;}\n#box{width:100%;height:100%;overflow:hidden;}",
+ "script": "// Find placed on the screen (no window). Its texts come from this\n// control's Translations (every language there, add more), then the project's and the built-in ones;\n// they follow the language at once when it changes.\nexport function init(instance) {\n    const box = instance._getDomElement('box');\n    if (!box || !window.IOB?.mountFind) return;\n    instance._view = window.IOB.mountFind(box, instance.query || '');\n}\nexport function disconnectedCallback(instance) {\n    instance._view?.dispose();\n    instance._view = null;\n}\n",
+ "translations": {
+  "en": {
+   "find": {
+    "title": "Find",
+    "close": "Close",
+    "placeholder": "An ID, a name or a kind of element",
+    "placeholderAdmin": "An ID, a name, a kind of element or a state",
+    "thisScreen": "On this screen",
+    "otherScreens": "On other screens",
+    "none": "Nothing found",
+    "searching": "Searching the other screens…"
+   }
+  },
+  "az": {
+   "find": {
+    "title": "Axtar",
+    "close": "Bağla",
+    "placeholder": "ID, ad və ya element növü",
+    "placeholderAdmin": "ID, ad, element növü və ya state",
+    "thisScreen": "Bu ekranda",
+    "otherScreens": "Digər ekranlarda",
+    "none": "Heç nə tapılmadı",
+    "searching": "Digər ekranlarda axtarılır…"
+   }
+  },
+  "ru": {
+   "find": {
+    "title": "Поиск",
+    "close": "Закрыть",
+    "placeholder": "ID, имя или тип элемента",
+    "placeholderAdmin": "ID, имя, тип элемента или состояние",
+    "thisScreen": "На этом экране",
+    "otherScreens": "На других экранах",
+    "none": "Ничего не найдено",
+    "searching": "Поиск на других экранах…"
+   }
+  },
+  "de": {
+   "find": {
+    "title": "Suchen",
+    "close": "Schließen",
+    "placeholder": "ID, Name oder Elementart",
+    "placeholderAdmin": "ID, Name, Elementart oder Datenpunkt",
+    "thisScreen": "Auf diesem Bild",
+    "otherScreens": "Auf anderen Bildern",
+    "none": "Nichts gefunden",
+    "searching": "Suche auf anderen Bildern…"
+   }
+  },
+  "tr": {
+   "find": {
+    "title": "Bul",
+    "close": "Kapat",
+    "placeholder": "ID, ad veya öğe türü",
+    "placeholderAdmin": "ID, ad, öğe türü veya durum",
+    "thisScreen": "Bu ekranda",
+    "otherScreens": "Diğer ekranlarda",
+    "none": "Bir şey bulunamadı",
+    "searching": "Diğer ekranlarda aranıyor…"
+   }
+  }
+ }
+}
