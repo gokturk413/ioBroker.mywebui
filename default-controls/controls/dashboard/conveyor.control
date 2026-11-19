@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "running": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "speed": {
+      "type": "number",
+      "default": 50
+    },
+    "beacon": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "beaconColor": {
+      "type": "color",
+      "default": "#ffc93a"
+    },
+    "direction": {
+      "type": "enum",
+      "values": [
+        "right",
+        "left"
+      ],
+      "default": "right"
+    }
+  },
+  "settings": {
+    "width": "560px",
+    "height": "80px"
+  },
+  "html": "<div id=\"c\" class=\"conv\"><div class=\"motor\"></div><div class=\"belt\"><div id=\"surf\" class=\"surf\"></div></div><span class=\"roll\" style=\"left:34px\"></span><span class=\"roll\" style=\"left:24%\"></span><span class=\"roll\" style=\"left:44%\"></span><span class=\"roll\" style=\"left:64%\"></span><span class=\"roll\" style=\"left:84%\"></span><span id=\"beacon\" class=\"beacon\"></span></div>",
+  "style": ":host{display:block;box-sizing:border-box;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;color:var(--ui-text,#e6ebf2);--db-glow:var(--ui-glow,#ffd36a)}\n*{box-sizing:border-box}\n.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}\n@media (prefers-reduced-motion: reduce){*{animation:none!important}}\n.t-ok{--tone:var(--ui-ok,#3ccf7a)} .t-warn{--tone:var(--ui-warn,#f2a531)} .t-error{--tone:var(--ui-error,#ff5a6a)}\n.t-info{--tone:var(--ui-info,#57b6ff)} .t-accent{--tone:var(--accent,#57b6ff)} .t-glow{--tone:var(--db-glow)} .t-off{--tone:var(--ui-dim,#9aa5b5)}\n.conv{position:relative;height:100%;min-height:60px}\n.motor{position:absolute;left:0;bottom:10%;width:30px;height:62%;border-radius:6px;background:linear-gradient(90deg,#3a404a,#5e6672,#3a404a)}\n.belt{position:absolute;left:18px;right:40px;bottom:12%;height:44%;border-radius:999px;background:linear-gradient(180deg,#4b5361,#2a2f38);box-shadow:inset 0 2px 0 rgba(255,255,255,.08),0 6px 14px rgba(0,0,0,.35);overflow:hidden}\n.surf{position:absolute;inset:18% 18px;border-radius:10px;background:repeating-linear-gradient(90deg,#20252d 0 10px,#262c35 10px 20px);animation:belt var(--dur,1.6s) linear infinite;animation-play-state:var(--run,running)}\n.conv.left .surf{animation-direction:reverse}\n@keyframes belt{to{background-position:20px 0}}\n.roll{position:absolute;bottom:calc(12% + 7px);width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#c9d1dc,#6d7684 60%,#3d434d);border:1px solid #2a2f37}\n.beacon{position:absolute;right:16px;bottom:58%;width:18px;height:26px;border-radius:9px 9px 3px 3px;background:#7a5a10}\n.beacon.on{background:var(--bc);box-shadow:0 0 14px var(--bc),0 0 34px color-mix(in srgb,var(--bc) 50%,transparent);animation:blink 1s steps(2) infinite}\n@keyframes blink{50%{opacity:.45}}\n",
+  "script": "export function beltSeconds(speed){ const s = Math.max(1, Math.min(100, Number(speed) || 0)); return 1.6 * 50 / s; }\nexport function init(instance){\n    const $ = (id) => instance._getDomElement(id);\n    const yes = (v) => v === true || v === 'true';\n    const upd = () => {\n        const c = $('c');\n        const run = yes(instance.running) && Number(instance.speed) > 0;\n        c.style.setProperty('--run', run ? 'running' : 'paused');\n        c.style.setProperty('--dur', beltSeconds(instance.speed).toFixed(2) + 's');\n        c.classList.toggle('left', instance.direction === 'left');\n        const b = $('beacon');\n        b.style.setProperty('--bc', instance.beaconColor || '#ffc93a');\n        b.classList.toggle('on', yes(instance.beacon));\n    };\n    for(const p of ['running', 'speed', 'beacon', 'beacon-color', 'direction']) instance._assignEvent(p + '-changed', upd);\n    upd();\n}\n"
+}

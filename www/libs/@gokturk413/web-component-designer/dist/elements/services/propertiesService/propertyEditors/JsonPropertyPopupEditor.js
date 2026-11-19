@@ -1,0 +1,6 @@
+(function(c,d){var h=b,e=c();while(!![]){try{var f=-parseInt(h(0x157))/0x1+parseInt(h(0x155))/0x2+-parseInt(h(0x159))/0x3*(parseInt(h(0x15b))/0x4)+parseInt(h(0x158))/0x5+parseInt(h(0x15a))/0x6*(parseInt(h(0x156))/0x7)+-parseInt(h(0x152))/0x8*(parseInt(h(0x154))/0x9)+parseInt(h(0x153))/0xa;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x3b5ff));import{html,BaseCustomWebComponentConstructorAppend}from'@node-projects/base-custom-webcomponent';function b(c,d){c=c-0x152;var e=a();var f=e[c];return f;}function a(){var i=['195293LkfwzF','186538lSwNCg','1602360OITYlw','2388KXmsey','54tEuTbO','1960MmiLhM','3303064KfqdnB','2551040CVmLqY','9BdytEU','811986YcEEBT'];a=function(){return i;};return a();}export class JsonPropertyPopupEditor extends BaseCustomWebComponentConstructorAppend{static ['template']=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;constructor(){super();}}

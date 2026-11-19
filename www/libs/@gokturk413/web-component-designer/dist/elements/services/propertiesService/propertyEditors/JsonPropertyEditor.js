@@ -1,0 +1,6 @@
+const i=b;(function(c,d){const h=b,e=c();while(!![]){try{const f=parseInt(h(0xfb))/0x1*(-parseInt(h(0xf3))/0x2)+parseInt(h(0xef))/0x3+-parseInt(h(0xee))/0x4+parseInt(h(0xed))/0x5+parseInt(h(0xfc))/0x6*(parseInt(h(0xf1))/0x7)+-parseInt(h(0xf0))/0x8+parseInt(h(0xf7))/0x9;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xa7587));import{BasePropertyEditor}from'./BasePropertyEditor.js';import{html}from'@node-projects/base-custom-webcomponent';function a(){const l=['value','element','3449574CJOAXg','_valueChanged','readonly','template','86489lrjWOK','504fxkYsL','cloneNode','2448230GYwgkv','1935588WNHPjd','210459bLUhtI','4919408flScgf','91721cCmAhJ','_input','6lDLBIv','getElementById'];a=function(){return l;};return a();}function b(c,d){c=c-0xec;const e=a();let f=e[c];return f;}export class JsonPropertyEditor extends BasePropertyEditor{static [i(0xfa)]=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;[i(0xf2)];constructor(c){const j=i;super(c);let d=JsonPropertyEditor[j(0xfa)]['content'][j(0xec)](!![]);this[j(0xf2)]=d[j(0xf4)]('input');if(c[j(0xf9)])this['_input']['readOnly']=!![];this[j(0xf2)]['onchange']=f=>this[j(0xf8)](this[j(0xf2)][j(0xf5)]),this[j(0xf6)]=d;}['refreshValue'](c,d){const k=i;this[k(0xf2)]['value']=d;}}
