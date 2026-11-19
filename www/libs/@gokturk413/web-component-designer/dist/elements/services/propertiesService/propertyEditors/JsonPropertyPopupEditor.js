@@ -1,0 +1,6 @@
+var i=b;function a(){var j=['2oskLgH','7359JqRxBc','13167fhwvGa','707ZFGbQF','55226MVvMVT','628fmAFEy','3355380lwDxjk','3990xnMjkc','template','2805840OuIbrh','6xGMRSN','21544keMJwf','448670UIGqAH'];a=function(){return j;};return a();}(function(c,d){var h=b,e=c();while(!![]){try{var f=parseInt(h(0x143))/0x1*(-parseInt(h(0x13f))/0x2)+parseInt(h(0x140))/0x3*(parseInt(h(0x144))/0x4)+-parseInt(h(0x13e))/0x5*(-parseInt(h(0x13c))/0x6)+parseInt(h(0x142))/0x7*(parseInt(h(0x13d))/0x8)+parseInt(h(0x13b))/0x9+parseInt(h(0x146))/0xa*(-parseInt(h(0x141))/0xb)+-parseInt(h(0x145))/0xc;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x3c194));function b(c,d){c=c-0x13b;var e=a();var f=e[c];return f;}import{html,BaseCustomWebComponentConstructorAppend}from'@node-projects/base-custom-webcomponent';export class JsonPropertyPopupEditor extends BaseCustomWebComponentConstructorAppend{static [i(0x147)]=html`
+    <div style="display: flex;">
+      <input id="input" type="text">
+      <button style="width: 30px;">...</button>
+    </div>
+  `;constructor(){super();}}
