@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ioBroker 3D Editor</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	</head>
+	<body>
+		<link rel="stylesheet" href="css/main.css">
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "../3d-lib/three.module.js",
+					"three/webgpu": "../3d-lib/three.module.js",
+					"three/addons/": "../3d-lib/jsm/",
+					"three/examples/jsm/": "../3d-lib/jsm/",
+					"three-gpu-pathtracer": "data:text/javascript,export class WebGLPathTracer{constructor(){}setScene(){}renderSample(){}updateCamera(){}updateEnvironment(){}updateMaterials(){}get samples(){return 0;}filterGlossyFactor=0.5;}",
+					"three-mesh-bvh": "data:text/javascript,export const MeshBVH={};export const acceleratedRaycast=()=>{};export const computeBoundsTree=()=>{};export const disposeBoundsTree=()=>{};"
+				}
+			}
+		</script>
+
+		<script src="js/libs/signals.min.js"></script>
+		<script src="js/libs/esprima.js"></script>
+		<script src="js/libs/jsonlint.js"></script>
+
+		<!-- iobroker bridge: reads URL params, wires postMessage save/load -->
+		<script>
+		(function () {
+			const params = new URLSearchParams(location.search);
+			window.__iob = {
+				sceneName: params.get('sceneName') || params.get('scene-name') || '',
+				sceneType: params.get('sceneType') || params.get('scene-type') || '3dscreen',
+				pendingLoad: null
+			};
+
+			// Listen for load / script-updated messages from parent
+			window.addEventListener('message', function (e) {
+				const d = e.data;
+				if (d && d.type === 'threeeditor:load' && window.editor) {
+					const json = d.threeScene;
+					if (json) window.editor.fromJSON(json).then ? window.editor.fromJSON(json) : (() => { try { window.editor.fromJSON(json); } catch(_) {} })();
+					else window.editor.signals.sceneEnvironmentChanged.dispatch('Default');
+				} else if (d && d.type === 'threeeditor:load') {
+					window.__iob.pendingLoad = d.threeScene;
+				}
+				if (d && d.type === 'threeeditor:scriptUpdated' && window.editor) {
+					const obj = window.editor.objectByUuid(d.objectUuid);
+					if (obj && obj.userData && Array.isArray(obj.userData.scripts)) {
+						const sc = obj.userData.scripts.find(s => s.name === d.scriptName);
+						if (sc) {
+							const { SetScriptValueCommand } = window.__iobCmds || {};
+							if (SetScriptValueCommand) {
+								window.editor.execute(new SetScriptValueCommand(window.editor, obj, 'source', d.source));
+							} else {
+								sc.source = d.source;
+							}
+						}
+					}
+				}
+			});
+		})();
+		</script>
+
+		<script type="module">
+
+			import * as THREE from 'three';
+			import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+
+			import { Editor } from './js/Editor.js';
+			import { Viewport } from './js/Viewport.js';
+			import { Toolbar } from './js/Toolbar.js';
+			import { Script } from './js/Script.js';
+			import { Player } from './js/Player.js';
+			import { Sidebar } from './js/Sidebar.js';
+			import { Menubar } from './js/Menubar.js';
+			import { Resizer } from './js/Resizer.js';
+			import { AnimationResizer } from './js/AnimationResizer.js';
+			import { Animation } from './js/Animation.js';
+			import { SetScriptValueCommand } from './js/commands/SetScriptValueCommand.js';
+
+			window.URL = window.URL || window.webkitURL;
+			window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+			window.__iobCmds = { SetScriptValueCommand };
+
+			const editor = new Editor();
+			window.editor = editor;
+			window.THREE = THREE;
+
+			THREE.ObjectLoader.registerGeometry('TextGeometry', TextGeometry);
+
+			const viewport = new Viewport(editor);
+			document.body.appendChild(viewport.dom);
+
+			const toolbar = new Toolbar(editor);
+			document.body.appendChild(toolbar.dom);
+
+			const script = new Script(editor);
+			document.body.appendChild(script.dom);
+
+			const player = new Player(editor);
+			document.body.appendChild(player.dom);
+
+			const sidebar = new Sidebar(editor);
+			document.body.appendChild(sidebar.dom);
+
+			const menubar = new Menubar(editor);
+			document.body.appendChild(menubar.dom);
+
+			const resizer = new Resizer(editor);
+			document.body.appendChild(resizer.dom);
+
+			const animation = new Animation(editor);
+			document.body.appendChild(animation.dom);
+
+			const animationResizer = new AnimationResizer(editor);
+			document.body.appendChild(animationResizer.dom);
+
+			editor.signals.animationPanelChanged.add(function (height) {
+				const visible = height !== false;
+				viewport.dom.classList.toggle('with-animation', visible);
+				toolbar.dom.classList.toggle('with-animation', visible);
+				if (visible) {
+					viewport.dom.style.bottom = height + 'px';
+					toolbar.dom.style.bottom = (height + 20) + 'px';
+				} else {
+					viewport.dom.style.bottom = '';
+					toolbar.dom.style.bottom = '';
+				}
+				editor.signals.windowResize.dispatch();
+			});
+
+			// ── iobroker integration ──────────────────────────────
+			// Notify parent that editor is ready
+			const iob = window.__iob;
+			function notifyParent(type, extra) {
+				if (window.parent !== window) {
+					window.parent.postMessage(Object.assign({ type }, extra), '*');
+				}
+			}
+
+			// After editor fully initialized, signal parent and apply pending load
+			setTimeout(function () {
+				notifyParent('threeeditor:ready', { sceneName: iob.sceneName, sceneType: iob.sceneType });
+				if (iob.pendingLoad !== null && iob.pendingLoad !== undefined) {
+					try { editor.fromJSON(iob.pendingLoad); } catch(e) {}
+				}
+			}, 200);
+
+			// Override autosave: save to parent (iobroker) instead of IndexedDB
+			editor.storage.init(function () {
+				// Do NOT restore from IndexedDB — parent will send scene
+				let timeout;
+				function saveState() {
+					if (editor.config.getKey('autosave') === false) return;
+					clearTimeout(timeout);
+					timeout = setTimeout(function () {
+						editor.signals.savingStarted.dispatch();
+						timeout = setTimeout(function () {
+							// Autosave to parent
+							notifyParent('threeeditor:autosave', { threeScene: editor.toJSON() });
+							editor.signals.savingFinished.dispatch();
+						}, 100);
+					}, 1500);
+				}
+
+				const signals = editor.signals;
+				signals.geometryChanged.add(saveState);
+				signals.objectAdded.add(saveState);
+				signals.objectChanged.add(saveState);
+				signals.objectRemoved.add(saveState);
+				signals.materialChanged.add(saveState);
+				signals.sceneBackgroundChanged.add(saveState);
+				signals.sceneEnvironmentChanged.add(saveState);
+				signals.sceneFogChanged.add(saveState);
+				signals.sceneGraphChanged.add(saveState);
+				signals.scriptChanged.add(saveState);
+			});
+
+			// "Save to ioBroker" shortcut: Ctrl+S
+			document.addEventListener('keydown', function (e) {
+				if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+					e.preventDefault();
+					notifyParent('threeeditor:save', { threeScene: editor.toJSON() });
+				}
+			});
+
+			// When a script is opened for editing → send to parent Monaco
+			editor.signals.editScript.add(function (object, script) {
+				notifyParent('threeeditor:editScript', {
+					objectUuid: object.uuid,
+					objectName: object.name,
+					scriptName: script.name,
+					source: script.source
+				});
+			});
+
+			// ── window events ─────────────────────────────────────
+			document.addEventListener('dragover', function (event) {
+				event.preventDefault();
+				event.dataTransfer.dropEffect = 'copy';
+			});
+			document.addEventListener('drop', function (event) {
+				event.preventDefault();
+				if (event.dataTransfer.types[0] === 'text/plain') return;
+				if (event.dataTransfer.items) editor.loader.loadItemList(event.dataTransfer.items);
+				else editor.loader.loadFiles(event.dataTransfer.files);
+			});
+
+			window.addEventListener('resize', function () { editor.signals.windowResize.dispatch(); });
+			editor.signals.windowResize.dispatch();
+
+		</script>
+	</body>
+</html>
