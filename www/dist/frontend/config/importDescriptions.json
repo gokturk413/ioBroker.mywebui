@@ -1,0 +1,10 @@
+[
+    {
+        "name": "",
+        "file": "/mywebui/dist/frontend/common/Common.globals.d.ts"
+    },
+    {
+        "name": "inmemory://model/@gokturk413/base-custom-webcomponent.d.ts",
+        "file": "/mywebui/libs/@gokturk413/base-custom-webcomponent/dist/BaseCustomWebComponent.d.ts"
+    }
+]

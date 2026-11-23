@@ -1,0 +1,159 @@
+{
+ "version": 1,
+ "categories": [
+  {
+   "id": "boilers_and_burners",
+   "name": "Boilers and Burners",
+   "count": 7,
+   "file": "boilers_and_burners.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "bulk_handling",
+   "name": "Bulk Handling",
+   "count": 8,
+   "file": "bulk_handling.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "columns_and_evaporators",
+   "name": "Columns and Evaporators",
+   "count": 9,
+   "file": "columns_and_evaporators.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "control_and_it",
+   "name": "Control and IT",
+   "count": 8,
+   "file": "control_and_it.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "conveyors",
+   "name": "Conveyors",
+   "count": 6,
+   "file": "conveyors.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "crushing_and_milling",
+   "name": "Crushing and Milling",
+   "count": 7,
+   "file": "crushing_and_milling.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "electrical",
+   "name": "Electrical",
+   "count": 7,
+   "file": "electrical.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "filters_and_separators",
+   "name": "Filters and Separators",
+   "count": 7,
+   "file": "filters_and_separators.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "gauges_and_meters",
+   "name": "Gauges and Meters",
+   "count": 3,
+   "file": "gauges_and_meters.pack",
+   "source": "Clker.com, marked public domain in the file"
+  },
+  {
+   "id": "heat_exchangers",
+   "name": "Heat Exchangers",
+   "count": 13,
+   "file": "heat_exchangers.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "hvac",
+   "name": "HVAC",
+   "count": 10,
+   "file": "hvac.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "instruments",
+   "name": "Instruments",
+   "count": 14,
+   "file": "instruments.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "machine_tools",
+   "name": "Machine Tools",
+   "count": 7,
+   "file": "machine_tools.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "mixers_and_reactors",
+   "name": "Mixers and Reactors",
+   "count": 6,
+   "file": "mixers_and_reactors.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "motors",
+   "name": "Motors",
+   "count": 6,
+   "file": "motors.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "operator_panel",
+   "name": "Operator Panel",
+   "count": 8,
+   "file": "operator_panel.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "piping",
+   "name": "Piping",
+   "count": 16,
+   "file": "piping.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "pumps",
+   "name": "Pumps",
+   "count": 14,
+   "file": "pumps.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "sensors",
+   "name": "Sensors",
+   "count": 12,
+   "file": "sensors.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "tanks",
+   "name": "Tanks",
+   "count": 16,
+   "file": "tanks.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "valves",
+   "name": "Valves",
+   "count": 20,
+   "file": "valves.pack",
+   "source": "mywebui"
+  },
+  {
+   "id": "water_and_wastewater",
+   "name": "Water and Wastewater",
+   "count": 8,
+   "file": "water_and_wastewater.pack",
+   "source": "mywebui"
+  }
+ ]
+}
