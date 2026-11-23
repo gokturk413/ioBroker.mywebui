@@ -1,0 +1,5 @@
+var i=b;function a(){var j=['469092HOkfvG','3855185sjUIiO','700252ZyHkFs','2356568sTRWCM','183sKRsBj','7MaHzcF','219756bMaOgM','3994rbltBO','template','6knIBQS','558290IoIGEY','99XuvCOc','117CIepgZ'];a=function(){return j;};return a();}(function(c,d){var h=b,e=c();while(!![]){try{var f=parseInt(h(0xe5))/0x1+parseInt(h(0xdd))/0x2*(-parseInt(h(0xda))/0x3)+-parseInt(h(0xdc))/0x4+parseInt(h(0xe4))/0x5*(-parseInt(h(0xdf))/0x6)+parseInt(h(0xdb))/0x7*(-parseInt(h(0xe6))/0x8)+parseInt(h(0xe2))/0x9*(parseInt(h(0xe0))/0xa)+parseInt(h(0xe1))/0xb*(parseInt(h(0xe3))/0xc);if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0x82bbc));import{BaseCustomWebComponentConstructorAppend,css,html}from'@node-projects/base-custom-webcomponent';function b(c,d){c=c-0xda;var e=a();var f=e[c];return f;}export class EditTextOverlay extends BaseCustomWebComponentConstructorAppend{static ['style']=css``;static [i(0xde)]=html`
+    <div>
+      <input type="text">
+    </div>
+  `;}

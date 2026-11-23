@@ -1,0 +1,5 @@
+var i=b;(function(c,d){var h=b,e=c();while(!![]){try{var f=parseInt(h(0xde))/0x1+-parseInt(h(0xe0))/0x2+parseInt(h(0xdb))/0x3+parseInt(h(0xd8))/0x4+parseInt(h(0xd9))/0x5*(-parseInt(h(0xdd))/0x6)+parseInt(h(0xe1))/0x7+parseInt(h(0xdf))/0x8*(parseInt(h(0xdc))/0x9);if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xb1f2b));import{html}from'@node-projects/base-custom-webcomponent';function b(c,d){c=c-0xd8;var e=a();var f=e[c];return f;}import{BasicStackedToolbarExtension}from'../BasicStackedToolbarExtension.js';export class BlockToolbarExtension extends BasicStackedToolbarExtension{static [i(0xe3)]=html`
+      <div style="height: 100%; width: 100%;">
+        ${BasicStackedToolbarExtension['basicTemplate']}
+      </div>
+    `;constructor(c,d,e){super(c,d,e);}[i(0xda)](c,d){var j=i;super['extend'](c,d),this[j(0xe2)](c,d);}}function a(){var k=['2711156jUXJDF','refresh','template','3674476BfnzKc','5BhwBcl','extend','1257693aWKfPN','71073dskkaQ','8326086KeTxXQ','1208767bfSEid','8NjNdEA','1650532lHPaGn'];a=function(){return k;};return a();}
